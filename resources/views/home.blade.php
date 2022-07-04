@@ -20,7 +20,7 @@
     </div>
     <div class="row text-center p-3">
         <div class="col">
-            <a class="btn btn-danger" href="{{route('seller.index')}}"> Halaman Seller </a>
+            <a class="btn btn-danger" href="{{route('seller.dashboard')}}"> Halaman Seller </a>
         </div>
     </div>
 </div>

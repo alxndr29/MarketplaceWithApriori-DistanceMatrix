@@ -20,5 +20,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth','cektoko']], function(){
     //Penjual
-    Route::get('/seller', 'penjual\PenjualController@index')->name('seller.index');
+    Route::get('/seller/dashboard', 'penjual\PenjualController@dashboard')->name('seller.dashboard');
+    //Toko
+   
+});
+Route::group(['middleware' => ['auth']],function(){
+    Route::get('/seller/halamanupdatetoko','penjual\PenjualController@halamanUpdateToko')->name('seller.halamanupdatetoko');
+    Route::post('/seller/updatetoko', 'penjual\PenjualController@updateToko')->name('seller.updatetoko');
+    Route::post('/seller/storetoko', 'penjual\PenjualController@storeToko')->name('seller.storetoko');
+    Route::get('/seller/registoko', 'penjual\PenjualController@regisToko')->name('seller.registoko');
 });

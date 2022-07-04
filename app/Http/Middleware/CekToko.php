@@ -18,10 +18,10 @@ class CekToko
      */
     public function handle($request, Closure $next)
     {
-        // $result = DB::table('toko')->where('users_id', Auth::user()->id)->first();
         $result = Toko::where('users_id', Auth::user()->id)->first();
         if ($result == null) {
-            abort(403, 'Unauthorized action.');
+            // abort(403, 'Unauthorized action.');
+            return redirect('/seller/registoko');
         }
         return $next($request);
     }
