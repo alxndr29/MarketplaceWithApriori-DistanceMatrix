@@ -12,20 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/coba', function () {
+    return view('pembeli.home');
+});
 Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['auth','cektoko']], function(){
+Route::group(['middleware' => ['auth', 'cektoko']], function () {
     //Penjual
     Route::get('/seller/dashboard', 'penjual\PenjualController@dashboard')->name('seller.dashboard');
     //Toko
-   
 });
-Route::group(['middleware' => ['auth']],function(){
-    Route::get('/seller/halamanupdatetoko','penjual\PenjualController@halamanUpdateToko')->name('seller.halamanupdatetoko');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/seller/halamanupdatetoko', 'penjual\PenjualController@halamanUpdateToko')->name('seller.halamanupdatetoko');
     Route::post('/seller/updatetoko', 'penjual\PenjualController@updateToko')->name('seller.updatetoko');
     Route::post('/seller/storetoko', 'penjual\PenjualController@storeToko')->name('seller.storetoko');
     Route::get('/seller/registoko', 'penjual\PenjualController@regisToko')->name('seller.registoko');

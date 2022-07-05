@@ -1,0 +1,43 @@
+HTTrack3.49-2+htsswf+htsjava launched on Tue, 03 Mar 2020 13:52:00 at http://html.lionode.com/korslook/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qYC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" -Y http://html.lionode.com/korslook/ -O1 "C:\My Web Sites\webEcom" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+13:57:32	Warning: 	Retry after error -4 (No data (connection closed)) at link html.lionode.com/korslook/Bootstrap/css/bootstrap.css (from html.lionode.com/korslook/)
+13:58:04	Error: 	"Not Found" (404) at link html.lionode.com/korslook/product.html (from html.lionode.com/korslook/)
+13:58:04	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/product/car3-70x92.jpg (from html.lionode.com/korslook/)
+14:01:03	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/main-banner1.jpg (from html.lionode.com/korslook/)
+14:01:04	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/main-banner2.jpg (from html.lionode.com/korslook/)
+14:01:15	Warning: 	file not stored in cache due to bogus state (broken size, expected 8757710 got 6700464): html.lionode.com/korslook/video/Fashion_Film.mp4
+14:01:17	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/product/feature-pro-3.jpg (from html.lionode.com/korslook/)
+14:01:17	Warning: 	Retry after error -4 (Incorrect length (6700464 Bytes, 8757710 expected)) at link html.lionode.com/korslook/video/Fashion_Film.mp4 (from html.lionode.com/korslook/)
+14:01:18	Error: 	"Not Found" (404) at link html.lionode.com/korslook/mov_bbb.ogg (from html.lionode.com/korslook/)
+14:01:18	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/blog4.jpg (from html.lionode.com/korslook/)
+14:03:20	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/blog1.jpg (from html.lionode.com/korslook/)
+14:03:23	Warning: 	File not parsed, looks like binary: html.lionode.com/korslook/fonts/fontawesome-webfont.woff2?v=4.4.0
+14:03:24	Error: 	"Not Found" (404) at link html.lionode.com/korslook/css/grabbing.png (from html.lionode.com/korslook/css/owl.carousel.css)
+14:03:24	Error: 	"Not Found" (404) at link html.lionode.com/korslook/product-details.html (from html.lionode.com/korslook/cart.html)
+14:03:24	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/product/cart70x92.jpg (from html.lionode.com/korslook/cart.html)
+14:03:25	Error: 	"Not Found" (404) at link html.lionode.com/korslook/forgot-password.html (from html.lionode.com/korslook/checkout.html)
+14:03:25	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/grid-vier.html (from html.lionode.com/korslook/grid-view.html)
+14:03:25	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/product/1prod281x366.jpg (from html.lionode.com/korslook/grid-view.html)
+14:03:26	Error: 	"Not Found" (404) at link html.lionode.com/korslook/terms-conditions.html (from html.lionode.com/korslook/checkout-step3.html)
+14:03:26	Error: 	"Not Found" (404) at link html.lionode.com/korslook/thanks-for-order.html (from html.lionode.com/korslook/checkout-step4.html)
+14:03:26	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/404.png (from html.lionode.com/korslook/404.html)
+14:03:27	Error: 	"Not Found" (404) at link html.lionode.com/korslook/images/favicon.ico (from html.lionode.com/korslook/product-detail-view.html)
+14:03:27	Error: 	"Not Found" (404) at link html.lionode.com/korslook/images/sp-loading.gif (from html.lionode.com/korslook/product-detail-view.html)
+14:03:27	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/product/feature-pro-1.jpg (from html.lionode.com/korslook/product-detail-view.html)
+14:03:28	Warning: 	Retry after error -4 (No data (connection closed)) at link html.lionode.com/korslook/video/Fashion_Film.mp4 (from html.lionode.com/korslook/)
+14:03:46	Warning: 	Retry after error -4 (No data (connection closed)) at link html.lionode.com/korslook/Bootstrap/fonts/glyphicons-halflings-regular.woff2 (from html.lionode.com/korslook/Bootstrap/css/bootstrap.css)
+14:03:49	Error: 	"Not Found" (404) at link html.lionode.com/korslook/grid-vier.html (from html.lionode.com/korslook/grid-view.html)
+14:05:56	Warning: 	Retry after error -2 (Receive Time Out) at link html.lionode.com/korslook/images/main-banner1.jpg (from html.lionode.com/korslook/images/main-banner1.jpg)
+14:05:56	Error: 	"No data (connection closed)" (-4) after 2 retries at link html.lionode.com/korslook/video/Fashion_Film.mp4 (from html.lionode.com/korslook/)
+14:05:56	Warning: 	Retry after error -4 (No data (connection closed)) at link html.lionode.com/korslook/images/blog1.jpg (from html.lionode.com/korslook/images/blog1.jpg)
+14:05:56	Warning: 	File not parsed, looks like binary: html.lionode.com/korslook/Bootstrap/fonts/glyphicons-halflings-regular.woff2
+14:06:07	Error: 	"No data (connection closed)" (-4) after 2 retries at link html.lionode.com/korslook/images/main-banner1.jpg (from html.lionode.com/korslook/images/main-banner1.jpg)
+
+HTTrack Website Copier/3.49-2 mirror complete in 14 minutes 7 seconds : 146 links scanned, 104 files written (4852287 bytes overall) [11241634 bytes received at 13272 bytes/sec], 2073492 bytes transferred using HTTP compression in 43 files, ratio 23%, 4.4 requests per connection
+(12 errors, 20 warnings, 0 messages)
