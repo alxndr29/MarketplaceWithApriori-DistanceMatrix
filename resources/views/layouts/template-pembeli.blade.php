@@ -37,7 +37,26 @@
                     <div class="user-info pull-right">
                         <div class="user">
                             <ul>
-                                <li><a href="#" data-toggle="modal" data-target="#login">Login</a>
+                                <li>
+                                    @guest
+                                        <a href="{{ route('login') }}">{{ __('Login') }}</a> || 
+                                        @if (Route::has('register'))
+                                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        @endif
+                                    @else
+                                        <a href="#">{{ Auth::user()->name }}</a>
+                                        ||
+                                        <a href="{{route('seller.dashboard')}}">Seller Dashboard</a> ||
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <b> Logout </b>
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    @endguest
+                                    <!-- <a href="#" data-toggle="modal" data-target="#login">Login</a> -->
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="login" role="dialog">
                                         <div class="modal-dialog">
@@ -83,7 +102,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#register">Register</a>
+                                <li>
+                                    <!-- <a href="#" data-toggle="modal" data-target="#register">Register</a> -->
                                     <div class="modal fade" id="register" role="dialog">
                                         <div class="modal-dialog">
                                             <!-- Modal content-->
@@ -405,7 +425,7 @@
     <!-- jQuery (price shorting) -->
     @include('korslook-src.js')
     @yield('anotherjs')
-    
+
 </body>
 <!-- Mirrored from html.lionode.com/korslook/grid-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 07:00:32 GMT -->
 

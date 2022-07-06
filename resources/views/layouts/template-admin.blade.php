@@ -20,7 +20,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                        <a href="{{route('seller.dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>Dashboard Toko!</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
