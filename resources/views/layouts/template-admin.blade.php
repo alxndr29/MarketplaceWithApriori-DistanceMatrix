@@ -11,7 +11,7 @@
     <title>Gentelella Alela! | </title>
 
     @include('gentelella-src.css')
-
+    @yield('anothercss')
 </head>
 
 <body class="nav-md footer_fixed">
@@ -40,11 +40,10 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-home"></i> Data <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html">Dashboard</a></li>
-                                        <li><a href="index2.html">Dashboard2</a></li>
-                                        <li><a href="index3.html">Dashboard3</a></li>
+                                        <li><a href="{{route('seller.etalaseindex')}}">Etalase</a></li>
+                                        <li><a href="{{route('seller.produkindex')}}">Produk</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -169,28 +168,28 @@
                 <div class="">
                     <div class="clearfix"></div>
                     @if(Session::has('sukses'))
-                        <div class="alert alert-success alert-dismissible " role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                            </button>
-                            {{ Session::get('sukses') }}
-                        </div>
+                    <div class="alert alert-success alert-dismissible " role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        {{ Session::get('sukses') }}
+                    </div>
                     @endif
                     @if(Session::has('gagal'))
-                        <div class="alert alert-danger alert-dismissible " role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                            </button>
-                            {{ Session::get('gagal') }}
-                        </div>
+                    <div class="alert alert-danger alert-dismissible " role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        {{ Session::get('gagal') }}
+                    </div>
                     @endif
                     <div class="clearfix"></div>
                     @if ($errors->any())
-                        @foreach ($errors->all() as $error)
-                            <div class="alert alert-warning alert-dismissible " role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                </button>
-                                {{ $error }}
-                            </div>
-                        @endforeach
+                    @foreach ($errors->all() as $error)
+                    <div class="alert alert-warning alert-dismissible " role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        {{ $error }}
+                    </div>
+                    @endforeach
                     @endif
                     <div class="clearfix"></div>
                     @yield('content')
@@ -216,6 +215,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        alert('hello world!');
+        // alert('hello world!');
     });
 </script>
+@yield('anotherjs')

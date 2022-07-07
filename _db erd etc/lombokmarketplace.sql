@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 04, 2022 at 03:03 PM
+-- Generation Time: Jul 07, 2022 at 03:10 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -30,8 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `etalase_produk` (
   `idetalase_produk` int(11) NOT NULL,
   `nama` varchar(45) DEFAULT NULL,
-  `toko_users_id` bigint(20) UNSIGNED NOT NULL
+  `toko_users_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `etalase_produk`
+--
+
+INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Mouse Gaming Bosku Edit', 1, '2022-07-07 06:01:08', '2022-07-07 07:05:51', '2022-07-07 07:05:51');
 
 -- --------------------------------------------------------
 
@@ -51,12 +61,28 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `gambar_produk`
+--
+
+CREATE TABLE `gambar_produk` (
+  `idgambar_produk` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `produk_idproduk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kategori`
 --
 
 CREATE TABLE `kategori` (
   `idkategori` int(11) NOT NULL,
-  `nama` varchar(45) DEFAULT NULL
+  `nama` varchar(45) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -69,7 +95,9 @@ CREATE TABLE `midtrans` (
   `idmidtrans` int(11) NOT NULL,
   `token` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `transaksi_idtransaksi` int(11) NOT NULL
+  `transaksi_idtransaksi` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -116,7 +144,10 @@ CREATE TABLE `produk` (
   `nama` varchar(45) DEFAULT NULL,
   `harga` varchar(45) DEFAULT NULL,
   `etalase_produk_idetalase_produk` int(11) NOT NULL,
-  `kategori_idkategori` int(11) NOT NULL
+  `kategori_idkategori` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -129,15 +160,17 @@ CREATE TABLE `toko` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `nama_toko` varchar(45) DEFAULT NULL,
   `deskripsi` varchar(45) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '0'
+  `status` tinyint(4) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `toko`
 --
 
-INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`) VALUES
-(1, 'BBBBBBBBBB', 'hello world', 1);
+INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'BBBBBBBBBB', 'hello world', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -149,7 +182,9 @@ CREATE TABLE `transaksi` (
   `idtransaksi` int(11) NOT NULL,
   `tanggal` varchar(45) DEFAULT NULL,
   `toko_users_id` bigint(20) UNSIGNED NOT NULL,
-  `users_id` bigint(20) UNSIGNED NOT NULL
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -216,6 +251,13 @@ ALTER TABLE `etalase_produk`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gambar_produk`
+--
+ALTER TABLE `gambar_produk`
+  ADD PRIMARY KEY (`idgambar_produk`),
+  ADD KEY `fk_gambar_produk_produk1_idx` (`produk_idproduk`);
 
 --
 -- Indexes for table `kategori`
@@ -296,7 +338,7 @@ ALTER TABLE `users_has_produk`
 -- AUTO_INCREMENT for table `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
-  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -349,6 +391,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `etalase_produk`
   ADD CONSTRAINT `fk_etalase_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `gambar_produk`
+--
+ALTER TABLE `gambar_produk`
+  ADD CONSTRAINT `fk_gambar_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `midtrans`

@@ -10,4 +10,9 @@
 @endsection
 
 @section('anotherjs')
+<script type="text/javascript">
+    $(document).ready(function() {
+       console.log('hello world!');
+    });
+</script>
 @endsection

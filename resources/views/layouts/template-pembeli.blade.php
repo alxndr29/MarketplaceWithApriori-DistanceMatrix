@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <!-- Mirrored from html.lionode.com/korslook/grid-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 06:58:06 GMT -->
-
 <head>
     <!-- =====  BASIC PAGE NEEDS  ===== -->
     <meta charset="utf-8">
@@ -22,7 +20,7 @@
     <meta name="viewport" content="width=device-width">
     <!-- =====  CSS  ===== -->
     @include('korslook-src.css')
-
+    @yield('anothercss')
 </head>
 
 <body>
@@ -39,21 +37,21 @@
                             <ul>
                                 <li>
                                     @guest
-                                        <a href="{{ route('login') }}">{{ __('Login') }}</a> || 
-                                        @if (Route::has('register'))
-                                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                                        @endif
+                                    <a href="{{ route('login') }}">{{ __('Login') }}</a> ||
+                                    @if (Route::has('register'))
+                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    @endif
                                     @else
-                                        <a href="#">{{ Auth::user()->name }}</a>
-                                        ||
-                                        <a href="{{route('seller.dashboard')}}">Seller Dashboard</a> ||
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a href="#">{{ Auth::user()->name }}</a>
+                                    ||
+                                    <a href="{{route('seller.dashboard')}}">Seller Dashboard</a> ||
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <b> Logout </b>
-                                        </a>
+                                    </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                     @endguest
                                     <!-- <a href="#" data-toggle="modal" data-target="#login">Login</a> -->
 

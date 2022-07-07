@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/coba',function(){
+    return view('penjual.produkadd');
+});
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,6 +26,17 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('/seller/dashboard', 'penjual\PenjualController@dashboard')->name('seller.dashboard');
     //Toko 
     Route::get('/seller/halamanupdatetoko', 'penjual\PenjualController@halamanUpdateToko')->name('seller.halamanupdatetoko');
+    //Etalase Produk
+    Route::get('/seller/etalase','penjual\EtalaseProdukController@index')->name('seller.etalaseindex');
+    Route::post('/seller/etalase/store', 'penjual\EtalaseProdukController@store')->name('seller.etalasestore');
+    Route::put('/seller/etalase/update/{id}', 'penjual\EtalaseProdukController@update')->name('seller.etalaseupdate');
+    Route::delete('/seller/etalase/delete/{id}', 'penjual\EtalaseProdukController@delete')->name('seller.etalasedelete');
+    //Produk
+    Route::get('/seller/produk', 'penjual\ProdukController@index')->name('seller.produkindex');
+    Route::post('/seller/produk/store', 'penjual\ProdukController@store')->name('seller.produkstore');
+    Route::put('/seller/produk/update/{id}', 'penjual\ProdukController@update')->name('seller.produkupdate');
+    Route::delete('/seller/produk/delete/{id}', 'penjual\ProdukController@delete')->name('seller.produkdelete');
+    //
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko

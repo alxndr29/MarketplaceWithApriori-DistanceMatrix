@@ -42,7 +42,6 @@ class PenjualController extends Controller
     }
     public function updateToko(Request $request)
     {
-
         $request->validate([
             'nama_toko' => 'required|min:10',
             'deskripsi' => 'required|min:10',
