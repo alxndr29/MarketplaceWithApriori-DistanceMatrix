@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 07, 2022 at 03:10 PM
+-- Generation Time: Jul 08, 2022 at 01:27 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -65,11 +65,19 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `gambar_produk` (
-  `idgambar_produk` int(11) NOT NULL,
+  `idgambar_produk` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `produk_idproduk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `gambar_produk`
+--
+
+INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`) VALUES
+('tenor.gif', '2022-07-07 17:27:01', '2022-07-07 17:27:01', 8),
+('WhatsApp Image 2020-10-27 at 08.25.32.jpeg', '2022-07-07 17:26:12', '2022-07-07 17:26:12', 7);
 
 -- --------------------------------------------------------
 
@@ -84,6 +92,13 @@ CREATE TABLE `kategori` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`idkategori`, `nama`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Mouse', '2022-07-08 01:12:02', '2022-07-08 01:12:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -147,8 +162,17 @@ CREATE TABLE `produk` (
   `kategori_idkategori` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `toko_users_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`) VALUES
+(7, 'puki', NULL, 1, 1, '2022-07-07 17:26:12', '2022-07-07 17:26:12', NULL, 1),
+(8, 'k', NULL, 1, 1, '2022-07-07 17:27:01', '2022-07-07 17:27:01', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -290,7 +314,8 @@ ALTER TABLE `password_resets`
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`idproduk`),
   ADD KEY `fk_produk_etalase_produk1_idx` (`etalase_produk_idetalase_produk`),
-  ADD KEY `fk_produk_kategori1_idx` (`kategori_idkategori`);
+  ADD KEY `fk_produk_kategori1_idx` (`kategori_idkategori`),
+  ADD KEY `fk_produk_toko1_idx` (`toko_users_id`);
 
 --
 -- Indexes for table `toko`
@@ -350,7 +375,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `midtrans`
@@ -368,7 +393,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
@@ -409,7 +434,8 @@ ALTER TABLE `midtrans`
 --
 ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_etalase_produk1` FOREIGN KEY (`etalase_produk_idetalase_produk`) REFERENCES `etalase_produk` (`idetalase_produk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_idkategori`) REFERENCES `kategori` (`idkategori`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_idkategori`) REFERENCES `kategori` (`idkategori`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `toko`

@@ -46,7 +46,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                    <br/>
+                    <br />
                 </div>
             </div>
         </div>
@@ -70,7 +70,8 @@
                         var file = e.target;
                         $("<span class=\"pip\">" +
                             "<img style='width:100px; height:100px;' class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                            "<br/><span class=\"remove\">Remove image</span>" +
+                            "<br/>" +
+                         "<span class=\"remove\">Remove image</span>" +
                             "</span>").insertAfter("#files");
                         $(".remove").click(function() {
                             $(this).parent(".pip").remove();
