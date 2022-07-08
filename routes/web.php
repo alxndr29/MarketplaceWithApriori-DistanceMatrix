@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/coba',function(){
-    return view('penjual.produkadd');
-});
+// Route::get('/coba',function(){
+//     return view('penjual.produkadd');
+// });
 Route::get('/', function () {
     return view('welcome');
 });
@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::delete('/seller/etalase/delete/{id}', 'penjual\EtalaseProdukController@delete')->name('seller.etalasedelete');
     //Produk
     Route::get('/seller/produk', 'penjual\ProdukController@index')->name('seller.produkindex');
+    Route::get('/seller/produk/add', 'penjual\ProdukController@add')->name('seller.produkadd');
     Route::post('/seller/produk/store', 'penjual\ProdukController@store')->name('seller.produkstore');
     Route::put('/seller/produk/update/{id}', 'penjual\ProdukController@update')->name('seller.produkupdate');
     Route::delete('/seller/produk/delete/{id}', 'penjual\ProdukController@delete')->name('seller.produkdelete');

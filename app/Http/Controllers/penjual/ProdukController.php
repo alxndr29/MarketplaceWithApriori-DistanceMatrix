@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Produk;
 use App\GambarProduk;
+use App\EtalaseProduk;
+use App\Kategori;
 
 class ProdukController extends Controller
 {
@@ -18,8 +20,14 @@ class ProdukController extends Controller
             ->where('produk.toko_users_id', '=', Auth::user()->id)
             ->select('produk.*', 'gambar_produk.idgambar_produk')
             ->get();
-        //return ($produk);
+        return ($produk);
         return view('penjual.produk', compact('produk'));
+    }
+    public function add()
+    {
+        $etalase = EtalaseProduk::where('toko_users_id',Auth::user()->id)->get();
+        $kategori = Kategori::all();
+        return view('penjual.produkadd',compact('etalase','kategori'));
     }
     public function store(Request $request)
     {
@@ -30,8 +38,8 @@ class ProdukController extends Controller
         try {
             $produk = new Produk();
             $produk->nama = $request->get('nama');
-            $produk->etalase_produk_idetalase_produk = 1;
-            $produk->kategori_idkategori = 1;
+            $produk->etalase_produk_idetalase_produk = $request->get('etalase');
+            $produk->kategori_idkategori = $request->get('kategori');
             $produk->toko_users_id = Auth::user()->id;
             $produk->save();
             if ($request->hasfile('files')) {

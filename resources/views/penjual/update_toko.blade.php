@@ -43,15 +43,53 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="control-label col-md-3 col-sm-3 ">Alamat <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <textarea class="form-control" rows="3" name="alamat" required>{{$data->alamat}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label class="control-label col-md-3 col-sm-3 ">Telepon</label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <input type="number" class="form-control" placeholder="Default Input" name="telepon" value="{{$data->telepon}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label class="control-label col-md-3 col-sm-3 ">Latitude</label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <input type="text" class="form-control" placeholder="Default Input" name="latitude" value="{{$data->latitude}}" id="latitude" required readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label class="control-label col-md-3 col-sm-3 ">Longitude</label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <input type="text" class="form-control" placeholder="Default Input" name="longitude" value="{{$data->longitude}}" id="longitude" required readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-md-3 col-sm-3 ">Kota Kabupaten</label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <select class="form-control" name="kotakabupaten">
+                                @foreach ($kotakabupaten as $value)
+                                @if($value->idkotakabupaten == $data->kotakabupaten_idkotakabupaten)
+                                <option value="{{$value->idkotakabupaten}}" selected>{{$value->nama}}</option>
+                                @endif
+                                <option value="{{$value->idkotakabupaten}}">{{$value->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="control-label col-md-3 col-sm-3 ">Status Toko</label>
                         <div class="col-md-9 col-sm-9 ">
                             <select class="form-control" name="status">
                                 @if ($data->status == 1)
-                                    <option value="1" selected>Aktif</option>
-                                    <option value="0">Tidak Aktif</option>
+                                <option value="1" selected>Aktif</option>
+                                <option value="0">Tidak Aktif</option>
                                 @else
-                                    <option value="1">Aktif</option>
-                                    <option value="0" selected>Tidak Aktif</option>
+                                <option value="1">Aktif</option>
+                                <option value="0" selected>Tidak Aktif</option>
                                 @endif
                             </select>
                         </div>
@@ -71,4 +109,22 @@
 @endsection
 
 @section('anotherjs')
+<script type="text/javascript">
+    $(document).ready(function() {
+        getLocation();
+    });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        $("#latitude").val(position.coords.latitude);
+        $("#longitude").val(position.coords.longitude);
+    }
+</script>
 @endsection

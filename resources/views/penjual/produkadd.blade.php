@@ -39,6 +39,26 @@
                             <label>Nama</label>
                             <input type="text" class="form-control" name="nama">
                         </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <div>
+                                <select class="form-control" name="kategori">
+                                    @foreach ($kategori as $value)
+                                    <option value="{{$value->idkategori}}">{{$value->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Etalase</label>
+                            <div>
+                                <select class="form-control" name="etalase">
+                                    @foreach ($etalase as $value)
+                                    <option value="{{$value->idetalase_produk}}">{{$value->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-grou">
                             <div id="image_preview">
 
@@ -71,7 +91,7 @@
                         $("<span class=\"pip\">" +
                             "<img style='width:100px; height:100px;' class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                             "<br/>" +
-                         "<span class=\"remove\">Remove image</span>" +
+                            "<span class=\"remove\">Remove image</span>" +
                             "</span>").insertAfter("#files");
                         $(".remove").click(function() {
                             $(this).parent(".pip").remove();

@@ -14,7 +14,7 @@
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <!-- Button trigger modal tambah etalase-->
-                        <a type="button" class="btn btn-primary" href="#">
+                        <a type="button" class="btn btn-primary" href="{{route('seller.produkadd')}}">
                             Tambah Produk
                         </a>
                     </li>
@@ -61,7 +61,7 @@
     $(document).ready(function() {
         console.log('hello world!');
         $('#datatable-1').DataTable();
-        
+
     });
 </script>
 @endsection
