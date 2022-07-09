@@ -18,22 +18,22 @@ class ProdukController extends Controller
     {
         $produk = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
             ->where('produk.toko_users_id', '=', Auth::user()->id)
+            ->whereNull('gambar_produk.deleted_at')
+            ->groupBy('produk.idproduk')
             ->select('produk.*', 'gambar_produk.idgambar_produk')
             ->get();
-        return ($produk);
+        //return ($produk);
         return view('penjual.produk', compact('produk'));
     }
     public function add()
     {
-        $etalase = EtalaseProduk::where('toko_users_id',Auth::user()->id)->get();
+        $etalase = EtalaseProduk::where('toko_users_id', Auth::user()->id)->get();
         $kategori = Kategori::all();
-        return view('penjual.produkadd',compact('etalase','kategori'));
+        return view('penjual.produkadd', compact('etalase', 'kategori'));
     }
     public function store(Request $request)
     {
-        $request->validate([
-
-        ]);
+        $request->validate([]);
         DB::beginTransaction();
         try {
             $produk = new Produk();
@@ -41,10 +41,11 @@ class ProdukController extends Controller
             $produk->etalase_produk_idetalase_produk = $request->get('etalase');
             $produk->kategori_idkategori = $request->get('kategori');
             $produk->toko_users_id = Auth::user()->id;
+            $produk->harga = $request->get('harga'); 
             $produk->save();
             if ($request->hasfile('files')) {
                 foreach ($request->file('files') as $file) {
-                    $file->move(public_path().'/gambar_produk/', $file->getClientOriginalName());  
+                    $file->move(public_path() . '/gambar_produk/', $file->getClientOriginalName());
                     $gambar_produk = new GambarProduk();
                     $gambar_produk->idgambar_produk = $file->getClientOriginalName();
                     $gambar_produk->produk_idproduk = $produk->idproduk;
@@ -58,11 +59,53 @@ class ProdukController extends Controller
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
+    public function edit($id)
+    {
+        $etalase = EtalaseProduk::where('toko_users_id', Auth::user()->id)->get();
+        $kategori = Kategori::all();
+        $produk = Produk::where('idproduk', $id)->first();
+        $gambar_produk = GambarProduk::where('produk_idproduk', $id)->get();
+        // return $gambar_produk;
+        return view('penjual.produkedit', compact('produk', 'etalase', 'kategori', 'gambar_produk'));
+    }
+    public function deleteGambarEdit($idproduk, $idgambar)
+    {
+        try {
+            if (GambarProduk::where('produk_idproduk', $idproduk)->count() <= 1) {
+                return redirect()->back()->with('gagal', 'Tidak dapat hapus gambar. produk ini setidaknya harus memiliki 1 gambar');
+            } else {
+                $image_path = "gambar_produk/" . $idgambar;
+                if (\File::exists($image_path)) {
+                    \File::delete($image_path);
+                    GambarProduk::where('idgambar_produk', $idgambar)->delete();
+                }
+                return redirect()->back()->with('sukses', 'Berhasil Hapus Gambar');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
+    }
     public function update(Request $request, $id)
     {
         $request->validate([]);
         try {
+            $produk = Produk::find($id);
+            $produk->nama = $request->get('nama');
+            $produk->etalase_produk_idetalase_produk = $request->get('etalase');
+            $produk->kategori_idkategori = $request->get('kategori');
+            $produk->toko_users_id = Auth::user()->id;
+            $produk->harga = $request->get('harga');
+            $produk->save();
 
+            if ($request->hasfile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $file->move(public_path() . '/gambar_produk/', $file->getClientOriginalName());
+                    $gambar_produk = new GambarProduk();
+                    $gambar_produk->idgambar_produk = $file->getClientOriginalName();
+                    $gambar_produk->produk_idproduk = $id;
+                    $gambar_produk->save();
+                }
+            }
             return redirect()->back()->with('sukses', 'Berhasil menambah etalase baru');
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());

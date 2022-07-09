@@ -34,9 +34,11 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     //Produk
     Route::get('/seller/produk', 'penjual\ProdukController@index')->name('seller.produkindex');
     Route::get('/seller/produk/add', 'penjual\ProdukController@add')->name('seller.produkadd');
+    Route::get('/seller/produk/edit/{id}','penjual\ProdukController@edit')->name('seller.produkedit');
     Route::post('/seller/produk/store', 'penjual\ProdukController@store')->name('seller.produkstore');
     Route::put('/seller/produk/update/{id}', 'penjual\ProdukController@update')->name('seller.produkupdate');
     Route::delete('/seller/produk/delete/{id}', 'penjual\ProdukController@delete')->name('seller.produkdelete');
+    Route::delete('/seller/produkimage/delete/{idproduk}/{idgambar}','penjual\ProdukController@deleteGambarEdit')->name('seller.gambarprodukdelete');
     //
 });
 Route::group(['middleware' => ['auth']], function () {

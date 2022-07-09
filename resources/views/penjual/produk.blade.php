@@ -14,7 +14,7 @@
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <!-- Button trigger modal tambah etalase-->
-                        <a type="button" class="btn btn-primary" href="{{route('seller.produkadd')}}">
+                        <a class="btn btn-primary" href="{{route('seller.produkadd')}}">
                             Tambah Produk
                         </a>
                     </li>
@@ -37,6 +37,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Gambar</th>
+                            <th>Nama</th>
                             <th>Nama</th>
                             <th>Update</th>
                             <th>Delete</th>
@@ -44,7 +46,23 @@
                     </thead>
                     <tbody>
                         @foreach ($produk as $key => $value)
-
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>
+                                <img src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:150px; height:150px;" class="img-fluid" alt="Responsive image">
+                            </td>
+                            <td>{{$value->nama}}</td>
+                            <td>{{$value->harga}}</td>
+                            <td>
+                                <a href="{{route('seller.produkedit',$value->idproduk)}}" class="btn btn-primary"> Update </a>
+                            </td>
+                            <td>
+                                <form method="post" action="">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary"> Hapus </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

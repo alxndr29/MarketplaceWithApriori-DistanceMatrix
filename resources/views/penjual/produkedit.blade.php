@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3><small> Tambah Produk</small></h3>
+        <h3><small> Edit Produk</small></h3>
     </div>
 </div>
 <div class="clearfix"></div>
@@ -12,7 +12,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Form Tambah Produk <small></small></h2>
+                    <h2>Form Edit Produk <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -29,26 +29,32 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="{{route('seller.produkstore')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('seller.produkupdate',$produk->idproduk)}}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="form-group">
                             <label> Pilih Foto </label>
                             <input class="form-control" type="file" id="files" name="files[]" multiple />
                         </div>
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" class="form-control" name="nama">
+                            <input type="text" class="form-control" name="nama" value="{{$produk->nama}}">
                         </div>
                         <div class="form-group">
                             <label>Harga</label>
-                            <input type="number" class="form-control" name="harga">
+                            <input type="number" class="form-control" name="harga" value="{{$produk->harga}}">
                         </div>
+                        
                         <div class="form-group">
                             <label>Kategori</label>
                             <div>
                                 <select class="form-control" name="kategori">
                                     @foreach ($kategori as $value)
+                                    @if ($value->idkategori == $produk->kategori_idkategori)
+                                    <option value="{{$value->idkategori}}" selected>{{$value->nama}}</option>
+                                    @else
                                     <option value="{{$value->idkategori}}">{{$value->nama}}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -58,7 +64,12 @@
                             <div>
                                 <select class="form-control" name="etalase">
                                     @foreach ($etalase as $value)
+                                    @if ($value->idetalase_produk == $produk->etalase_produk_idetalase_produk)
+                                    <option value="{{$value->idetalase_produk}}" selected>{{$value->nama}}</option>
+                                    @else
                                     <option value="{{$value->idetalase_produk}}">{{$value->nama}}</option>
+                                    @endif
+
                                     @endforeach
                                 </select>
                             </div>
@@ -70,6 +81,19 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                    <div class="row">
+                        Gambar Sekarang
+                        @foreach ($gambar_produk as $value)
+                        <div class="col">
+                            <img src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:150px; height:150px;" class="img-fluid" alt="Responsive image">
+                            <form method="post" action="{{route('seller.gambarprodukdelete',[ $produk->idproduk,  $value->idgambar_produk])}}">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-primary">Hapus</button>
+                            </form>
+                        </div>
+                        @endforeach
+                    </div>
                     <br />
                 </div>
             </div>

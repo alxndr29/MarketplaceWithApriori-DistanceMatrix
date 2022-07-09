@@ -94,6 +94,9 @@
                             </select>
                         </div>
                     </div>
+                    <div id="map" style="height:200px; width100%">
+
+                    </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-9 col-sm-9  offset-md-3">
@@ -109,6 +112,8 @@
 @endsection
 
 @section('anotherjs')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&libraries=&v=weekly" async></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         getLocation();
@@ -125,6 +130,44 @@
     function showPosition(position) {
         $("#latitude").val(position.coords.latitude);
         $("#longitude").val(position.coords.longitude);
+        initMap(position.coords.latitude, position.coords.longitude);
+    }
+
+    function initMap(a, b) {
+        // map = new google.maps.Map(document.getElementById("map"), {
+        //     center: {
+        //         lat: -34.397,
+        //         lng: 150.644
+        //     },
+        //     zoom: 8,
+        // });
+        var myLatlng = new google.maps.LatLng(a, b);
+        var mapOptions = {
+            zoom: 15,
+            center: myLatlng
+        }
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        let infoWindow = new google.maps.InfoWindow({
+            content: "Lokasimu",
+            position: myLatlng,
+        });
+        infoWindow.open(map);
+        // Configure the click listener.
+        map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+                //JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+                'Lokasimu',
+                $('#latitude').val(mapsMouseEvent.latLng.lat().toString()),
+                $('#longitude').val(mapsMouseEvent.latLng.lng().toString())
+            );
+            infoWindow.open(map);
+        });
     }
 </script>
 @endsection

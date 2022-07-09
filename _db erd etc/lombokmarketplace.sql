@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 08, 2022 at 04:43 PM
+-- Generation Time: Jul 09, 2022 at 04:44 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -75,7 +75,8 @@ CREATE TABLE `etalase_produk` (
 
 INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Mouse Gaming Bosku Edit', 1, '2022-07-07 06:01:08', '2022-07-07 07:05:51', '2022-07-07 07:05:51'),
-(2, 'Logitech Gaming G', 1, '2022-07-08 08:13:36', '2022-07-08 08:13:36', NULL);
+(2, 'Logitech Gaming G', 1, '2022-07-08 08:13:36', '2022-07-08 08:13:36', NULL),
+(3, 'Asus ROG', 1, '2022-07-08 19:44:44', '2022-07-08 19:44:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -102,15 +103,18 @@ CREATE TABLE `gambar_produk` (
   `idgambar_produk` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `produk_idproduk` int(11) NOT NULL
+  `produk_idproduk` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `gambar_produk`
 --
 
-INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`) VALUES
-('Evan_TracingBFS.jpg', '2022-07-08 08:21:40', '2022-07-08 08:21:40', 1);
+INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`, `deleted_at`) VALUES
+('Evan_TracingBFS.jpg', '2022-07-08 08:21:40', '2022-07-08 20:33:59', 1, '2022-07-08 20:33:59'),
+('WhatsApp Image 2018-12-14 at 15.48.50(1).jpeg', '2022-07-08 20:29:51', '2022-07-08 20:29:51', 1, NULL),
+('WhatsApp Image 2020-10-27 at 08.25.32.jpeg', '2022-07-08 20:29:51', '2022-07-08 20:29:51', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -131,7 +135,20 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`idkategori`, `nama`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Acc Komp', NULL, NULL, NULL);
+(1, 'Acc Komp', NULL, NULL, NULL),
+(2, 'Acc Monitor', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `keranjang`
+--
+
+CREATE TABLE `keranjang` (
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_idproduk` int(11) NOT NULL,
+  `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -726,7 +743,7 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`) VALUES
-(1, 'First Product', NULL, 2, 1, '2022-07-08 08:21:40', '2022-07-08 08:21:40', NULL, 1);
+(1, 'First Product', '1', 2, 2, '2022-07-08 08:21:40', '2022-07-08 20:29:25', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -859,18 +876,6 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
 (1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users_has_produk`
---
-
-CREATE TABLE `users_has_produk` (
-  `users_id` bigint(20) UNSIGNED NOT NULL,
-  `produk_idproduk` int(11) NOT NULL,
-  `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 --
 -- Indexes for dumped tables
 --
@@ -916,6 +921,14 @@ ALTER TABLE `gambar_produk`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`idkategori`);
+
+--
+-- Indexes for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_produk1_idx` (`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_users1_idx` (`users_id`);
 
 --
 -- Indexes for table `kotakabupaten`
@@ -990,14 +1003,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `users_has_produk`
---
-ALTER TABLE `users_has_produk`
-  ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
-  ADD KEY `fk_users_has_produk_produk1_idx` (`produk_idproduk`),
-  ADD KEY `fk_users_has_produk_users1_idx` (`users_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1005,7 +1010,7 @@ ALTER TABLE `users_has_produk`
 -- AUTO_INCREMENT for table `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
-  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1017,7 +1022,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `midtrans`
@@ -1080,6 +1085,13 @@ ALTER TABLE `gambar_produk`
   ADD CONSTRAINT `fk_gambar_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD CONSTRAINT `fk_users_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_has_produk_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `kotakabupaten`
 --
 ALTER TABLE `kotakabupaten`
@@ -1119,13 +1131,6 @@ ALTER TABLE `transaksi`
 ALTER TABLE `transaksi_has_produk`
   ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `users_has_produk`
---
-ALTER TABLE `users_has_produk`
-  ADD CONSTRAINT `fk_users_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_users_has_produk_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
