@@ -114,10 +114,15 @@ class ProdukController extends Controller
     public function delete($id)
     {
         try {
-
             return redirect()->back()->with('sukses', 'Berhasil meghapus etalase ');
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());
         }
+    }
+    public function detail($id){
+        $produk = Produk::find($id)->first();
+        $gambar_produk = GambarProduk::where('produk_idproduk',$id)->get();
+        // return $gambar_produk;
+        return view('pembeli.detailproduk',compact('produk','gambar_produk'));
     }
 }

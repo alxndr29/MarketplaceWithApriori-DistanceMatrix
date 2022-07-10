@@ -9,6 +9,8 @@
 <script src="{{asset('kors-look/html.lionode.com/korslook/js/smoothproducts.min.js')}}"></script>
 <script src="{{asset('kors-look/html.lionode.com/korslook/js/jquery-ui.js')}}"></script>
 <script src="{{asset('kors-look/html.lionode.com/korslook/js/DioProgress.js')}}"></script>
+<script type="text/javascript" src="{{asset('kors-look/html.lionode.com/korslook/js/smoothproducts.min.js')}}"></script>
+
 <script type="text/javascript">
     if (self == top) {
         function netbro_cache_analytics(fn, callback) {

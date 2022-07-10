@@ -46,5 +46,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/seller/updatetoko', 'penjual\PenjualController@updateToko')->name('seller.updatetoko');
     Route::post('/seller/storetoko', 'penjual\PenjualController@storeToko')->name('seller.storetoko');
     Route::get('/seller/registoko', 'penjual\PenjualController@regisToko')->name('seller.registoko');
+
+    //Produk
+    Route::get('/produkdetail/{id}','penjual\ProdukController@detail')->name('user.produkdetail');
+
+    //Keranjang
+    Route::post('/keranjang/store','pembeli\KeranjangController@store')->name('user.keranjangstore');
 });
 

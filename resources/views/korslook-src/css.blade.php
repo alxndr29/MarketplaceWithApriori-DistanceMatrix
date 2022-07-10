@@ -10,8 +10,10 @@
 
 <link href="{{asset('kors-look/html.lionode.com/korslook/css/owl.carousel.css')}}" rel="stylesheet" type="text/css">
 
-<link rel="icon" type="image/png"  href="{{asset('kors-look/html.lionode.com/korslook/images/favicon.png')}}">
+<link rel="icon" type="image/png" href="{{asset('kors-look/html.lionode.com/korslook/images/favicon.png')}}">
 
 <link rel="apple-touch-icon" href="{{asset('kors-look/html.lionode.com/korslook/images/favicon.png')}}">
 
 <link href="{{asset('kors-look/html.lionode.com/korslook/css/jquery-ui.css')}}" rel="stylesheet">
+
+<link rel="stylesheet" href="{{asset('kors-look/html.lionode.com/korslook/css/smoothproducts.css')}}">
