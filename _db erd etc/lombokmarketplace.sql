@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 12, 2022 at 05:02 AM
+-- Generation Time: Jul 12, 2022 at 07:39 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -76,7 +76,8 @@ CREATE TABLE `etalase_produk` (
 INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Mouse Gaming Bosku Edit', 1, '2022-07-07 06:01:08', '2022-07-07 07:05:51', '2022-07-07 07:05:51'),
 (2, 'Logitech Gaming G', 1, '2022-07-08 08:13:36', '2022-07-08 08:13:36', NULL),
-(3, 'Asus ROG', 1, '2022-07-08 19:44:44', '2022-07-08 19:44:44', NULL);
+(3, 'Asus ROG', 1, '2022-07-08 19:44:44', '2022-07-08 19:44:44', NULL),
+(4, 'Kue kerign', 2, '2022-07-12 11:34:13', '2022-07-12 11:34:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -112,6 +113,8 @@ CREATE TABLE `gambar_produk` (
 --
 
 INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`, `deleted_at`) VALUES
+('a.PNG', '2022-07-12 11:35:15', '2022-07-12 11:35:15', 3, NULL),
+('baru sekaleeee ini.png', '2022-07-12 11:23:01', '2022-07-12 11:23:01', 2, NULL),
 ('index.jpg', '2022-07-11 20:53:45', '2022-07-11 20:53:45', 1, NULL),
 ('Logo-Ubaya-untuk-Watermark-v.1.jpg', '2022-07-11 20:55:30', '2022-07-11 20:55:30', 1, NULL);
 
@@ -154,7 +157,9 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
-(1, 1, '2');
+(1, 1, '1'),
+(1, 2, '1'),
+(1, 3, '1');
 
 -- --------------------------------------------------------
 
@@ -742,15 +747,18 @@ CREATE TABLE `produk` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `toko_users_id` bigint(20) UNSIGNED NOT NULL,
-  `deskripsi` varchar(45) DEFAULT NULL
+  `deskripsi` varchar(45) DEFAULT NULL,
+  `stok` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`) VALUES
-(1, 'First Product Gawr Gura', '25000', 2, 2, '2022-07-08 08:21:40', '2022-07-11 20:51:47', NULL, 1, 'Gura vtuber terbaik. Tidak semua vtuber bagus');
+INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`, `stok`) VALUES
+(1, 'First Product Gawr Gura', '25000', 2, 2, '2022-07-08 08:21:40', '2022-07-12 09:51:03', NULL, 1, 'Gura', 100),
+(2, 'Izumi Sagiri', '20000', 2, 1, '2022-07-12 11:23:01', '2022-07-12 11:23:01', NULL, 1, 'Eromanga Sensei terbaik', 50),
+(3, 'Kue Nastar', '30000', 4, 1, '2022-07-12 11:35:15', '2022-07-12 11:35:15', NULL, 2, 'Enak pokoknya', 10);
 
 -- --------------------------------------------------------
 
@@ -822,7 +830,7 @@ CREATE TABLE `toko` (
   `longitude` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `kotakabupaten_idkotakabupaten` int(11) NOT NULL
+  `kotakabupaten_idkotakabupaten` int(11) NOT NULL DEFAULT '241'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -830,7 +838,8 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `telepon`, `latitude`, `longitude`, `created_at`, `updated_at`, `kotakabupaten_idkotakabupaten`) VALUES
-(1, '1111', 'hello world', 1, 'asdasdasda', '123123', '-8.8441895', '121.6677444', NULL, '2022-07-08 08:11:51', 241);
+(1, 'Toko Barett', 'hello world', 1, 'asdasdasda', '123123', '-8.844183', '121.667746', NULL, '2022-07-12 10:23:45', 241),
+(2, 'Teratai Cookies', 'Menjual kue khas makkasar', 1, 'Komplek catalia', '0813', '-8.843257601381023', '121.65381767079468', '2022-07-12 11:32:46', '2022-07-12 11:33:20', 241);
 
 -- --------------------------------------------------------
 
@@ -881,7 +890,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual');
+(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
+(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL);
 
 --
 -- Indexes for dumped tables
@@ -1017,7 +1027,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
-  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1047,7 +1057,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
@@ -1059,7 +1069,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

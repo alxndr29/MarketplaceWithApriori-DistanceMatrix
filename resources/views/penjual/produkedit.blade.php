@@ -49,7 +49,10 @@
                             <label>Harga</label>
                             <input type="number" class="form-control" name="harga" value="{{$produk->harga}}">
                         </div>
-
+                        <div class="form-group">
+                            <label>Stok</label>
+                            <input type="number" class="form-control" name="stok" value="{{$produk->stok}}">
+                        </div>
                         <div class="form-group">
                             <label>Kategori</label>
                             <div>

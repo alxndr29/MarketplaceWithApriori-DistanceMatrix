@@ -13,7 +13,7 @@ class EtalaseProdukController extends Controller
     //
     public function index()
     {
-        $etalase = EtalaseProduk::all();
+        $etalase = EtalaseProduk::where('toko_users_id',Auth::user()->id)->get();
         return view('penjual.etalase', compact('etalase'));
     }
     public function store(Request $request)

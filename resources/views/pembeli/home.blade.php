@@ -230,11 +230,16 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Featured Products block End  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products block End  -->
 
-                    @endsection
-                    @section('anotherjs')
-                    <script>
+@endsection
+@section('anotherjs')
+<script>
 
-                    </script>
-                    @endsection
+</script>
+@endsection

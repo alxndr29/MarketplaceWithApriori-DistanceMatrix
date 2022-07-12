@@ -51,8 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/produkdetail/{id}','penjual\ProdukController@detail')->name('user.produkdetail');
 
     //Keranjang
+    Route::get('/keranjang','pembeli\KeranjangController@index')->name('user.keranjang');
     Route::get('/keranjang/notif','pembeli\KeranjangController@keranjangNotif')->name('user.keranjangnotif');
     Route::post('/keranjang/store','pembeli\KeranjangController@store')->name('user.keranjangstore');
-    
+    Route::put('/keranjang/update/{id}','pembeli\KeranjangController@updateKeranjang')->name('user.keranjangupdte');
+    Route::delete('/keranjang/delete/{id}', 'pembeli\KeranjangController@destroy')->name('user.keranjangdestroy');
 });
 

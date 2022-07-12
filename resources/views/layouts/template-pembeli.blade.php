@@ -224,7 +224,14 @@
                                                     </tr>
                                                 </tbody>
                                             </table> -->
-                                            <div class="controls"> <a class="btn btn-primary pull-left" href="cart.html" id="view-cart"><i class="fa fa-shopping-cart"></i> View Cart </a> <a class="btn btn-primary pull-right" href="checkout.html" id="checkout"><i class="fa fa-share"></i> Checkout</a> </div>
+                                            <div class="controls">
+                                                <a class="btn btn-primary pull-left" href="{{route('user.keranjang')}}" id="view-cart">
+                                                    <i class="fa fa-shopping-cart"></i> View Cart
+                                                </a>
+                                                <!-- <a class="btn btn-primary pull-right" href="checkout.html" id="checkout">
+                                                    <i class="fa fa-share"></i> Checkout
+                                                </a> -->
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -301,7 +308,8 @@
         <!-- Footer block Start  -->
         <footer id="footer">
             <div class="container">
-                <div class="row">
+                <br>
+                <!-- <div class="row">
                     <div class="col-md-12">
                         <div class="newslatter">
                             <form>
@@ -313,7 +321,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-3">
                         <div class="about">
@@ -413,7 +421,14 @@
     <!-- jQuery (price shorting) -->
     @include('korslook-src.js')
     <script type="text/javascript">
-        function keranjang(){
+        @if(Session::has('sukses'))
+        alert("{{Session::get('sukses')}}");
+        @endif
+        @if(Session::has('gagal'))
+        alert("{{Session::get('gagal')}}");
+        @endif
+
+        function keranjang() {
             $.ajax({
                 url: "{{route('user.keranjangnotif')}}",
                 type: "GET",
@@ -431,10 +446,10 @@
                         $.each(response.keranjang, function(k, v) {
                             $("#isikeranjang").append(
                                 '<tr>' +
-                                '<td class="text-center"><a href="#"><img class="img-thumbnail" style="width:70px; height:92px;" src="'+ "{{asset('gambar_produk')}}/"+ v.idgambar_produk +'" alt="img"></a></td>' +
-                                '<td class="text-left"><a href="#">'+v.nama+'</a></td>' +
-                                '<td class="text-right quality"> X'+v.jumlah+'</td>' +
-                                '<td class="text-right price-new"> Rp. '+(v.harga * v.jumlah)+'</td>' +
+                                '<td class="text-center"><a href="#"><img class="img-thumbnail" style="width:70px; height:92px;" src="' + "{{asset('gambar_produk')}}/" + v.idgambar_produk + '" alt="img"></a></td>' +
+                                '<td class="text-left"><a href="#">' + v.nama + '</a></td>' +
+                                '<td class="text-right quality"> X' + v.jumlah + '</td>' +
+                                '<td class="text-right price-new"> Rp. ' + (v.harga * v.jumlah) + '</td>' +
                                 '</tr>'
                             );
                         });
@@ -453,4 +468,5 @@
 
 </body>
 <!-- Mirrored from html.lionode.com/korslook/grid-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 07:00:32 GMT -->
+
 </html>

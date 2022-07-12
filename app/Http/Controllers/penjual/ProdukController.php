@@ -42,7 +42,8 @@ class ProdukController extends Controller
             $produk->kategori_idkategori = $request->get('kategori');
             $produk->deskripsi = $request->get('deskripsi');
             $produk->toko_users_id = Auth::user()->id;
-            $produk->harga = $request->get('harga'); 
+            $produk->harga = $request->get('harga');
+            $produk->stok = $request->get('stok');  
             $produk->save();
             if ($request->hasfile('files')) {
                 foreach ($request->file('files') as $file) {
@@ -97,8 +98,8 @@ class ProdukController extends Controller
             $produk->toko_users_id = Auth::user()->id;
             $produk->deskripsi = $request->get('deskripsi');
             $produk->harga = $request->get('harga');
+            $produk->stok = $request->get('stok');
             $produk->save();
-
             if ($request->hasfile('files')) {
                 foreach ($request->file('files') as $file) {
                     $file->move(public_path() . '/gambar_produk/', $file->getClientOriginalName());
@@ -122,7 +123,8 @@ class ProdukController extends Controller
         }
     }
     public function detail($id){
-        $produk = Produk::find($id)->first();
+        $produk = Produk::where('idproduk',$id)->first();
+        // return $produk;
         $gambar_produk = GambarProduk::where('produk_idproduk',$id)->get();
         // return $gambar_produk;
         return view('pembeli.detailproduk',compact('produk','gambar_produk'));

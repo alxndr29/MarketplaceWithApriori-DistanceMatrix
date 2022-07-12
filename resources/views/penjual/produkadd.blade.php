@@ -39,16 +39,20 @@
                             <label>Nama</label>
                             <input type="text" class="form-control" name="nama">
                         </div>
-                        <div class="form-group row">
-                            <label class="control-label col-md-3 col-sm-3 ">Deskripsi <span class="required">*</span>
+                        <div class="form-group">
+                            <label>Deskripsi <span class="required">*</span>
                             </label>
-                            <div class="col-md-9 col-sm-9 ">
+                            <div>
                                 <textarea class="form-control" rows="3" name="deskripsi" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Harga</label>
                             <input type="number" class="form-control" name="harga">
+                        </div>
+                        <div class="form-group">
+                            <label>Stok</label>
+                            <input type="number" class="form-control" name="stok">
                         </div>
                         <div class="form-group">
                             <label>Kategori</label>
