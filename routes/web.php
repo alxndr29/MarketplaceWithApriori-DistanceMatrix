@@ -47,10 +47,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/seller/storetoko', 'penjual\PenjualController@storeToko')->name('seller.storetoko');
     Route::get('/seller/registoko', 'penjual\PenjualController@regisToko')->name('seller.registoko');
 
-    //Produk
+    //Produk Detail
     Route::get('/produkdetail/{id}','penjual\ProdukController@detail')->name('user.produkdetail');
 
     //Keranjang
+    Route::get('/keranjang/notif','pembeli\KeranjangController@keranjangNotif')->name('user.keranjangnotif');
     Route::post('/keranjang/store','pembeli\KeranjangController@store')->name('user.keranjangstore');
+    
 });
 

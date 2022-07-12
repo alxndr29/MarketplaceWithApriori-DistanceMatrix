@@ -31,7 +31,15 @@ class KeranjangController extends Controller
     }
     public function keranjangNotif()
     {
-        return DB::table('keranjang')->get();
+        $keranjang = DB::table('keranjang')
+        ->join('produk','produk.idproduk','=','keranjang.produk_idproduk')
+        ->join('gambar_produk','produk.idproduk','=','gambar_produk.produk_idproduk')
+        ->select('keranjang.jumlah','gambar_produk.idgambar_produk','produk.nama','produk.harga')
+        ->groupBy('produk.idproduk')
+        ->get();
+        return response()->json([
+            'keranjang' => $keranjang
+        ]);
     }
     public function destroy($id)
     { }

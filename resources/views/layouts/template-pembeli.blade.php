@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- Mirrored from html.lionode.com/korslook/grid-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 06:58:06 GMT -->
+
 <head>
     <!-- =====  BASIC PAGE NEEDS  ===== -->
     <meta charset="utf-8">
@@ -190,31 +191,20 @@
                         <div class="col-md-3 header-right">
                             <div class="cart">
                                 <div class="cart-icon dropdown"></div>
-                                <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="cart.html">My Cart( 2 )<span> $261.20</span></a>
+                                <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#" id="jumlahkeranjang">
+                                    <!-- <span> $261.20</span> -->
+                                </a>
                                 <ul class="dropdown-menu pull-right cart-dropdown-menu">
                                     <li>
                                         <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center"><a href="product.html"><img class="img-thumbnail" src="{{asset('kors-look/html.lionode.com/korslook/images/product/car3-70x92.jpg')}}" alt="img"></a></td>
-                                                    <td class="text-left"><a href="#">Black African Print Pencil Skirt</a></td>
-                                                    <td class="text-right quality">X1</td>
-                                                    <td class="text-right price-new">$254.00</td>
-                                                    <td class="text-center"><button type="button" title="Remove" class="btn btn-xs remove"><i class="fa fa-times"></i></button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center"><a href="product.html"><img class="img-thumbnail" src="{{asset('kors-look/html.lionode.com/korslook/images/product/car3-70x92.jpg')}}" alt="img"></a></td>
-                                                    <td class="text-left"><a href="#">Black African Print Pencil Skirt</a></td>
-                                                    <td class="text-right quality">X1</td>
-                                                    <td class="text-right price-new">$254.00</td>
-                                                    <td class="text-center"><button type="button" title="Remove" class="btn btn-xs remove"><i class="fa fa-times"></i></button></td>
-                                                </tr>
+                                            <tbody id="isikeranjang">
+
                                             </tbody>
                                         </table>
                                     </li>
                                     <li>
                                         <div class="minitotal">
-                                            <table class="table pricetotal">
+                                            <!-- <table class="table pricetotal">
                                                 <tbody>
                                                     <tr>
                                                         <td class="text-right"><strong>Sub-Total</strong></td>
@@ -233,7 +223,7 @@
                                                         <td class="text-right price-new">$254.00</td>
                                                     </tr>
                                                 </tbody>
-                                            </table>
+                                            </table> -->
                                             <div class="controls"> <a class="btn btn-primary pull-left" href="cart.html" id="view-cart"><i class="fa fa-shopping-cart"></i> View Cart </a> <a class="btn btn-primary pull-right" href="checkout.html" id="checkout"><i class="fa fa-share"></i> Checkout</a> </div>
                                         </div>
                                     </li>
@@ -422,9 +412,45 @@
     </div>
     <!-- jQuery (price shorting) -->
     @include('korslook-src.js')
+    <script type="text/javascript">
+        function keranjang(){
+            $.ajax({
+                url: "{{route('user.keranjangnotif')}}",
+                type: "GET",
+                data: {
+
+                },
+                success: function(response) {
+                    $("#jumlahkeranjang").empty();
+                    $("#isikeranjang").empty();
+                    if (response.keranjang.length == 0) {
+                        $("#jumlahkeranjang").append('Keranjang (' + response.keranjang.length + " )");
+                        $("#isikeranjang").html('<div class="text-center">ra ono barang e</div>');
+                    } else {
+                        $("#jumlahkeranjang").append('Keranjang (' + response.keranjang.length + " )");
+                        $.each(response.keranjang, function(k, v) {
+                            $("#isikeranjang").append(
+                                '<tr>' +
+                                '<td class="text-center"><a href="#"><img class="img-thumbnail" style="width:70px; height:92px;" src="'+ "{{asset('gambar_produk')}}/"+ v.idgambar_produk +'" alt="img"></a></td>' +
+                                '<td class="text-left"><a href="#">'+v.nama+'</a></td>' +
+                                '<td class="text-right quality"> X'+v.jumlah+'</td>' +
+                                '<td class="text-right price-new"> Rp. '+(v.harga * v.jumlah)+'</td>' +
+                                '</tr>'
+                            );
+                        });
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
+        }
+        $(document).ready(function() {
+            keranjang();
+        });
+    </script>
     @yield('anotherjs')
 
 </body>
 <!-- Mirrored from html.lionode.com/korslook/grid-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 07:00:32 GMT -->
-
 </html>

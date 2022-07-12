@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 09, 2022 at 04:44 AM
+-- Generation Time: Jul 12, 2022 at 05:02 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -112,9 +112,8 @@ CREATE TABLE `gambar_produk` (
 --
 
 INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`, `deleted_at`) VALUES
-('Evan_TracingBFS.jpg', '2022-07-08 08:21:40', '2022-07-08 20:33:59', 1, '2022-07-08 20:33:59'),
-('WhatsApp Image 2018-12-14 at 15.48.50(1).jpeg', '2022-07-08 20:29:51', '2022-07-08 20:29:51', 1, NULL),
-('WhatsApp Image 2020-10-27 at 08.25.32.jpeg', '2022-07-08 20:29:51', '2022-07-08 20:29:51', 1, NULL);
+('index.jpg', '2022-07-11 20:53:45', '2022-07-11 20:53:45', 1, NULL),
+('Logo-Ubaya-untuk-Watermark-v.1.jpg', '2022-07-11 20:55:30', '2022-07-11 20:55:30', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -149,6 +148,13 @@ CREATE TABLE `keranjang` (
   `produk_idproduk` int(11) NOT NULL,
   `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `keranjang`
+--
+
+INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
+(1, 1, '2');
 
 -- --------------------------------------------------------
 
@@ -735,15 +741,16 @@ CREATE TABLE `produk` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `toko_users_id` bigint(20) UNSIGNED NOT NULL
+  `toko_users_id` bigint(20) UNSIGNED NOT NULL,
+  `deskripsi` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`) VALUES
-(1, 'First Product', '1', 2, 2, '2022-07-08 08:21:40', '2022-07-08 20:29:25', NULL, 1);
+INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`) VALUES
+(1, 'First Product Gawr Gura', '25000', 2, 2, '2022-07-08 08:21:40', '2022-07-11 20:51:47', NULL, 1, 'Gura vtuber terbaik. Tidak semua vtuber bagus');
 
 -- --------------------------------------------------------
 

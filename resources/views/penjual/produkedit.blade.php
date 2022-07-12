@@ -41,10 +41,15 @@
                             <input type="text" class="form-control" name="nama" value="{{$produk->nama}}">
                         </div>
                         <div class="form-group">
+                            <label>Deskripsi <span class="required">*</span>
+                            </label>
+                            <textarea class="form-control" name="deskripsi" required>{{$produk->deskripsi}}</textarea>
+                        </div>
+                        <div class="form-group">
                             <label>Harga</label>
                             <input type="number" class="form-control" name="harga" value="{{$produk->harga}}">
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Kategori</label>
                             <div>

@@ -47,11 +47,12 @@
                                         <h4><a href="#">{{$produk->nama}}</a></h4>
                                     </div>
                                     <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> 15 Review(s) | <a href="#">Add Your Review </a> </div>
-                                    <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
+                                    <!-- <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div> -->
+                                    <div class="price"> <span class="price-new">IDR. {{number_format($produk->harga)}}</span> </div>
                                     <div class="stock"><span>In stock : </span>Availability </div>
-                                    <div class="products-code"> <span>Product Code :</span> Html5_sample1</div>
-                                    <div class="product-discription"><span>Description</span>
-                                        <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. </p>
+                                    <!-- <div class="products-code"> <span>Product Code :</span> Html5_sample1</div> -->
+                                    <div class="product-discription"><span>Deskripsi</span>
+                                        <p>{{$produk->deskripsi}}</p>
                                     </div>
                                     <!-- <div class="Sort-by">
                                         <label>Sort by</label>
@@ -287,6 +288,7 @@
             },
             success: function(response) {
                 if (response == "berhasil"){
+                    keranjang();
                     alert('berhasil menambahkan produk kedalam keranjang');
                 }else{
                     alert(response);

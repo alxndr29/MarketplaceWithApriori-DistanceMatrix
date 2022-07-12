@@ -40,6 +40,7 @@ class ProdukController extends Controller
             $produk->nama = $request->get('nama');
             $produk->etalase_produk_idetalase_produk = $request->get('etalase');
             $produk->kategori_idkategori = $request->get('kategori');
+            $produk->deskripsi = $request->get('deskripsi');
             $produk->toko_users_id = Auth::user()->id;
             $produk->harga = $request->get('harga'); 
             $produk->save();
@@ -94,6 +95,7 @@ class ProdukController extends Controller
             $produk->etalase_produk_idetalase_produk = $request->get('etalase');
             $produk->kategori_idkategori = $request->get('kategori');
             $produk->toko_users_id = Auth::user()->id;
+            $produk->deskripsi = $request->get('deskripsi');
             $produk->harga = $request->get('harga');
             $produk->save();
 
