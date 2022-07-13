@@ -16,6 +16,7 @@ class KeranjangController extends Controller
         $a = DB::table('keranjang')
             ->join('produk', 'produk.idproduk', '=', 'keranjang.produk_idproduk')
             ->join('toko', 'toko.users_id', '=', 'produk.toko_users_id')
+            ->where('keranjang.users_id', Auth::user()->id)
             ->select('produk.toko_users_id', 'toko.nama_toko')
             ->groupBy('produk.toko_users_id')
             ->get();
@@ -23,6 +24,7 @@ class KeranjangController extends Controller
         $b = DB::table('keranjang')
             ->join('produk', 'produk.idproduk', '=', 'keranjang.produk_idproduk')
             ->join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
+            ->where('keranjang.users_id', Auth::user()->id)
             ->select('keranjang.jumlah', 'gambar_produk.idgambar_produk', 'produk.nama', 'produk.idproduk', 'produk.harga', 'produk.toko_users_id')
             ->groupBy('produk.idproduk')
             ->get();
@@ -70,6 +72,7 @@ class KeranjangController extends Controller
             ->join('produk', 'produk.idproduk', '=', 'keranjang.produk_idproduk')
             ->join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
             ->select('keranjang.jumlah', 'gambar_produk.idgambar_produk', 'produk.nama', 'produk.harga')
+            ->where('keranjang.users_id', Auth::user()->id)
             ->groupBy('produk.idproduk')
             ->get();
         return response()->json([
@@ -79,7 +82,7 @@ class KeranjangController extends Controller
     public function destroy($id)
     {
         try {
-            DB::table('keranjang')->where('produk_idproduk', $id)->delete();
+            DB::table('keranjang')->where('keranjang.users_id', Auth::user()->id)->where('produk_idproduk', $id)->delete();
             return redirect()->back()->with('sukses', 'Berhasil hapus keranjang');
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', 'Gagal hapus keranjang');

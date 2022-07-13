@@ -446,7 +446,7 @@
                         $.each(response.keranjang, function(k, v) {
                             $("#isikeranjang").append(
                                 '<tr>' +
-                                '<td class="text-center"><a href="#"><img class="img-thumbnail" style="width:70px; height:92px;" src="' + "{{asset('gambar_produk')}}/" + v.idgambar_produk + '" alt="img"></a></td>' +
+                                '<td class="text-center"><a href="#"><img class="img-thumbnail" style="width:50px; height:50px;" src="' + "{{asset('gambar_produk')}}/" + v.idgambar_produk + '" alt="img"></a></td>' +
                                 '<td class="text-left"><a href="#">' + v.nama + '</a></td>' +
                                 '<td class="text-right quality"> X' + v.jumlah + '</td>' +
                                 '<td class="text-right price-new"> Rp. ' + (v.harga * v.jumlah) + '</td>' +

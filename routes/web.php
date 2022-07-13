@@ -56,5 +56,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/keranjang/store','pembeli\KeranjangController@store')->name('user.keranjangstore');
     Route::put('/keranjang/update/{id}','pembeli\KeranjangController@updateKeranjang')->name('user.keranjangupdte');
     Route::delete('/keranjang/delete/{id}', 'pembeli\KeranjangController@destroy')->name('user.keranjangdestroy');
+
+    //Alamat
+    Route::get('/alamat','pembeli\AlamatController@index')->name('user.alamat');
 });
 

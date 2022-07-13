@@ -1,0 +1,14 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+class Alamat extends Model
+{
+    //
+    use SoftDeletes;
+    protected $table = 'alamat';
+    protected $primaryKey = 'idalamat';
+    protected $dates = ['deleted_at'];
+}

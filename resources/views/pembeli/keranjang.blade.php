@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-md-9 col-xs-12">
                 <!-- left block Start  -->
-                
                 @foreach ($a as $key => $value)
                 <input type="radio" id="{{$value->toko_users_id}}" name="toko" value="{{$value->toko_users_id}}">
                 <label for="{{$value->toko_users_id}}">{{$value->nama_toko}}</label><br>
@@ -74,8 +73,6 @@
             </div>
             <div class="col-md-3 col-xs-12">
                 <br>
-                
-                
                 <!-- right block Start  -->
                 <div id="right">
                     <div class="sidebar-block">
@@ -88,24 +85,40 @@
                                     <table class="table" id="cart-summary">
                                         <tbody>
                                             <tr>
-                                                <td>Total products</td>
-                                                <td class="price">$125.05</td>
+                                                <td>Alamat</td>
+                                                <td class="price">
+                                                    <button type="button"> Pilih Alamat </button>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>Shipping</td>
-                                                <td class="price"><span class="success">Free shipping!</span></td>
+                                            <tr class="cart-total-price">
+                                                <td>Pengiriman</td>
+                                                <td class="price">
+                                                    <select name="cars" id="cars" class="form-control">
+                                                        <option value="volvo">Volvo</option>
+                                                        <option value="saab">Saab</option>
+                                                        <option value="mercedes">Mercedes</option>
+                                                        <option value="audi">Audi</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                             <tr class="cart-total-price ">
-                                                <td>Total (tax excl.)</td>
-                                                <td class="price">$125.05</td>
+                                                <td>Pembayaran</td>
+                                                <td class="price">
+                                                    <select name="cars" id="cars" class="form-control">
+                                                        <option value="volvo">Volvo</option>
+                                                        <option value="saab">Saab</option>
+                                                        <option value="mercedes">Mercedes</option>
+                                                        <option value="audi">Audi</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Total tax</td>
-                                                <td id="total-tax" class="price">$0.00</td>
+                                                <td>Total products</td>
+                                                <td class="price" id="total-products">IDR. 0</td>
                                             </tr>
                                             <tr>
                                                 <td> Total</td>
-                                                <td id="total-price">$125.05</td>
+                                                <td id="total-price">IDR. 0</td>
                                             </tr>
                                             <!-- <tr>
                                                 <td colspan="2">
@@ -131,7 +144,21 @@
 <br>
 @endsection
 @section('anotherjs')
-<script>
+<script type="text/javascript">
+    var totalSemua = 0;
 
+    $('input[type=radio][name=toko]').change(function() {
+        var total = 0;
+        console.log(this.value);
+        @foreach($b as $value)
+            if ("{{$value->toko_users_id}}" == this.value) {
+                total += parseInt("{{$value->harga}}");
+            }
+        @endforeach
+        console.log(total);
+        $("#total-products").html('IDR. ' + total);
+        totalSemua = total;
+        $("#total-price").html('IDR. ' + totalSemua);
+    });
 </script>
 @endsection

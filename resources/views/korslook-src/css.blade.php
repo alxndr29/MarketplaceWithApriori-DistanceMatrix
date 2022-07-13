@@ -17,3 +17,5 @@
 <link href="{{asset('kors-look/html.lionode.com/korslook/css/jquery-ui.css')}}" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('kors-look/html.lionode.com/korslook/css/smoothproducts.css')}}">
+
+<link href="{{asset('tambahan/datatables.min.css')}}" rel="stylesheet">
