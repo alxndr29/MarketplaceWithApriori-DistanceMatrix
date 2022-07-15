@@ -143,8 +143,8 @@
                                             <div class="price"> <span class="price-new">IDR. {{number_format($value->harga)}}</span> </div>
                                             <div class="product-hov">
                                                 <ul>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="addtocart"><a href="#">Delete</a></li>
+                                                    <li class="addtocart"><a href="{{route('user.wishlistaddToCart',$value->idproduk)}}">Add to Cart</a> </li>
+                                                    <li class="addtocart"><a href="{{route('user.wishlistdestroy',$value->idproduk)}}">Delete</a></li>
                                                 </ul>
                                                 <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
                                             </div>

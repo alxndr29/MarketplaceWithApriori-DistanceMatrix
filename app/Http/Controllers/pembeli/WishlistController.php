@@ -19,20 +19,45 @@ class WishlistController extends Controller
             ->select('gambar_produk.idgambar_produk', 'produk.nama', 'produk.idproduk', 'produk.harga', 'produk.toko_users_id')
             ->groupBy('produk.idproduk')
             ->paginate(10);
-        return view('pembeli.wishlist',compact('data'));
+        return view('pembeli.wishlist', compact('data'));
         return $data;
     }
-    public function store(Request $request)
-    { }
-    public function destroy($id)
-    { 
-        try{
-            return redirect()->back()->with('sukses', 'Berhasil hapus wishlist');
-        }catch(\Exception $e){
+    public function store($id)
+    {
+        try {
+            DB::table('wishlist')->updateOrInsert(
+                [
+                    'users_id' => Auth::user()->id,
+                    'produk_idproduk' => $id
+                ]
+            );
+            return redirect()->back()->with('sukses', 'Berhasil tambah ke wishlist');
+        } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
-    public function addToCart($id){
-
+    public function destroy($id)
+    {
+        try {
+            DB::table('wishlist')->where('users_id', Auth::user()->id)->where('produk_idproduk', $id)->delete();
+            return redirect()->back()->with('sukses', 'Berhasil hapus wishlist');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
+    }
+    public function addToCart($id)
+    {
+        try {
+            DB::table('keranjang')->updateOrInsert(
+                [
+                    'users_id' => Auth::user()->id,
+                    'produk_idproduk' => $id
+                ],
+                ['jumlah' => 1]
+            );
+            return redirect()->back()->with('sukses', 'Berhasil tambah ke keranjang');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
     }
 }

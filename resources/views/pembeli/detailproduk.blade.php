@@ -83,7 +83,7 @@
                                         <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
                                     </div>
                                     <ul class="add-links">
-                                        <li> <a class="add-to-wishlist" href="#"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
+                                        <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
                                         <!-- <li> <a class="link-compare" href="#"> <i class="fa fa-bar-chart"></i> Add to Compare </a></li> -->
                                     </ul>
                                 </div>
@@ -287,10 +287,10 @@
                 'idproduk': "{{$produk->idproduk}}"
             },
             success: function(response) {
-                if (response == "berhasil"){
+                if (response == "berhasil") {
                     keranjang();
                     alert('berhasil menambahkan produk kedalam keranjang');
-                }else{
+                } else {
                     alert(response);
                 }
             },
