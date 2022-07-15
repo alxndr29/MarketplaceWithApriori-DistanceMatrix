@@ -57,6 +57,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/keranjang/update/{id}','pembeli\KeranjangController@updateKeranjang')->name('user.keranjangupdte');
     Route::delete('/keranjang/delete/{id}', 'pembeli\KeranjangController@destroy')->name('user.keranjangdestroy');
 
+    //Wishlist
+    Route::get('/wishlist','pembeli\WishlistController@index')->name('user.wishlist');
+    Route::post('/wishlist/store','pembeli\WishlistController@store')->name('user.wishliststore');
+    Route::delete('/wishlist/destroy/{id}','pembeli\WishlistController@destroy')->name('user.wishlistdestroy');
+
     //Alamat
     Route::get('/alamat','pembeli\AlamatController@index')->name('user.alamat');
 });

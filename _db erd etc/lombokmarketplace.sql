@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 13, 2022 at 02:41 AM
+-- Generation Time: Jul 15, 2022 at 03:08 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -893,6 +893,25 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
 (2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_idproduk` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
+(1, 1),
+(1, 2);
+
 --
 -- Indexes for dumped tables
 --
@@ -1018,6 +1037,14 @@ ALTER TABLE `transaksi_has_produk`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_produk2_idx` (`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_users2_idx` (`users_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1148,6 +1175,13 @@ ALTER TABLE `transaksi`
 ALTER TABLE `transaksi_has_produk`
   ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `fk_users_has_produk_produk2` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_has_produk_users2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
