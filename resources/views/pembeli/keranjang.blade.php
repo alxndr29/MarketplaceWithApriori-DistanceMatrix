@@ -3,10 +3,10 @@
 <div id="cart-page-contain">
     <div class="container">
         <div class="row">
-            <div class="col-md-9 col-xs-12">
+            <div class="col-md-8 col-xs-12">
                 <!-- left block Start  -->
                 @foreach ($a as $key => $value)
-                <input type="radio" id="{{$value->toko_users_id}}" name="toko" value="{{$value->toko_users_id}}">
+                <input type="radio" id="{{$value->toko_users_id}}" name="toko" value="{{$value->toko_users_id}}|{{$value->latitude}}|{{$value->longitude}}">
                 <label for="{{$value->toko_users_id}}">{{$value->nama_toko}}</label><br>
                 <div class="cart-content table-responsive">
                     <table class="cart-table table-responsive" style="width:100%">
@@ -71,7 +71,7 @@
                 </div>
                 <!-- left block end  -->
             </div>
-            <div class="col-md-3 col-xs-12">
+            <div class="col-md-4 col-xs-12">
                 <br>
                 <!-- right block Start  -->
                 <div id="right">
@@ -87,28 +87,32 @@
                                             <tr>
                                                 <td>Alamat</td>
                                                 <td class="price">
-                                                    <button type="button"> Pilih Alamat </button>
+                                                    <!-- <button type="button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-alamat"> Pilih Alamat </button> -->
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="alamat">
+                                                            <option value="">Pilih</option>
+                                                            @foreach ($alamat as $key => $value)
+                                                            <option value="{{$value->idalamat}}|{{$value->latitude}}|{{$value->longitude}}">{{$value->nama_penerima}} {{$value->alamat_lengkap}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr class="cart-total-price">
                                                 <td>Pengiriman</td>
                                                 <td class="price">
-                                                    <select name="cars" id="cars" class="form-control">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
+                                                    <select name="pengiriman" id="pengiriman" class="form-control">
+                                                        <option value="" selected>Pilih</option>
+                                                        <option value="kurir_toko">Kurir Toko</option>
+                                                        <option value="ambil_sendiri">Ambil Sendiri</option>
                                                     </select>
                                                 </td>
                                             </tr>
                                             <tr class="cart-total-price ">
                                                 <td>Pembayaran</td>
                                                 <td class="price">
-                                                    <select name="cars" id="cars" class="form-control">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
+                                                    <select name="pembayaran" id="pembayaran" class="form-control">
+                                                        <option value="transfer">Transfer</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -117,17 +121,14 @@
                                                 <td class="price" id="total-products">IDR. 0</td>
                                             </tr>
                                             <tr>
+                                                <td>Total Ongkir</td>
+                                                <td class="price" id="total-ongkir">IDR. 0</td>
+                                            </tr>
+                                            <tr>
                                                 <td> Total</td>
                                                 <td id="total-price">IDR. 0</td>
                                             </tr>
-                                            <!-- <tr>
-                                                <td colspan="2">
-                                                    <div class="input-append couponForm">
-                                                        <input type="text" placeholder="Gift or Coupon code" id="appendedInputButton">
-                                                        <button type="button" class="col-lg-4 btn btn-success">Apply!</button>
-                                                    </div>
-                                                </td>
-                                            </tr> -->
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -142,23 +143,60 @@
     </div>
 </div>
 <br>
+
 @endsection
 @section('anotherjs')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&libraries=&v=weekly" async></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     var totalSemua = 0;
-
+    var o;
+    var d;
+    var ongkir = 0;
     $('input[type=radio][name=toko]').change(function() {
         var total = 0;
-        console.log(this.value);
         @foreach($b as $value)
-            if ("{{$value->toko_users_id}}" == this.value) {
-                total += parseInt("{{$value->harga}}");
-            }
+        if ("{{$value->toko_users_id}}" == this.value.split("|")[0]) {
+            total += parseInt("{{$value->harga}}");
+            console.log(this.value.split("|")[0]);
+        }
         @endforeach
         console.log(total);
         $("#total-products").html('IDR. ' + total);
         totalSemua = total;
         $("#total-price").html('IDR. ' + totalSemua);
+        o = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
+        initMap(o, d);
     });
+
+    $("#alamat").change(function() {
+        d = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
+        initMap(o, d);
+        alert(d);
+    });
+
+    function initMap(origin, destination) {
+        const service = new google.maps.DistanceMatrixService(); // instantiate Distance Matrix service
+        const matrixOptions = {
+            origins: [origin], // technician locations
+            destinations: [destination], // customer address
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.METRIC
+        };
+        // Call Distance Matrix service
+        service.getDistanceMatrix(matrixOptions, callback);
+        // Callback function used to process Distance Matrix response
+        function callback(response, status) {
+            if (status !== "OK") {
+                alert("Error with distance matrix");
+                return;
+            }
+            console.log(response);
+            console.log(response.rows[0].elements[0].distance.value);
+            onkir = response.rows[0].elements[0].distance.value * 500;
+            $("#total-price").html('IDR. ' + (totalSemua + onkir));
+            $("#total-ongkir").html(response.rows[0].elements[0].distance.value + " km * 500perak " + (response.rows[0].elements[0].distance.value * 500));
+        }
+    }
 </script>
 @endsection

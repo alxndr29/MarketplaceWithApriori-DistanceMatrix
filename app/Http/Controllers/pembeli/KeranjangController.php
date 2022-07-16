@@ -7,17 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Produk;
+use App\Alamat;
 
 class KeranjangController extends Controller
 {
     //
     public function index()
     {
+        $alamat = Alamat::where('users_id', Auth::user()->id)->get();
         $a = DB::table('keranjang')
             ->join('produk', 'produk.idproduk', '=', 'keranjang.produk_idproduk')
             ->join('toko', 'toko.users_id', '=', 'produk.toko_users_id')
             ->where('keranjang.users_id', Auth::user()->id)
-            ->select('produk.toko_users_id', 'toko.nama_toko')
+            ->select('produk.toko_users_id', 'toko.nama_toko','toko.latitude','toko.longitude')
             ->groupBy('produk.toko_users_id')
             ->get();
         //return $a;
@@ -29,7 +31,7 @@ class KeranjangController extends Controller
             ->groupBy('produk.idproduk')
             ->get();
         //return $b;
-        return view('pembeli.keranjang', compact('a', 'b'));
+        return view('pembeli.keranjang', compact('a', 'b', 'alamat'));
     }
     public function updateKeranjang(Request $request, $id)
     {

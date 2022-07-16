@@ -17,13 +17,15 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', function () {
     $client = new GuzzleHttp\Client();
-    $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Washington%2C%20DC&destinations=New%20York%20City%2C%20NY&units=imperial&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
+    //$request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Washington%2C%20DC&destinations=New%20York%20City%2C%20NY&units=imperial&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
+    $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=42.9814292,-70.9477546&destinations=51.5073509,-0.1277583&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $promise = $client->sendAsync($request)->then(function ($response) {
         echo 'I completed! ' . $response->getBody();
     });
     $promise->wait();
     return view('welcome');
 });
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -75,4 +77,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/alamat/edit/{id}', 'pembeli\AlamatController@edit')->name('user.alamatedit');
     Route::put('/alamat/update/{id}', 'pembeli\AlamatController@update')->name('user.alamatupdate');
     Route::delete('/alamat/edit/{id}', 'pembeli\AlamatController@destroy')->name('user.alamatdelete');
+
+    // Search
+    Route::get('/search', 'pembeli\SearchController@index');
 });
+
+Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');

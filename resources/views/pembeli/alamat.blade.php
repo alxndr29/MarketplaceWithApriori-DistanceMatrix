@@ -174,25 +174,8 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        
-        const service = new google.maps.DistanceMatrixService(); // instantiate Distance Matrix service
-        const matrixOptions = {
-            origins: ["41.8848274,-87.6320859", "41.878729,-87.6301087", "41.8855277,-87.6440611"], // technician locations
-            destinations: ["233 S Wacker Dr, Chicago, IL 60606"], // customer address
-            travelMode: 'DRIVING',
-            unitSystem: google.maps.UnitSystem.IMPERIAL
-        };
-        // Call Distance Matrix service
-        service.getDistanceMatrix(matrixOptions, callback);
 
-        // Callback function used to process Distance Matrix response
-        function callback(response, status) {
-            if (status !== "OK") {
-                alert("Error with distance matrix");
-                return;
-            }
-            console.log(response);
-        }
+
         //$('#exampleModalCenter').modal('show');
         $('#latitude').val('-8.5876173');
         $('#longitude').val('116.0815738');
@@ -299,7 +282,25 @@
         });
 
 
-
+        const service = new google.maps.DistanceMatrixService(); // instantiate Distance Matrix service
+        const matrixOptions = {
+            origins: ["-8.843302480931007, 121.64994834964395"], // technician locations
+            destinations: ["-8.83272376817757, 121.67776481254928"], // customer address
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.IMPERIAL
+        };
+        // Call Distance Matrix service
+        service.getDistanceMatrix(matrixOptions, callback);
+        // Callback function used to process Distance Matrix response
+        function callback(response, status) {
+            if (status !== "OK") {
+                alert("Error with distance matrix");
+                return;
+            }
+            console.log(response);
+        }
     }
 </script>
+
+
 @endsection
