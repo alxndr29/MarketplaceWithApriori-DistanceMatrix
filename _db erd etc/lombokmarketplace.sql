@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 15, 2022 at 03:08 AM
+-- Generation Time: Jul 16, 2022 at 05:04 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -35,8 +35,20 @@ CREATE TABLE `alamat` (
   `created_at` varchar(45) DEFAULT NULL,
   `updated_at` varchar(45) DEFAULT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
-  `kotakabupaten_idkotakabupaten` int(11) NOT NULL
+  `kotakabupaten_idkotakabupaten` int(11) NOT NULL,
+  `longitude` varchar(45) DEFAULT NULL,
+  `telepon` varchar(45) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `provinsi_idprovinsi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `alamat`
+--
+
+INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
+(1, 'Jln. Sultan Hassanudin', 'Richardo Hartanto', '-8.578725106091214', '2022-07-16 01:26:38', '2022-07-16 01:26:38', 1, 122, '116.08215547238801', '08776127', NULL, 23),
+(2, 'kk', 'Ev', '-5.236563859412162', '2022-07-16 03:06:33', '2022-07-16 03:06:33', 1, 254, '119.46130396479317', '123', NULL, 28);
 
 -- --------------------------------------------------------
 
@@ -838,7 +850,7 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `telepon`, `latitude`, `longitude`, `created_at`, `updated_at`, `kotakabupaten_idkotakabupaten`) VALUES
-(1, 'Toko Barett', 'hello world', 1, 'asdasdasda', '123123', '-8.844183', '121.667746', NULL, '2022-07-12 10:23:45', 241),
+(1, 'Toko Barett', 'hello world', 1, 'asdasdasda', '123123', '-8.589259394724797', '116.13002335887123', NULL, '2022-07-15 19:10:18', 241),
 (2, 'Teratai Cookies', 'Menjual kue khas makkasar', 1, 'Komplek catalia', '0813', '-8.843257601381023', '121.65381767079468', '2022-07-12 11:32:46', '2022-07-12 11:33:20', 241);
 
 -- --------------------------------------------------------
@@ -922,7 +934,8 @@ INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
 ALTER TABLE `alamat`
   ADD PRIMARY KEY (`idalamat`),
   ADD KEY `fk_alamat_users1_idx` (`users_id`),
-  ADD KEY `fk_alamat_kotakabupaten1_idx` (`kotakabupaten_idkotakabupaten`);
+  ADD KEY `fk_alamat_kotakabupaten1_idx` (`kotakabupaten_idkotakabupaten`),
+  ADD KEY `fk_alamat_provinsi1_idx` (`provinsi_idprovinsi`);
 
 --
 -- Indexes for table `chat`
@@ -1051,6 +1064,12 @@ ALTER TABLE `wishlist`
 --
 
 --
+-- AUTO_INCREMENT for table `alamat`
+--
+ALTER TABLE `alamat`
+  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
@@ -1107,6 +1126,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `alamat`
   ADD CONSTRAINT `fk_alamat_kotakabupaten1` FOREIGN KEY (`kotakabupaten_idkotakabupaten`) REFERENCES `kotakabupaten` (`idkotakabupaten`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_alamat_provinsi1` FOREIGN KEY (`provinsi_idprovinsi`) REFERENCES `provinsi` (`idprovinsi`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_alamat_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
