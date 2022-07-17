@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 16, 2022 at 05:04 AM
+-- Generation Time: Jul 17, 2022 at 03:04 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -169,8 +169,6 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
-(1, 1, '1'),
-(1, 2, '1'),
 (1, 3, '1');
 
 -- --------------------------------------------------------
@@ -828,6 +826,28 @@ INSERT INTO `provinsi` (`idprovinsi`, `nama`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rating`
+--
+
+CREATE TABLE `rating` (
+  `idrating` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_idproduk` int(11) NOT NULL,
+  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`idrating`, `users_id`, `produk_idproduk`, `komen`, `jumlah`) VALUES
+(1, 2, 1, NULL, '3'),
+(2, 2, 1, NULL, '5');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `toko`
 --
 
@@ -1021,6 +1041,14 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`idprovinsi`);
 
 --
+-- Indexes for table `rating`
+--
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`idrating`,`users_id`,`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_produk3_idx` (`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_users3_idx` (`users_id`);
+
+--
 -- Indexes for table `toko`
 --
 ALTER TABLE `toko`
@@ -1106,6 +1134,12 @@ ALTER TABLE `produk`
   MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `rating`
+--
+ALTER TABLE `rating`
+  MODIFY `idrating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -1174,6 +1208,13 @@ ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_etalase_produk1` FOREIGN KEY (`etalase_produk_idetalase_produk`) REFERENCES `etalase_produk` (`idetalase_produk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_idkategori`) REFERENCES `kategori` (`idkategori`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `fk_users_has_produk_produk3` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_has_produk_users3` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `toko`

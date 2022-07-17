@@ -46,10 +46,14 @@
                                     <div class="product-name">
                                         <h4><a href="#">{{$produk->nama}}</a></h4>
                                     </div>
-                                    <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> 15 Review(s) | <a href="#">Add Your Review </a> </div>
+                                    <div class="review">
+                                        <span class="rate">
+                                            @for($i = 0; $i < $avg; $i++) <i class="fa fa-star rated"></i>
+                                                @endfor
+                                        </span> {{$avg}} Review(s) | <a href="#">Add Your Review </a> </div>
                                     <!-- <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div> -->
                                     <div class="price"> <span class="price-new">IDR. {{number_format($produk->harga)}}</span> </div>
-                                    <div class="stock"><span>In stock : </span>Availability </div>
+                                    <div class="stock"><span>In stock : </span> {{$produk->stok}} Pcs.</div>
                                     <!-- <div class="products-code"> <span>Product Code :</span> Html5_sample1</div> -->
                                     <div class="product-discription"><span>Deskripsi</span>
                                         <p>{{$produk->deskripsi}}</p>
@@ -117,7 +121,26 @@
                                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</div>
                                             </li>
                                             <li>
-                                                <div class="items-Reviews ">masghrgjhgjr jh mahendra kathiriya shibhavadla lashkar</div>
+                                                <div class="items-Reviews ">
+                                                    <div class="comments-area">
+                                                        <h4>Comments<span>(2)</span></h4>
+                                                        <ul class="comment-list ">
+                                                            <li>
+                                                                <div class="comment-user"> <img src="{{asset('kors-look\html.lionode.com\korslook\images\comment-user.jpg')}}" alt="further"> </div>
+                                                                <div class="comment-detail">
+                                                                    <h6>John Doe</h6>
+                                                                    <div class="post-info">
+                                                                        <ul>
+                                                                            <li>Fab 11, 2016</li>
+                                                                        </ul>
+
+                                                                    </div>
+                                                                    <!-- <p>Consectetur adipiscing elit integer sit amet augue laoreet maximus nuncac.</p> -->
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>

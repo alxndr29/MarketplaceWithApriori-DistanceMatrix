@@ -125,8 +125,12 @@ class ProdukController extends Controller
     public function detail($id){
         $produk = Produk::where('idproduk',$id)->first();
         // return $produk;
+        // $avg = Produk::join('rating','rating.produk_idproduk','=','produk.idproduk')->select(DB::raw("ROUND(AVG(rating.jumlah)) as rating"))->first();
+        $avg = DB::table('rating')->where('produk_idproduk',$id)->avg('jumlah');
+        //  return $avg;
+        // return $avg;
         $gambar_produk = GambarProduk::where('produk_idproduk',$id)->get();
         // return $gambar_produk;
-        return view('pembeli.detailproduk',compact('produk','gambar_produk'));
+        return view('pembeli.detailproduk',compact('produk','gambar_produk','avg'));
     }
 }

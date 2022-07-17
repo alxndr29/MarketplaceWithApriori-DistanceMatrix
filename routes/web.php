@@ -18,12 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $client = new GuzzleHttp\Client();
     //$request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Washington%2C%20DC&destinations=New%20York%20City%2C%20NY&units=imperial&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
-    $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=42.9814292,-70.9477546&destinations=51.5073509,-0.1277583&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
+    //$request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=42.9814292%2C-70.9477546&destinations=51.5073509%2C-0.1277583&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
+    $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=-8.848198553520579%2C121.6637660808329&destinations=-8.832836631765579%2C121.67777565447375&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $promise = $client->sendAsync($request)->then(function ($response) {
-        echo 'I completed! ' . $response->getBody();
+         echo ($response->getBody());
     });
     $promise->wait();
-    return view('welcome');
+    //return view('welcome');
 });
 
 Auth::routes();

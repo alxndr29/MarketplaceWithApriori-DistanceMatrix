@@ -89,17 +89,17 @@
             <div class="col-md-9 col-sm-8">
                 <!-- right block Start  -->
                 <div id="right">
-                    <div class="category-banner"> <a href="#"><img src="{{asset('kors-look/html.lionode.com/korslook/images/product/Category-banner.jpg')}}" alt="#"></a> </div>
+                    <!-- <div class="category-banner"> <a href="#"><img src="{{asset('kors-look/html.lionode.com/korslook/images/product/Category-banner.jpg')}}" alt="#"></a> </div> -->
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="view">
+                            <!-- <div class="view">
                                 <div class="grid active "><a href="grid-view.html">
                                         <div class="grid-icon "></div>
                                     </a> </div>
                                 <div class="list"><a href="list-view.html">
                                         <div class="list-icon "></div>
                                     </a> </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-md-6">
                             <div class="shoring pull-right">
@@ -116,7 +116,7 @@
                                         </select>
                                         <span class="fa fa-angle-down"></span> </div>
                                 </div>
-                                <div class="show-item">
+                                <!-- <div class="show-item">
                                     <p>Show</p>
                                     <div class="select-item">
                                         <select>
@@ -125,180 +125,43 @@
                                             <option value="">6</option>
                                         </select>
                                         <span class="fa fa-angle-down"></span> </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                     <div class="product-grid-view">
                         <ul>
+                            @foreach ($produk as $value)
                             <li>
                                 <div class="item col-md-4 col-sm-6 col-xs-6">
                                     <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
+                                        <div class="image"> <a href="#"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:281px; height:300px;"></a> </div>
                                         <div class="product-details">
                                             <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
+                                                <h4><a href="#">{{$value->nama}} </a></h4>
                                             </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
+                                            <div class="price"> <span class="price-new">IDR. {{number_format($value->harga)}}</span> </div>
                                             <div class="product-hov">
                                                 <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
+                                                    <li class="addtocart"><a href="{{route('user.wishlistaddToCart',$value->idproduk)}}">Add to Cart</a> </li>
+                                                    <li class="addtocart"><a href="{{route('user.produkdetail',$value->idproduk)}}">Detail</a></li>
+                                                    <!-- <li class="compare"><a href="#"></a></li> -->
                                                 </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
+                                                <div class="review">
+                                                    <span class="rate">
+                                                        @for($i = 0; $i < $value->rating; $i++) 
+                                                        <i class="fa fa-star rated"></i>
+                                                        @endfor
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-block ">
-                                        <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('kors-look/html.lionode.com/korslook/images/product/1prod281x366.jpg')}}"></a> </div>
-                                        <div class="product-details">
-                                            <div class="product-name">
-                                                <h4><a href="product-detail-view.html">Black African Print Pencil Skirt </a></h4>
-                                            </div>
-                                            <div class="price"> <span class="price-old">$123.20</span> <span class="price-new">$14.99</span> </div>
-                                            <div class="product-hov">
-                                                <ul>
-                                                    <li class="wish"><a href="#"></a></li>
-                                                    <li class="addtocart"><a href="#">Add to Cart</a> </li>
-                                                    <li class="compare"><a href="#"></a></li>
-                                                </ul>
-                                                <div class="review"> <span class="rate"> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star rated"></i> <i class="fa fa-star"></i> </span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                            @endforeach
+
+
                         </ul>
                     </div>
                 </div>
