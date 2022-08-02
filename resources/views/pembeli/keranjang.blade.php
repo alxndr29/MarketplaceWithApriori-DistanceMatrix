@@ -134,7 +134,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="checkout"> <a href="checkout.html" title="checkout" class="btn btn-default ">Proceed to checkout</a> </div>
+                        <div class="checkout">
+                            <button type="button" title="checkout" id="btncheckout" class="btn btn-default ">Proceed to checkout</button>
+                        </div>
                     </div>
                 </div>
                 <!-- left block end  -->
@@ -153,12 +155,14 @@
     var o;
     var d;
     var ongkir = 0;
+    var idtoko = 0;
     $('input[type=radio][name=toko]').change(function() {
         var total = 0;
         @foreach($b as $value)
         if ("{{$value->toko_users_id}}" == this.value.split("|")[0]) {
             total += parseInt("{{$value->harga}}");
             console.log(this.value.split("|")[0]);
+            idtoko = this.value.split("|")[0];
         }
         @endforeach
         console.log(total);
@@ -198,5 +202,25 @@
             $("#total-ongkir").html(response.rows[0].elements[0].distance.value + " km * 500perak " + (response.rows[0].elements[0].distance.value * 500));
         }
     }
+
+    $("#btncheckout").on("click", function() {
+        $.ajax({
+            url: "{{route('user.transaksistore')}}",
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'idtoko': idtoko,
+                'alamat': $("#alamat").val(),
+                'pengiriman': $("#pengiriman").val().split("|")[0],
+                'pembayaran': $("#pembayaran").val()
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    });
 </script>
 @endsection

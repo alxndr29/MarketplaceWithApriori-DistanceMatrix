@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi extends Model
 {
     //
-    protected $table = 'toko';
-    protected $primaryKey = 'users_id';
+    protected $table = 'transaksi';
+    protected $primaryKey = 'idtransaksi';
 }

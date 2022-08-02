@@ -168,7 +168,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3 header-left">
-                            <div class="logo"> <a href="#"><img src="{{asset('kors-look/html.lionode.com/korslook/images/logo.png')}}" alt="#"></a> </div>
+                            <div class="logo"> <a href="{{route('home')}}"><img src="{{asset('kors-look/html.lionode.com/korslook/images/logo.png')}}" alt="#"></a> </div>
                         </div>
                         <div class="col-md-6 search_block">
                             <div class="search">
@@ -183,8 +183,8 @@
                                             <option class="computer">Electronics</option>
                                         </select>
                                         <span class="fa fa-angle-down"></span> </div>
-                                    <input type="text" placeholder="Search...">
-                                    <button type="submit" class="btn submit"> <span class="fa fa-search"></span></button>
+                                    <input type="text" placeholder="Search..." id="txtsearch">
+                                    <button type="button" id="btnsearchatas" class="btn submit"> <span class="fa fa-search"></span></button>
                                 </form>
                             </div>
                         </div>
@@ -427,6 +427,12 @@
         @if(Session::has('gagal'))
         alert("{{Session::get('gagal')}}");
         @endif
+
+        $("#btnsearchatas").click(function() {
+
+            //alert('hello world!');
+            window.location.href = "{{url('')}}" + "/search?" + "filter=" + $("#txtsearch").val();
+        });
 
         function keranjang() {
             $.ajax({

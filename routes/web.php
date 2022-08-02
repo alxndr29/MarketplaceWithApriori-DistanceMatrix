@@ -81,6 +81,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Search
     Route::get('/search', 'pembeli\SearchController@index');
+
+    //Transaksi
+
+    Route::get('/transaksi', 'pembeli\TransaksiController@index')->name('user.transaksi');
+    Route::post('/transaksi/store','pembeli\TransaksiController@store')->name('user.transaksistore');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');

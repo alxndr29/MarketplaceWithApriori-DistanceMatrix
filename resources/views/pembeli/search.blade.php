@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <div class="page-title">
-                    <h4>Woman</h4>
+                    <h4>Pencarian Produk: {{$filter}}</h4>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-9">
@@ -31,25 +31,63 @@
                     <div class="sidebar-block">
                         <div class="sidebar-widget Category-block">
                             <div class="sidebar-title">
-                                <h4> Categories</h4>
+                                <h4> Filter</h4>
                             </div>
                             <ul class="title-toggle">
-                                <li><a href="grid-view.html">Clothing</a></li>
-                                <li><a href="grid-view.html">Shoes</a></li>
-                                <li><a href="grid-view.html">Jewellery</a></li>
-                                <li><a href="grid-view.html">Home & Furniture</a></li>
-                                <li><a href="grid-view.html">Bags</a></li>
-                                <li><a href="grid-view.html">Accessories</a></li>
+                                <li>
+                                    <p> Kategori: </p>
+                                    <select id="kategori">
+                                        <option value="" selected="selected">All</option>
+                                        @foreach ($datakategori as $value)
+                                        @if ($kategori != null && $kategori == $value->idkategori)
+                                        <option value="{{$value->idkategori}}" selected="selected">{{$value->nama}}</option>
+                                        @else
+                                        <option value="{{$value->idkategori}}">{{$value->nama}}</option>
+                                        @endif
+
+                                        @endforeach
+                                    </select>
+                                </li>
+                                <li>
+                                    <p> Order By: </p>
+                                    <select id="order">
+                                        @if($order == null)
+                                            <option value="asc" selected="selected">Ascending</option>
+                                            <option value="desc">Descending</option>
+                                        @elseif ($order == "asc")
+                                            <option value="asc" selected="selected">Ascending</option>
+                                            <option value="desc">Descending</option>
+                                        @else
+                                            <option value="asc">Ascending</option>
+                                            <option value="desc" selected="selected">Descending</option>
+                                        @endif
+                                    </select>
+                                </li>
+                                <li>
+                                    <p> Min Rating: </p>
+                                    <select id="rating">
+                                        <option value="all" selected="selected">Semua</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <br>
+                                    <button type="button" id="btnsearch"> Cari </button>
+                                </li>
                             </ul>
                         </div>
-                        <div class="sidebar-widget Price-range">
+                        <!-- <div class="sidebar-widget Price-range">
                             <div class="sidebar-title">
                                 <label for="amount">Price range:</label>
                                 <input type="text" id="amount" readonly style="border:0; color:#4d90fe; font-weight:bold;">
                                 <div id="slider-range"></div>
                             </div>
-                        </div>
-                        <div class="sidebar-widget Shop-by-block">
+                        </div> -->
+                        <!-- <div class="sidebar-widget Shop-by-block">
                             <div class="sidebar-title">
                                 <h4>Shop by</h4>
                             </div>
@@ -80,8 +118,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
-
+                        </div> -->
                     </div>
                 </div>
                 <!-- left block end  -->
@@ -149,9 +186,9 @@
                                                 </ul>
                                                 <div class="review">
                                                     <span class="rate">
-                                                        @for($i = 0; $i < $value->rating; $i++) 
-                                                        <i class="fa fa-star rated"></i>
-                                                        @endfor
+                                                        @for($i = 0; $i < $value->rating; $i++)
+                                                            <i class="fa fa-star rated"></i>
+                                                            @endfor
                                                     </span>
                                                 </div>
                                             </div>
@@ -196,6 +233,13 @@
         });
         $("#amount").val("$" + $("#slider-range").slider("values", 0) +
             " - $" + $("#slider-range").slider("values", 1));
+    });
+    $(document).ready(function() {
+        $("#txtsearch").val('{{$filter}}');
+    });
+    $("#btnsearch").click(function() {
+        //alert('hello world!');
+        window.location.href = "{{url('')}}" + "/search?" + "kategori=" + $("#kategori").val() + "&order=" + $("#order").val() + "&rating=" + $("#rating").val() + "&filter=" + $("#txtsearch").val();
     });
 </script>
 @endsection

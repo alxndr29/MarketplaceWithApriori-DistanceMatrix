@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 17, 2022 at 03:04 PM
--- Server version: 5.7.33
--- PHP Version: 7.4.19
+-- Waktu pembuatan: 02 Agu 2022 pada 04.33
+-- Versi server: 5.7.33
+-- Versi PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alamat`
+-- Struktur dari tabel `alamat`
 --
 
 CREATE TABLE `alamat` (
@@ -43,7 +43,7 @@ CREATE TABLE `alamat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `alamat`
+-- Dumping data untuk tabel `alamat`
 --
 
 INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
@@ -53,7 +53,7 @@ INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat`
+-- Struktur dari tabel `chat`
 --
 
 CREATE TABLE `chat` (
@@ -69,7 +69,7 @@ CREATE TABLE `chat` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `etalase_produk`
+-- Struktur dari tabel `etalase_produk`
 --
 
 CREATE TABLE `etalase_produk` (
@@ -82,7 +82,7 @@ CREATE TABLE `etalase_produk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `etalase_produk`
+-- Dumping data untuk tabel `etalase_produk`
 --
 
 INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -94,7 +94,7 @@ INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -109,7 +109,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gambar_produk`
+-- Struktur dari tabel `gambar_produk`
 --
 
 CREATE TABLE `gambar_produk` (
@@ -121,7 +121,7 @@ CREATE TABLE `gambar_produk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `gambar_produk`
+-- Dumping data untuk tabel `gambar_produk`
 --
 
 INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `produk_idproduk`, `deleted_at`) VALUES
@@ -133,7 +133,7 @@ INSERT INTO `gambar_produk` (`idgambar_produk`, `created_at`, `updated_at`, `pro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kategori`
+-- Struktur dari tabel `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -145,7 +145,7 @@ CREATE TABLE `kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `kategori`
+-- Dumping data untuk tabel `kategori`
 --
 
 INSERT INTO `kategori` (`idkategori`, `nama`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -155,7 +155,7 @@ INSERT INTO `kategori` (`idkategori`, `nama`, `created_at`, `updated_at`, `delet
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keranjang`
+-- Struktur dari tabel `keranjang`
 --
 
 CREATE TABLE `keranjang` (
@@ -165,16 +165,18 @@ CREATE TABLE `keranjang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `keranjang`
+-- Dumping data untuk tabel `keranjang`
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
+(1, 1, '1'),
+(1, 2, '1'),
 (1, 3, '1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kotakabupaten`
+-- Struktur dari tabel `kotakabupaten`
 --
 
 CREATE TABLE `kotakabupaten` (
@@ -187,7 +189,7 @@ CREATE TABLE `kotakabupaten` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `kotakabupaten`
+-- Dumping data untuk tabel `kotakabupaten`
 --
 
 INSERT INTO `kotakabupaten` (`idkotakabupaten`, `nama`, `created_at`, `updated_at`, `provinsi_idprovinsi`, `kodepos`) VALUES
@@ -696,7 +698,7 @@ INSERT INTO `kotakabupaten` (`idkotakabupaten`, `nama`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `midtrans`
+-- Struktur dari tabel `midtrans`
 --
 
 CREATE TABLE `midtrans` (
@@ -711,7 +713,7 @@ CREATE TABLE `midtrans` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -721,7 +723,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -732,7 +734,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -744,7 +746,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
@@ -762,7 +764,7 @@ CREATE TABLE `produk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `produk`
+-- Dumping data untuk tabel `produk`
 --
 
 INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`, `stok`) VALUES
@@ -773,7 +775,7 @@ INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_pro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `provinsi`
+-- Struktur dari tabel `provinsi`
 --
 
 CREATE TABLE `provinsi` (
@@ -784,7 +786,7 @@ CREATE TABLE `provinsi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `provinsi`
+-- Dumping data untuk tabel `provinsi`
 --
 
 INSERT INTO `provinsi` (`idprovinsi`, `nama`, `created_at`, `updated_at`) VALUES
@@ -826,7 +828,7 @@ INSERT INTO `provinsi` (`idprovinsi`, `nama`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rating`
+-- Struktur dari tabel `rating`
 --
 
 CREATE TABLE `rating` (
@@ -838,7 +840,7 @@ CREATE TABLE `rating` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `rating`
+-- Dumping data untuk tabel `rating`
 --
 
 INSERT INTO `rating` (`idrating`, `users_id`, `produk_idproduk`, `komen`, `jumlah`) VALUES
@@ -848,7 +850,7 @@ INSERT INTO `rating` (`idrating`, `users_id`, `produk_idproduk`, `komen`, `jumla
 -- --------------------------------------------------------
 
 --
--- Table structure for table `toko`
+-- Struktur dari tabel `toko`
 --
 
 CREATE TABLE `toko` (
@@ -866,7 +868,7 @@ CREATE TABLE `toko` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `toko`
+-- Dumping data untuk tabel `toko`
 --
 
 INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `telepon`, `latitude`, `longitude`, `created_at`, `updated_at`, `kotakabupaten_idkotakabupaten`) VALUES
@@ -876,33 +878,55 @@ INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `t
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `transaksi`
 --
 
 CREATE TABLE `transaksi` (
   `idtransaksi` int(11) NOT NULL,
-  `tanggal` varchar(45) DEFAULT NULL,
+  `tanggal` datetime DEFAULT CURRENT_TIMESTAMP,
   `toko_users_id` bigint(20) UNSIGNED NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `alamat_idalamat` int(11) NOT NULL,
+  `pembayaran` varchar(45) DEFAULT NULL,
+  `pengiriman` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `transaksi`
+--
+
+INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
+(3, '2022-08-02 12:20:57', 1, 1, '2022-08-01 20:20:57', '2022-08-01 20:20:57', 45000, 2, 'transfer', 'ambil_sendiri', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi_has_produk`
+-- Struktur dari tabel `transaksi_has_produk`
 --
 
 CREATE TABLE `transaksi_has_produk` (
   `transaksi_idtransaksi` int(11) NOT NULL,
-  `produk_idproduk` int(11) NOT NULL
+  `produk_idproduk` int(11) NOT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `transaksi_has_produk`
+--
+
+INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
+(3, 1, 25000, 1),
+(3, 2, 20000, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -918,7 +942,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
@@ -928,7 +952,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wishlist`
+-- Struktur dari tabel `wishlist`
 --
 
 CREATE TABLE `wishlist` (
@@ -937,7 +961,7 @@ CREATE TABLE `wishlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `wishlist`
+-- Dumping data untuk tabel `wishlist`
 --
 
 INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
@@ -949,7 +973,7 @@ INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
 --
 
 --
--- Indexes for table `alamat`
+-- Indeks untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
   ADD PRIMARY KEY (`idalamat`),
@@ -958,7 +982,7 @@ ALTER TABLE `alamat`
   ADD KEY `fk_alamat_provinsi1_idx` (`provinsi_idprovinsi`);
 
 --
--- Indexes for table `chat`
+-- Indeks untuk tabel `chat`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`idchat`),
@@ -966,33 +990,33 @@ ALTER TABLE `chat`
   ADD KEY `fk_chat_users2_idx` (`users_id1`);
 
 --
--- Indexes for table `etalase_produk`
+-- Indeks untuk tabel `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
   ADD PRIMARY KEY (`idetalase_produk`),
   ADD KEY `fk_etalase_produk_toko1_idx` (`toko_users_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `gambar_produk`
+-- Indeks untuk tabel `gambar_produk`
 --
 ALTER TABLE `gambar_produk`
   ADD PRIMARY KEY (`idgambar_produk`),
   ADD KEY `fk_gambar_produk_produk1_idx` (`produk_idproduk`);
 
 --
--- Indexes for table `kategori`
+-- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`idkategori`);
 
 --
--- Indexes for table `keranjang`
+-- Indeks untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
   ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
@@ -1000,33 +1024,33 @@ ALTER TABLE `keranjang`
   ADD KEY `fk_users_has_produk_users1_idx` (`users_id`);
 
 --
--- Indexes for table `kotakabupaten`
+-- Indeks untuk tabel `kotakabupaten`
 --
 ALTER TABLE `kotakabupaten`
   ADD PRIMARY KEY (`idkotakabupaten`),
   ADD KEY `fk_kotakabupaten_provinsi1_idx` (`provinsi_idprovinsi`);
 
 --
--- Indexes for table `midtrans`
+-- Indeks untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
   ADD PRIMARY KEY (`idmidtrans`),
   ADD KEY `fk_midtrans_transaksi1_idx` (`transaksi_idtransaksi`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`idproduk`),
@@ -1035,13 +1059,13 @@ ALTER TABLE `produk`
   ADD KEY `fk_produk_toko1_idx` (`toko_users_id`);
 
 --
--- Indexes for table `provinsi`
+-- Indeks untuk tabel `provinsi`
 --
 ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`idprovinsi`);
 
 --
--- Indexes for table `rating`
+-- Indeks untuk tabel `rating`
 --
 ALTER TABLE `rating`
   ADD PRIMARY KEY (`idrating`,`users_id`,`produk_idproduk`),
@@ -1049,7 +1073,7 @@ ALTER TABLE `rating`
   ADD KEY `fk_users_has_produk_users3_idx` (`users_id`);
 
 --
--- Indexes for table `toko`
+-- Indeks untuk tabel `toko`
 --
 ALTER TABLE `toko`
   ADD PRIMARY KEY (`users_id`),
@@ -1057,15 +1081,16 @@ ALTER TABLE `toko`
   ADD KEY `fk_toko_kotakabupaten1_idx` (`kotakabupaten_idkotakabupaten`);
 
 --
--- Indexes for table `transaksi`
+-- Indeks untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`idtransaksi`),
   ADD KEY `fk_transaksi_toko1_idx` (`toko_users_id`),
-  ADD KEY `fk_transaksi_users1_idx` (`users_id`);
+  ADD KEY `fk_transaksi_users1_idx` (`users_id`),
+  ADD KEY `fk_transaksi_alamat1_idx` (`alamat_idalamat`);
 
 --
--- Indexes for table `transaksi_has_produk`
+-- Indeks untuk tabel `transaksi_has_produk`
 --
 ALTER TABLE `transaksi_has_produk`
   ADD PRIMARY KEY (`transaksi_idtransaksi`,`produk_idproduk`),
@@ -1073,14 +1098,14 @@ ALTER TABLE `transaksi_has_produk`
   ADD KEY `fk_transaksi_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `wishlist`
+-- Indeks untuk tabel `wishlist`
 --
 ALTER TABLE `wishlist`
   ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
@@ -1088,75 +1113,75 @@ ALTER TABLE `wishlist`
   ADD KEY `fk_users_has_produk_users2_idx` (`users_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `alamat`
+-- AUTO_INCREMENT untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
   MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `etalase_produk`
+-- AUTO_INCREMENT untuk tabel `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
   MODIFY `idetalase_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kategori`
+-- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `midtrans`
+-- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
   MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `produk`
+-- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
   MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `rating`
+-- AUTO_INCREMENT untuk tabel `rating`
 --
 ALTER TABLE `rating`
   MODIFY `idrating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `transaksi`
+-- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `alamat`
+-- Ketidakleluasaan untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
   ADD CONSTRAINT `fk_alamat_kotakabupaten1` FOREIGN KEY (`kotakabupaten_idkotakabupaten`) REFERENCES `kotakabupaten` (`idkotakabupaten`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1164,45 +1189,45 @@ ALTER TABLE `alamat`
   ADD CONSTRAINT `fk_alamat_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `chat`
+-- Ketidakleluasaan untuk tabel `chat`
 --
 ALTER TABLE `chat`
   ADD CONSTRAINT `fk_chat_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_chat_users2` FOREIGN KEY (`users_id1`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `etalase_produk`
+-- Ketidakleluasaan untuk tabel `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
   ADD CONSTRAINT `fk_etalase_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `gambar_produk`
+-- Ketidakleluasaan untuk tabel `gambar_produk`
 --
 ALTER TABLE `gambar_produk`
   ADD CONSTRAINT `fk_gambar_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `keranjang`
+-- Ketidakleluasaan untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
   ADD CONSTRAINT `fk_users_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_has_produk_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `kotakabupaten`
+-- Ketidakleluasaan untuk tabel `kotakabupaten`
 --
 ALTER TABLE `kotakabupaten`
   ADD CONSTRAINT `fk_kotakabupaten_provinsi1` FOREIGN KEY (`provinsi_idprovinsi`) REFERENCES `provinsi` (`idprovinsi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `midtrans`
+-- Ketidakleluasaan untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
   ADD CONSTRAINT `fk_midtrans_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `produk`
+-- Ketidakleluasaan untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_etalase_produk1` FOREIGN KEY (`etalase_produk_idetalase_produk`) REFERENCES `etalase_produk` (`idetalase_produk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1210,35 +1235,36 @@ ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `rating`
+-- Ketidakleluasaan untuk tabel `rating`
 --
 ALTER TABLE `rating`
   ADD CONSTRAINT `fk_users_has_produk_produk3` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_has_produk_users3` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `toko`
+-- Ketidakleluasaan untuk tabel `toko`
 --
 ALTER TABLE `toko`
   ADD CONSTRAINT `fk_toko_kotakabupaten1` FOREIGN KEY (`kotakabupaten_idkotakabupaten`) REFERENCES `kotakabupaten` (`idkotakabupaten`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_toko_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `transaksi`
+-- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
+  ADD CONSTRAINT `fk_transaksi_alamat1` FOREIGN KEY (`alamat_idalamat`) REFERENCES `alamat` (`idalamat`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `transaksi_has_produk`
+-- Ketidakleluasaan untuk tabel `transaksi_has_produk`
 --
 ALTER TABLE `transaksi_has_produk`
   ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `wishlist`
+-- Ketidakleluasaan untuk tabel `wishlist`
 --
 ALTER TABLE `wishlist`
   ADD CONSTRAINT `fk_users_has_produk_produk2` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
