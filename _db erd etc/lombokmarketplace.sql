@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 02 Agu 2022 pada 04.33
+-- Waktu pembuatan: 07 Agu 2022 pada 08.04
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -710,6 +710,13 @@ CREATE TABLE `midtrans` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data untuk tabel `midtrans`
+--
+
+INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
+(2, 'b353f502-1026-49e6-b2a2-109219faa18f', 'settlement', 6, '2022-08-06 23:32:24', '2022-08-06 23:55:13');
+
 -- --------------------------------------------------------
 
 --
@@ -900,7 +907,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(3, '2022-08-02 12:20:57', 1, 1, '2022-08-01 20:20:57', '2022-08-01 20:20:57', 45000, 2, 'transfer', 'ambil_sendiri', NULL);
+(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-06 23:59:49', 45000, 1, 'transfer', 'kurir_toko', 'Menunggu Konfirmasi');
 
 -- --------------------------------------------------------
 
@@ -920,8 +927,8 @@ CREATE TABLE `transaksi_has_produk` (
 --
 
 INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
-(3, 1, 25000, 1),
-(3, 2, 20000, 1);
+(6, 1, 25000, 1),
+(6, 2, 20000, 1);
 
 -- --------------------------------------------------------
 
@@ -1144,7 +1151,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -1168,7 +1175,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

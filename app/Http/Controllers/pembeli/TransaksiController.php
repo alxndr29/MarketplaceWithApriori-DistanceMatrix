@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Transaksi;
 use App\Produk;
-
+use App\Midtrans;
 class TransaksiController extends Controller
 {
     //
@@ -40,6 +40,23 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::where('users_id', Auth::user()->id)->get();
         return view('pembeli.transaksi', compact('transaksi'));
     }
+    public function ambildataajax($id)
+    {
+        $datatransaksi = Transaksi::where('idtransaksi', $id)
+            ->join('alamat', 'alamat.idalamat', '=', 'transaksi.alamat_idalamat')
+            ->select('transaksi.*', 'alamat.*')
+            ->first();
+        $detailtransaksi = DB::table('transaksi_has_produk')
+            ->where('transaksi_has_produk.transaksi_idtransaksi', $id)
+            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+            ->select('produk.nama', 'transaksi_has_produk.*')
+            ->get();
+        return response()->json([
+            'coba' => $id,
+            'datatransaksi' => $datatransaksi,
+            'detailtransaksi' => $detailtransaksi
+        ]);
+    }
     public function store(Request $request)
     {
         // return $request->all();
@@ -57,8 +74,7 @@ class TransaksiController extends Controller
             foreach ($keranjang as $value) {
                 $total += $value->harga * $value->jumlah;
             }
-            //return $total;
-            //return $keranjang;
+
             $transaksi = new Transaksi();
             $transaksi->users_id = Auth::user()->id;
             $transaksi->total = $total;
@@ -66,6 +82,11 @@ class TransaksiController extends Controller
             $transaksi->alamat_idalamat = $request->get('alamat');
             $transaksi->pengiriman = $request->get('pengiriman');
             $transaksi->pembayaran = $request->get('pembayaran');
+            if ($request->get('pembayaran') == 'transfer') {
+                $transaksi->status = "Menunggu Pembayaran";
+            } else {
+                $transaksi->status = "Menunggu Konfirmasi";
+            }
             $transaksi->save();
             $transaksi->idtransaksi;
 
@@ -77,11 +98,39 @@ class TransaksiController extends Controller
                     'qty' => $value->jumlah
                 ]);
             }
-
+            if ($request->get('pembayaran') == 'transfer') {
+                // Set your Merchant Server Key
+                \Midtrans\Config::$serverKey = 'SB-Mid-server-yj9hNmncUrqOhEvf1k3JSmPX';
+                // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+                \Midtrans\Config::$isProduction = false;
+                // Set sanitization on (default)
+                \Midtrans\Config::$isSanitized = true;
+                // Set 3DS transaction for credit card to true
+                \Midtrans\Config::$is3ds = true;
+                $params = array(
+                    'transaction_details' => array(
+                        'order_id' =>   $transaksi->idtransaksi,
+                        'gross_amount' => $total,
+                    ),
+                    'customer_details' => array(
+                        'first_name' => Auth::user()->id,
+                        'email' => Auth::user()->email
+                    ),
+                );
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $midtrans = new Midtrans();
+                $midtrans->token = $snapToken;
+                $midtrans->transaksi_idtransaksi = $transaksi->idtransaksi;
+                $midtrans->save();
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
         }
+    }
+    public function ambiltokenmidtrans($id){
+        $midtrans = Midtrans::where('transaksi_idtransaksi',$id)->first();
+        return $midtrans->token;
     }
 }

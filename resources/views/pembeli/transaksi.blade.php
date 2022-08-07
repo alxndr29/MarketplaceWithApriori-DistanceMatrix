@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <div class="page-title">
-                    <h4>Transaksi</h4>
+                    <h4>Daftar Transaksi</h4>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-9">
@@ -21,6 +21,7 @@
         </div>
     </div>
 </div>
+<div id="result-json">JSON result will appear here after payment:<br></div>
 <!-- bredcrumb and page title block end  -->
 <div id="product-category">
     <div class="container">
@@ -46,10 +47,15 @@
                                 <td>{{$value->tanggal}}</td>
                                 <td>{{$value->total}}</td>
                                 <td>
-                                    Menunggu Pembayaran
+                                    {{$value->status}}
                                 </td>
                                 <td>
-                                    <button type="button" onClick="modal()" class="btn btn-primary"> Detail </button>
+                                    <button type="button" onClick="modal({{$value->idtransaksi}})" class="btn btn-primary"> Detail </button>
+                                    @if($value->status == "Menunggu Pembayaran")
+                                    <button type="button" onClick="bayar({{$value->idtransaksi}})" class="btn btn-primary"> Bayar </button>
+                                    @else
+                                    @endif
+
                                 </td>
                             </tr>
                             @endforeach
@@ -64,41 +70,54 @@
 <br>
 <!-- Modal Alamat -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <form method="post" action="#">
-                    @csrf
-                    <div class="form-group">
-                        <label>Nama Penerima</label>
-                        <input type="text" class="form-control" name="nama_penerima" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat Lengkap</label>
-                        <input type="text" class="form-control" name="alamat_lengkap" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Telepon</label>
-                        <input type="number" class="form-control" name="telepon" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label> Kota Kabupaten </label>
-                        <select class="form-control" id="kotakabupaten" name="kotakabupaten" required>
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Latitude</label>
-                        <input type="text" class="form-control" id="latitude" name="latitude" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Longitude</label>
-                        <input type="text" class="form-control" id="longitude" name="longitude" required>
-                    </div>
-                    <div id="map" style="height:200px; width100%">
+                <div class="row">
+                    <div class="col-md-12 col-sm-6 col-xs-6" id="datatransaksi">
 
                     </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Alamat Lengkap</th>
+                                <th>Nama Penerima</th>
+                                <th>Telepon</th>
+                                <th>Kota</th>
+                                <th>Provinsi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="isitablealamat">
+
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        Daftar Produk:
+                        <table class="table" id="tabledetail">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Jumlah</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="isitabledetail">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,14 +129,101 @@
 </div>
 @endsection
 @section('anotherjs')
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-KK2QTLbPiIfm9sBs"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#myTable').DataTable();
     });
 
-    function modal() {
-        alert('hello world!');
+    function modal(idtransaksi) {
+        $("#isitabledetail").empty();
+        $("#isitablealamat").empty();
+        $("#datatransaksi").empty();
+        $.ajax({
+            url: "{{url('transaksi/ajaxdetail')}}/" + idtransaksi,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                var total = 0;
+                $("#datatransaksi").append(
+                    'ID Transaksi: ' + response.datatransaksi.idtransaksi +
+                    '<br>' +
+                    'Tanggal: ' + response.datatransaksi.tanggal +
+                    '<br>' +
+                    'Status: ' + response.datatransaksi.status +
+                    '<br>' +
+                    'Pembayaran: ' + response.datatransaksi.pembayaran +
+                    '<br>' +
+                    'Pengiriman: ' + response.datatransaksi.pengiriman
+                );
+                $("#isitablealamat").append(
+                    '<tr>' +
+                    '<th>' + response.datatransaksi.alamat_lengkap + '</th>' +
+                    '<th>' + response.datatransaksi.nama_penerima + '</th>' +
+                    '<th>' + response.datatransaksi.telepon + '</th>' +
+                    '<th>' + 'Ende' + '</th>' +
+                    '<th>' + 'Nusa Tenggara Barat' + '</th>' +
+                    '</tr>'
+                );
+                $.each(response.detailtransaksi, function(i, k) {
+                    $("#isitabledetail").append(
+                        '<tr>' +
+                        '<th>' + (i + 1) + '</th>' +
+                        '<th>' + (k.nama) + '</th>' +
+                        '<th>' + (k.qty) + '</th>' +
+                        '<th> Rp. ' + (k.jumlah) + '</th>' +
+                        '</tr>'
+                    );
+                    total += k.jumlah;
+                });
+                $("#isitabledetail").append(
+                    '<tr>' +
+                    '<th>' + '</th>' +
+                    '<th>' + '</th>' +
+                    '<th>' + '</th>' +
+                    '<th> Rp. ' + (total) + '</th>' +
+                    '</tr>'
+                );
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
         $("#exampleModalCenter").modal('show');
+    }
+
+    function bayar(id) {
+        $.ajax({
+            url: "{{url('tokenmidtrans')}}/" + id,
+            type: "GET",
+            success: function(response) {
+                snap.pay(response, {
+                    // Optional
+                    onSuccess: function(result) {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    },
+                    // Optional
+                    onPending: function(result) {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    },
+                    // Optional
+                    onError: function(result) {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    },
+                    onClose: function() {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    }
+                });
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+
     }
 </script>
 @endsection
