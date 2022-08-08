@@ -59,9 +59,6 @@ class TransaksiController extends Controller
     }
     public function store(Request $request)
     {
-        // return $request->all();
-        // return $request->get('idtoko');
-        // return 'a';
         DB::beginTransaction();
         try {
             $keranjang = DB::table('keranjang')
@@ -74,7 +71,6 @@ class TransaksiController extends Controller
             foreach ($keranjang as $value) {
                 $total += $value->harga * $value->jumlah;
             }
-
             $transaksi = new Transaksi();
             $transaksi->users_id = Auth::user()->id;
             $transaksi->total = $total;
@@ -89,7 +85,6 @@ class TransaksiController extends Controller
             }
             $transaksi->save();
             $transaksi->idtransaksi;
-
             foreach ($keranjang as $value) {
                 DB::table('transaksi_has_produk')->insert([
                     'transaksi_idtransaksi' => $transaksi->idtransaksi,
@@ -97,6 +92,11 @@ class TransaksiController extends Controller
                     'jumlah' => $value->jumlah * $value->harga,
                     'qty' => $value->jumlah
                 ]);
+            }
+            if($request->get('pengiriman') == "kurir_toko"){
+
+            }else{
+
             }
             if ($request->get('pembayaran') == 'transfer') {
                 // Set your Merchant Server Key

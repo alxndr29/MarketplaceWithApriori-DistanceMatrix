@@ -45,6 +45,8 @@
                                         <li><a href="{{route('seller.halamanupdatetoko')}}">Pengaturan</a></li>
                                         <li><a href="{{route('seller.etalaseindex')}}">Etalase</a></li>
                                         <li><a href="{{route('seller.produkindex')}}">Produk</a></li>
+                                        <li><a href="{{route('seller.kuririndex')}}">Kurir</a></li>
+                                        <li><a href="{{route('seller.transaksiindex')}}">Transaksi</a></li>
                                     </ul>
                                 </li>
                             </ul>

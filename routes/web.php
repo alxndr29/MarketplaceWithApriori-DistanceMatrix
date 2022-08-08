@@ -48,7 +48,14 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::put('/seller/produk/update/{id}', 'penjual\ProdukController@update')->name('seller.produkupdate');
     Route::delete('/seller/produk/delete/{id}', 'penjual\ProdukController@delete')->name('seller.produkdelete');
     Route::delete('/seller/produkimage/delete/{idproduk}/{idgambar}', 'penjual\ProdukController@deleteGambarEdit')->name('seller.gambarprodukdelete');
-    //
+    //Kurir
+    Route::get('seller/kurir', 'penjual\KurirController@index')->name('seller.kuririndex');
+    Route::post('seller/kurir/store', 'penjual\KurirController@store')->name('seller.kurirstore');
+    Route::put('seller/kurir/update/{id}', 'penjual\KurirController@update')->name('seller.kurirupdate');
+    Route::delete('seller/kurir/delete/{id}', 'penjual\KurirController@destroy')->name('seller.kurirdelete');
+    //Transaksi
+    Route::get('seller/transaksi','penjual\TransaksiController@index')->name('seller.transaksiindex');
+    Route::get('seller/transaksi/{id}','penjual\TransaksiController@show')->name('seller.transaksishow');
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko

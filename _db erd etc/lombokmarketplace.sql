@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 07 Agu 2022 pada 08.04
+-- Waktu pembuatan: 08 Agu 2022 pada 01.58
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -698,6 +698,31 @@ INSERT INTO `kotakabupaten` (`idkotakabupaten`, `nama`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kurir`
+--
+
+CREATE TABLE `kurir` (
+  `idkurir` int(11) NOT NULL,
+  `nama` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `toko_users_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `kurir`
+--
+
+INSERT INTO `kurir` (`idkurir`, `nama`, `email`, `password`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 'E', 'A', '$2y$10$TNkFbO.8qOum2HRJwNYs8OgW0W2E.aU/.SjV1ty1/dGIclFjIkPtm', 1, '2022-08-07 06:25:23', '2022-08-07 06:41:12', NULL),
+(3, 'asd', 's', 'cccc', 1, '2022-08-07 06:45:51', '2022-08-07 06:53:55', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `midtrans`
 --
 
@@ -1038,6 +1063,13 @@ ALTER TABLE `kotakabupaten`
   ADD KEY `fk_kotakabupaten_provinsi1_idx` (`provinsi_idprovinsi`);
 
 --
+-- Indeks untuk tabel `kurir`
+--
+ALTER TABLE `kurir`
+  ADD PRIMARY KEY (`idkurir`),
+  ADD KEY `fk_kurir_toko1_idx` (`toko_users_id`);
+
+--
 -- Indeks untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
@@ -1148,6 +1180,12 @@ ALTER TABLE `kategori`
   MODIFY `idkategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `kurir`
+--
+ALTER TABLE `kurir`
+  MODIFY `idkurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
@@ -1226,6 +1264,12 @@ ALTER TABLE `keranjang`
 --
 ALTER TABLE `kotakabupaten`
   ADD CONSTRAINT `fk_kotakabupaten_provinsi1` FOREIGN KEY (`provinsi_idprovinsi`) REFERENCES `provinsi` (`idprovinsi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `kurir`
+--
+ALTER TABLE `kurir`
+  ADD CONSTRAINT `fk_kurir_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `midtrans`
