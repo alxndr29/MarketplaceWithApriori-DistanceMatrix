@@ -74,7 +74,13 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12 col-sm-6 col-xs-6" id="datatransaksi">
+                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
 
                     </div>
                 </div>

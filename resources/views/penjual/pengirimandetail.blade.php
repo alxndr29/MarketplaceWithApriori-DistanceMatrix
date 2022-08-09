@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3><small> Detail Transaksi Transaksi</small></h3>
+        <h3><small> Detail Pengiriman</small></h3>
     </div>
 </div>
 <div class="clearfix"></div>
@@ -28,14 +28,14 @@
             </div>
             <div class="x_content">
                 <div class="row">
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         Data Pemesan:
                         <br>
                         Nama: {{$datapemesan->name}}
                         <br>
                         Email: {{$datapemesan->email}}
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         Data Alamat:
                         <br>
                         Alamat Lengkap: {{$dataalamat->alamat_lengkap}}
@@ -48,7 +48,7 @@
                         <br>
                         Provinsi: {{$dataalamat->provinsi}}
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         Data Pesanan:
                         <br>
                         Tanggal: {{$datapemesan->tanggal}}
@@ -62,6 +62,13 @@
                         Pengiriman: {{$datapemesan->pengiriman}}
                         <br>
                         Total: Rp. {{number_format($datapemesan->total)}}
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        Data Pengiriman:
+                        <br>
+                        Status: {{$datapengiriman->status}}
+                        <br>
+                        Kurir: {{$datapengiriman->nama}}
                     </div>
                 </div>
                 <br>
@@ -115,27 +122,50 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        @if($datapemesan->status == "Menunggu Konfirmasi")
-                        <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Diproses'])}}" class="btn btn-primary">Pesanan Diproses</a>
-                        <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Batal'])}}" class="btn btn-danger">Batal</a>
-                        @endif
-
-                        @if($datapemesan->status == "Pesanan Diproses")
-                            <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Dikirim'])}}" class="btn btn-primary">Pesanan Dikirim</a>
-                        @endif
+                        Tujuan Pengantaran:
+                        <br>
+                        <iframe width="100%" height="250" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&q={{$dataalamat->latitude}},{{$dataalamat->longitude}}" allowfullscreen>
+                        </iframe>
+                        <br>
+                        <a href="https://www.google.com/maps/search/?api=1&query={{$dataalamat->latitude}},{{$dataalamat->longitude}}" class="btn btn-success">
+                            Buka Peta
+                        </a>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        Pilih Kurir:
+                        <form class="form-horizontal form-label-left" action="{{route('seller.plotkurir')}}" method="post">
+                            @csrf
+                            <div class="form-group row">
+                                <label class="control-label col-md-3 col-sm-3 ">Nama Kurir: </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <select class="form-control" name="kurir">
+                                        <option selected>Pilih Kurir</option>
+                                        @foreach ($kurir as $value)
+                                        <option value="{{$value->idkurir}}">{{$value->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <input type="hidden" name="idtransaksi" value="{{$datapemesan->idtransaksi}}">
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+
             </div>
         </div>
     </div>
-</div>
 
-@endsection
-@section('anotherjs')
-<script type="text/javascript">
-    $(document).ready(function() {
-        console.log('hello world!');
-        // $('#datatable-1').DataTable();
-    });
-</script>
-@endsection
+    @endsection
+    @section('anotherjs')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log('hello world!');
+            // $('#datatable-1').DataTable();
+        });
+    </script>
+    @endsection

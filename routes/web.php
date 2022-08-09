@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
+use App\Kurir;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,8 +56,13 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::put('seller/kurir/update/{id}', 'penjual\KurirController@update')->name('seller.kurirupdate');
     Route::delete('seller/kurir/delete/{id}', 'penjual\KurirController@destroy')->name('seller.kurirdelete');
     //Transaksi
-    Route::get('seller/transaksi','penjual\TransaksiController@index')->name('seller.transaksiindex');
-    Route::get('seller/transaksi/{id}','penjual\TransaksiController@show')->name('seller.transaksishow');
+    Route::get('seller/transaksi', 'penjual\TransaksiController@index')->name('seller.transaksiindex');
+    Route::get('seller/transaksi/{id}', 'penjual\TransaksiController@show')->name('seller.transaksishow');
+    Route::get('seller/transaksi/status/{id}/{status}', 'penjual\TransaksiController@ubahstatus')->name('seller.transaksistatus');
+    //Pengiriman
+    Route::get('seller/pengiriman', 'penjual\PengirimanController@index')->name('seller.pengiriman');
+    Route::get('seller/pengiriman/{id}', 'penjual\PengirimanController@show')->name('seller.pengirimandetail');
+    Route::post('seller/plotkurir', 'penjual\PengirimanController@plotkurir')->name('seller.plotkurir');
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko
@@ -97,3 +104,30 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
+
+
+Route::get('/loginkurir', function (Request $request) {
+    if ($request->session()->has('kurir')) {
+      
+        $request->session()->forget('kurir');
+        return 'sdh ada bosku';
+    } else {
+        return view('kurir.login');
+    }
+  
+});
+Route::post('loginproseskurir', function (Request $request) {
+   
+    try {
+        $kurir = Kurir::where('email', $request->get('email'))->where('password', $request->get('password'))->first();
+        if (!$kurir) {
+            return 'username password salah';
+        } else {
+            $request->session()->put('kurir', $kurir->idkurir);
+            return $request->session()->get('kurir');
+            return 'login berhasil';
+        }
+    } catch (\Exception $e) {
+        return $e->getMessage();
+    }
+})->name('loginproseskurir');

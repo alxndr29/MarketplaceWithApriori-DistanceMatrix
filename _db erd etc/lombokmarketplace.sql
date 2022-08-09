@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 08 Agu 2022 pada 01.58
+-- Waktu pembuatan: 09 Agu 2022 pada 03.12
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -717,8 +717,8 @@ CREATE TABLE `kurir` (
 --
 
 INSERT INTO `kurir` (`idkurir`, `nama`, `email`, `password`, `toko_users_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 'E', 'A', '$2y$10$TNkFbO.8qOum2HRJwNYs8OgW0W2E.aU/.SjV1ty1/dGIclFjIkPtm', 1, '2022-08-07 06:25:23', '2022-08-07 06:41:12', NULL),
-(3, 'asd', 's', 'cccc', 1, '2022-08-07 06:45:51', '2022-08-07 06:53:55', NULL);
+(2, 'Fabianus', 'a@a.com', 'a', 1, '2022-08-07 06:25:23', '2022-08-08 18:15:45', NULL),
+(3, 'Fransiskus', 'b@b.com', 'cccc', 1, '2022-08-07 06:45:51', '2022-08-08 18:15:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -774,6 +774,29 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengiriman`
+--
+
+CREATE TABLE `pengiriman` (
+  `idpengiriman` int(11) NOT NULL,
+  `tanggalwaktu` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(45) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `kurir_idkurir` int(11) DEFAULT NULL,
+  `transaksi_idtransaksi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `pengiriman`
+--
+
+INSERT INTO `pengiriman` (`idpengiriman`, `tanggalwaktu`, `status`, `created_at`, `updated_at`, `kurir_idkurir`, `transaksi_idtransaksi`) VALUES
+(1, '2022-08-09 01:45:42', 'Menunggu Pickup Kurir', '2022-08-08 17:45:42', '2022-08-08 18:48:57', 2, 6);
 
 -- --------------------------------------------------------
 
@@ -932,7 +955,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-06 23:59:49', 45000, 1, 'transfer', 'kurir_toko', 'Menunggu Konfirmasi');
+(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-08 17:45:42', 45000, 1, 'transfer', 'kurir_toko', 'Pesanan Dikirim');
 
 -- --------------------------------------------------------
 
@@ -1089,6 +1112,14 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indeks untuk tabel `pengiriman`
+--
+ALTER TABLE `pengiriman`
+  ADD PRIMARY KEY (`idpengiriman`),
+  ADD KEY `fk_pengiriman_kurir1_idx` (`kurir_idkurir`),
+  ADD KEY `fk_pengiriman_transaksi1_idx` (`transaksi_idtransaksi`);
+
+--
 -- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
@@ -1198,6 +1229,12 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT untuk tabel `pengiriman`
+--
+ALTER TABLE `pengiriman`
+  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
@@ -1276,6 +1313,13 @@ ALTER TABLE `kurir`
 --
 ALTER TABLE `midtrans`
   ADD CONSTRAINT `fk_midtrans_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `pengiriman`
+--
+ALTER TABLE `pengiriman`
+  ADD CONSTRAINT `fk_pengiriman_kurir1` FOREIGN KEY (`kurir_idkurir`) REFERENCES `kurir` (`idkurir`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pengiriman_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `produk`
