@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Kurir;
+use App\Pengiriman;
 use Illuminate\Http\Request;
+use App\Transaksi;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,14 +21,11 @@ use Illuminate\Http\Request;
 // });
 Route::get('/', function () {
     $client = new GuzzleHttp\Client();
-    //$request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=Washington%2C%20DC&destinations=New%20York%20City%2C%20NY&units=imperial&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
-    //$request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=42.9814292%2C-70.9477546&destinations=51.5073509%2C-0.1277583&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=-8.848198553520579%2C121.6637660808329&destinations=-8.832836631765579%2C121.67777565447375&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $promise = $client->sendAsync($request)->then(function ($response) {
         echo ($response->getBody());
     });
     $promise->wait();
-    //return view('welcome');
 });
 
 Auth::routes();
@@ -101,6 +100,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/transaksi/store', 'pembeli\TransaksiController@store')->name('user.transaksistore');
     Route::get('transaksi/ajaxdetail/{id}', 'pembeli\TransaksiController@ambildataajax');
     Route::get('/tokenmidtrans/{id}', 'pembeli\TransaksiController@ambiltokenmidtrans');
+    Route::get('transaksi/status/{id}/{status}','pembeli\TransaksiController@ubahstatus')->name('user.transaksiubahstatus');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
@@ -108,26 +108,78 @@ Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
 
 Route::get('/loginkurir', function (Request $request) {
     if ($request->session()->has('kurir')) {
-      
-        $request->session()->forget('kurir');
-        return 'sdh ada bosku';
+        return redirect('kurir/home');
     } else {
         return view('kurir.login');
     }
-  
 });
 Route::post('loginproseskurir', function (Request $request) {
-   
     try {
         $kurir = Kurir::where('email', $request->get('email'))->where('password', $request->get('password'))->first();
         if (!$kurir) {
             return 'username password salah';
         } else {
             $request->session()->put('kurir', $kurir->idkurir);
-            return $request->session()->get('kurir');
-            return 'login berhasil';
+            return redirect('kurir/home');
         }
     } catch (\Exception $e) {
         return $e->getMessage();
     }
 })->name('loginproseskurir');
+Route::get('kurir/home', function (Request $request) {
+    if ($request->session()->has('kurir')) {
+        $data = Pengiriman::where('kurir_idkurir', $request->session()->get('kurir'))->get();
+        // return $data;
+        return view('kurir.daftarpengiriman', compact('data'));
+    } else {
+        return view('kurir.login');
+    }
+})->name('kurir.home');
+Route::get('kurir/detail/{id}', function (Request $request, $id) {
+    if ($request->session()->has('kurir')) {
+        $databarang = Transaksi::join('transaksi_has_produk', 'transaksi_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+            ->join('pengiriman', 'transaksi.idtransaksi', '=', 'pengiriman.transaksi_idtransaksi')
+            ->where('pengiriman.idpengiriman', $id)
+            ->select('transaksi_has_produk.*', 'produk.nama')
+            ->get();
+        $dataalamat = Transaksi::join('alamat', 'alamat.idalamat', '=', 'transaksi.alamat_idalamat')
+            ->join('provinsi', 'provinsi.idprovinsi', '=', 'alamat.provinsi_idprovinsi')
+            ->join('kotakabupaten', 'kotakabupaten.idkotakabupaten', 'alamat.kotakabupaten_idkotakabupaten')
+            ->join('pengiriman', 'transaksi.idtransaksi', '=', 'pengiriman.transaksi_idtransaksi')
+            ->where('pengiriman.idpengiriman', $id)
+            ->select('alamat.*', 'kotakabupaten.nama as kabupaten', 'provinsi.nama as provinsi')
+            ->first();
+        $datapengiriman = Pengiriman::where('idpengiriman', $id)->first();
+        return view('kurir.detailpengiriman', compact('dataalamat', 'databarang', 'datapengiriman'));
+    } else {
+        return view('kurir.login');
+    }
+})->name('kurirdetail');
+Route::get('kurir/logout', function (Request $request) {
+    if ($request->session()->has('kurir')) {
+        $request->session()->forget('kurir');
+    } else {
+        return view('kurir.login');
+    }
+});
+Route::get('kurir/status/{id}/{status}', function ($id, $status) {
+    try {
+        if ($status == "Antar Sekarang") {
+            $pengiriman = Pengiriman::find($id);
+            $pengiriman->status = "Pesanan Diantar";
+            $pengiriman->save();
+        } else if ($status == "Sampai Tujuan") {
+            $pengiriman = Pengiriman::find($id);
+            $pengiriman->status = $status;
+            $pengiriman->save();
+
+            $transaksi = Transaksi::find($pengiriman->transaksi_idtransaksi);
+            $transaksi->status = $status;
+            $transaksi->save();
+        }
+        return redirect()->back()->with('sukses', 'Berhasil ubah status pengiriman');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('gagal', $e->getMessage());
+    }
+})->name('kurir.status');

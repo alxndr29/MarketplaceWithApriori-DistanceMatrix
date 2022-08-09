@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 09 Agu 2022 pada 03.12
+-- Waktu pembuatan: 09 Agu 2022 pada 13.57
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -796,7 +796,7 @@ CREATE TABLE `pengiriman` (
 --
 
 INSERT INTO `pengiriman` (`idpengiriman`, `tanggalwaktu`, `status`, `created_at`, `updated_at`, `kurir_idkurir`, `transaksi_idtransaksi`) VALUES
-(1, '2022-08-09 01:45:42', 'Menunggu Pickup Kurir', '2022-08-08 17:45:42', '2022-08-08 18:48:57', 2, 6);
+(1, '2022-08-09 01:45:42', 'Sampai Tujuan', '2022-08-08 17:45:42', '2022-08-09 05:34:11', 2, 6);
 
 -- --------------------------------------------------------
 
@@ -955,7 +955,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-08 17:45:42', 45000, 1, 'transfer', 'kurir_toko', 'Pesanan Dikirim');
+(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, 1, 'transfer', 'kurir_toko', 'Selesai');
 
 -- --------------------------------------------------------
 

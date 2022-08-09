@@ -53,9 +53,15 @@
                                     <button type="button" onClick="modal({{$value->idtransaksi}})" class="btn btn-primary"> Detail </button>
                                     @if($value->status == "Menunggu Pembayaran")
                                     <button type="button" onClick="bayar({{$value->idtransaksi}})" class="btn btn-primary"> Bayar </button>
-                                    @else
                                     @endif
 
+                                    @if($value->status == "Sampai Tujuan")
+                                    <a href="{{route('user.transaksiubahstatus',['id' => $value->idtransaksi, 'status'=> 'Selesai'])}}" class="btn btn-primary"> Selesai </a>
+                                    @endif
+
+                                    @if($value->status == "Selesai")
+                                        
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -77,10 +83,10 @@
                     <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
 
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
+                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi1">
 
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi">
+                    <div class="col-md-4 col-sm-4 col-xs-4" id="datatransaksi2">
 
                     </div>
                 </div>
@@ -127,7 +133,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
             </div>
             </form>
         </div>
@@ -145,6 +151,8 @@
         $("#isitabledetail").empty();
         $("#isitablealamat").empty();
         $("#datatransaksi").empty();
+        $("#datatransaksi1").empty();
+        $("#datatransaksi2").empty();
         $.ajax({
             url: "{{url('transaksi/ajaxdetail')}}/" + idtransaksi,
             type: "GET",
@@ -161,6 +169,17 @@
                     'Pembayaran: ' + response.datatransaksi.pembayaran +
                     '<br>' +
                     'Pengiriman: ' + response.datatransaksi.pengiriman
+                );
+                $("#datatransaksi1").append(
+                    'Pengiriman:' +
+                    '<br>' +
+                    'Tanggal: ' + response.datapengiriman.tanggalwaktu +
+                    '<br>' +
+                    'Status: ' + response.datapengiriman.status +
+                    '<br>' +
+                    'Nama Kurir: ' + response.datapengiriman.nama +
+                    '<br>' +
+                    'Telp: ' + response.datapengiriman.email
                 );
                 $("#isitablealamat").append(
                     '<tr>' +

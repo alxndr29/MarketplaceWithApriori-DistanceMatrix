@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Transaksi;
 use App\Produk;
 use App\Midtrans;
+use App\Pengiriman;
+
 class TransaksiController extends Controller
 {
     //
@@ -51,10 +53,13 @@ class TransaksiController extends Controller
             ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
             ->select('produk.nama', 'transaksi_has_produk.*')
             ->get();
+        $datapengiriman = Pengiriman::where('transaksi_idtransaksi', $id)->leftJoin('kurir', 'kurir.idkurir', '=', 'pengiriman.kurir_idkurir')->first();
+
         return response()->json([
             'coba' => $id,
             'datatransaksi' => $datatransaksi,
-            'detailtransaksi' => $detailtransaksi
+            'detailtransaksi' => $detailtransaksi,
+            'datapengiriman' => $datapengiriman
         ]);
     }
     public function store(Request $request)
@@ -93,11 +98,7 @@ class TransaksiController extends Controller
                     'qty' => $value->jumlah
                 ]);
             }
-            if($request->get('pengiriman') == "kurir_toko"){
-
-            }else{
-
-            }
+            if ($request->get('pengiriman') == "kurir_toko") { } else { }
             if ($request->get('pembayaran') == 'transfer') {
                 // Set your Merchant Server Key
                 \Midtrans\Config::$serverKey = 'SB-Mid-server-yj9hNmncUrqOhEvf1k3JSmPX';
@@ -129,8 +130,22 @@ class TransaksiController extends Controller
             return $e->getMessage();
         }
     }
-    public function ambiltokenmidtrans($id){
-        $midtrans = Midtrans::where('transaksi_idtransaksi',$id)->first();
+    public function ambiltokenmidtrans($id)
+    {
+        $midtrans = Midtrans::where('transaksi_idtransaksi', $id)->first();
         return $midtrans->token;
+    }
+    public function ubahstatus($id, $status)
+    {
+        try {
+            if($status == "Selesai") { 
+                $transaksi = Transaksi::find($id);
+                $transaksi->status = $status;
+                $transaksi->save();
+            }
+            return redirect()->back()->with('sukses', 'Berhasil ubah status pesanan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
     }
 }

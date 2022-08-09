@@ -10,7 +10,7 @@ use App\Produk;
 use App\GambarProduk;
 use App\EtalaseProduk;
 use App\Kategori;
-
+use Phpml\Association\Apriori;
 class ProdukController extends Controller
 {
     //
@@ -43,7 +43,7 @@ class ProdukController extends Controller
             $produk->deskripsi = $request->get('deskripsi');
             $produk->toko_users_id = Auth::user()->id;
             $produk->harga = $request->get('harga');
-            $produk->stok = $request->get('stok');  
+            $produk->stok = $request->get('stok');
             $produk->save();
             if ($request->hasfile('files')) {
                 foreach ($request->file('files') as $file) {
@@ -122,15 +122,61 @@ class ProdukController extends Controller
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
-    public function detail($id){
-        $produk = Produk::where('idproduk',$id)->first();
+    public function detail($id)
+    {
+        $produk = Produk::where('idproduk', $id)->first();
         // return $produk;
         // $avg = Produk::join('rating','rating.produk_idproduk','=','produk.idproduk')->select(DB::raw("ROUND(AVG(rating.jumlah)) as rating"))->first();
-        $avg = DB::table('rating')->where('produk_idproduk',$id)->avg('jumlah');
+        $avg = DB::table('rating')->where('produk_idproduk', $id)->avg('jumlah');
         //  return $avg;
         // return $avg;
-        $gambar_produk = GambarProduk::where('produk_idproduk',$id)->get();
+        $gambar_produk = GambarProduk::where('produk_idproduk', $id)->get();
         // return $gambar_produk;
-        return view('pembeli.detailproduk',compact('produk','gambar_produk','avg'));
+
+        //apriori
+        $detailtransaksi = DB::table('transaksi_has_produk')
+            ->orderBy('transaksi_idtransaksi')
+            ->get();
+        $data = [];
+        foreach ($detailtransaksi as $item) {
+            if (!array_key_exists($item->transaksi_idtransaksi, $data)) {
+                $data[$item->transaksi_idtransaksi] = [];
+            }
+            array_push($data[$item->transaksi_idtransaksi], $item->produk_idproduk);
+        }
+
+        $labels  = [];
+        $support = 0;
+        $confidence = 0;
+        $associator = new Apriori($support, $confidence);
+        $associator->train($data, $labels);
+        $result =  $associator->getRules();
+
+        return $result;
+        // $rekomendasi = [];
+        // foreach ($data1 as $value) {
+        //     if (count($value['antecedent']) == 1) {
+        //         if ($value['antecedent'][0] == $id) {
+        //             //return "dapet";
+        //             foreach ($value['consequent'] as $kon) {
+        //                 if (in_array($kon, $rekomendasi)) { } else {
+        //                     array_push($rekomendasi, $kon);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+       
+        // $hasilAkhirRekomendasi = [];
+        // foreach ($rekomendasi as $rek) {
+        //     $a = DB::table('produk')->where('produk.idproduk', $rek)
+        //         ->leftJoin('gambarproduk', 'gambarproduk.produk_idproduk', '=', 'produk.idproduk')
+        //         ->select('produk.idproduk', 'produk.nama', 'produk.harga', 'idgambarproduk')
+        //         ->groupBy('produk.idproduk')
+        //         ->first();
+        //     array_push($hasilAkhirRekomendasi, $a);
+        // }
+
+        return view('pembeli.detailproduk', compact('produk', 'gambar_produk', 'avg'));
     }
 }
