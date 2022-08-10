@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 09 Agu 2022 pada 13.57
+-- Waktu pembuatan: 10 Agu 2022 pada 14.48
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -883,28 +883,6 @@ INSERT INTO `provinsi` (`idprovinsi`, `nama`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `rating`
---
-
-CREATE TABLE `rating` (
-  `idrating` int(11) NOT NULL,
-  `users_id` bigint(20) UNSIGNED NOT NULL,
-  `produk_idproduk` int(11) NOT NULL,
-  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `rating`
---
-
-INSERT INTO `rating` (`idrating`, `users_id`, `produk_idproduk`, `komen`, `jumlah`) VALUES
-(1, 2, 1, NULL, '3'),
-(2, 2, 1, NULL, '5');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `toko`
 --
 
@@ -1003,6 +981,29 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
 (1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
 (2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users_has_produk`
+--
+
+CREATE TABLE `users_has_produk` (
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_idproduk` int(11) NOT NULL,
+  `transaksi_idtransaksi` int(11) NOT NULL,
+  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bintang` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggalwaktu` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users_has_produk`
+--
+
+INSERT INTO `users_has_produk` (`users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
+(1, 1, 6, 'HAR', '5', '2022-08-10 22:11:27'),
+(1, 2, 6, 'TOP', '1', '2022-08-10 22:11:27');
 
 -- --------------------------------------------------------
 
@@ -1135,14 +1136,6 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`idprovinsi`);
 
 --
--- Indeks untuk tabel `rating`
---
-ALTER TABLE `rating`
-  ADD PRIMARY KEY (`idrating`,`users_id`,`produk_idproduk`),
-  ADD KEY `fk_users_has_produk_produk3_idx` (`produk_idproduk`),
-  ADD KEY `fk_users_has_produk_users3_idx` (`users_id`);
-
---
 -- Indeks untuk tabel `toko`
 --
 ALTER TABLE `toko`
@@ -1173,6 +1166,15 @@ ALTER TABLE `transaksi_has_produk`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indeks untuk tabel `users_has_produk`
+--
+ALTER TABLE `users_has_produk`
+  ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_produk4_idx` (`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_users4_idx` (`users_id`),
+  ADD KEY `fk_users_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
 
 --
 -- Indeks untuk tabel `wishlist`
@@ -1239,12 +1241,6 @@ ALTER TABLE `pengiriman`
 --
 ALTER TABLE `produk`
   MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `rating`
---
-ALTER TABLE `rating`
-  MODIFY `idrating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
@@ -1330,13 +1326,6 @@ ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Ketidakleluasaan untuk tabel `rating`
---
-ALTER TABLE `rating`
-  ADD CONSTRAINT `fk_users_has_produk_produk3` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_users_has_produk_users3` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Ketidakleluasaan untuk tabel `toko`
 --
 ALTER TABLE `toko`
@@ -1357,6 +1346,14 @@ ALTER TABLE `transaksi`
 ALTER TABLE `transaksi_has_produk`
   ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `users_has_produk`
+--
+ALTER TABLE `users_has_produk`
+  ADD CONSTRAINT `fk_users_has_produk_produk4` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_has_produk_users4` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `wishlist`

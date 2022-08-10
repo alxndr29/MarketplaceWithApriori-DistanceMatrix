@@ -39,7 +39,13 @@ class TransaksiController extends Controller
         // $snapToken = \Midtrans\Snap::getSnapToken($params);
         // return view('midtrans', compact('snapToken'));
 
-        $transaksi = Transaksi::where('users_id', Auth::user()->id)->get();
+        $transaksi = Transaksi::where('transaksi.users_id', Auth::user()->id)
+            ->leftJoin('users_has_produk', 'users_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->select('transaksi.*', DB::raw('COUNT(users_has_produk.transaksi_idtransaksi) as hitung'))
+            ->get();
+
+
+        // return $transaksi;
         return view('pembeli.transaksi', compact('transaksi'));
     }
     public function ambildataajax($id)
@@ -138,7 +144,7 @@ class TransaksiController extends Controller
     public function ubahstatus($id, $status)
     {
         try {
-            if($status == "Selesai") { 
+            if ($status == "Selesai") {
                 $transaksi = Transaksi::find($id);
                 $transaksi->status = $status;
                 $transaksi->save();
@@ -146,6 +152,44 @@ class TransaksiController extends Controller
             return redirect()->back()->with('sukses', 'Berhasil ubah status pesanan');
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());
+        }
+    }
+    public function ambildatareview($id)
+    {
+        $review = Transaksi::where('transaksi.idtransaksi', $id)
+            ->join('transaksi_has_produk', 'transaksi.idtransaksi', '=', 'transaksi_has_produk.transaksi_idtransaksi')
+            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+            ->select('transaksi.idtransaksi', 'produk.nama', 'produk.idproduk')
+            ->where('transaksi.status', 'Selesai')
+            ->get();
+        return view('pembeli.review', compact('review', 'id'));
+    }
+    public function storereview(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            // return $request->all();
+            foreach ($request->get('rating') as $key => $value) {
+                DB::table('users_has_produk')->updateOrInsert([
+                    'users_id' => Auth::user()->id,
+                    'produk_idproduk' => $key,
+                    'transaksi_idtransaksi' => $id
+                ], [
+                    'bintang' => $value
+                ]);
+            }
+            foreach ($request->get('komen') as $key => $value) {
+                DB::table('users_has_produk')->updateOrInsert([
+                    'users_id' => Auth::user()->id,
+                    'produk_idproduk' => $key,
+                    'transaksi_idtransaksi' => $id
+                ], [
+                    'komen' => $value
+                ]);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
         }
     }
 }

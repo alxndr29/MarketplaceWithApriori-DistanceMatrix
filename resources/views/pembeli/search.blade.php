@@ -188,7 +188,7 @@
                                                     <span class="rate">
                                                         @for($i = 0; $i < $value->rating; $i++)
                                                             <i class="fa fa-star rated"></i>
-                                                            @endfor
+                                                        @endfor
                                                     </span>
                                                 </div>
                                             </div>

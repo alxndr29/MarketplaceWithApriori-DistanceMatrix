@@ -59,8 +59,10 @@
                                     <a href="{{route('user.transaksiubahstatus',['id' => $value->idtransaksi, 'status'=> 'Selesai'])}}" class="btn btn-primary"> Selesai </a>
                                     @endif
 
-                                    @if($value->status == "Selesai")
-                                        
+                                    @if($value->status == "Selesai" && $value->hitung == 0)
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-review-{{$value->idtransaksi}}">
+                                        Review
+                                    </button>
                                     @endif
                                 </td>
                             </tr>
@@ -74,7 +76,8 @@
     </div>
 </div>
 <br>
-<!-- Modal Alamat -->
+<!-- Modal Detail -->
+@foreach ($review as $value)
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -139,6 +142,9 @@
         </div>
     </div>
 </div>
+@endforeach
+
+
 @endsection
 @section('anotherjs')
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-KK2QTLbPiIfm9sBs"></script>

@@ -100,7 +100,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/transaksi/store', 'pembeli\TransaksiController@store')->name('user.transaksistore');
     Route::get('transaksi/ajaxdetail/{id}', 'pembeli\TransaksiController@ambildataajax');
     Route::get('/tokenmidtrans/{id}', 'pembeli\TransaksiController@ambiltokenmidtrans');
-    Route::get('transaksi/status/{id}/{status}','pembeli\TransaksiController@ubahstatus')->name('user.transaksiubahstatus');
+    Route::get('transaksi/status/{id}/{status}', 'pembeli\TransaksiController@ubahstatus')->name('user.transaksiubahstatus');
+    Route::get('transaksi/datareview/{id}', 'pembeli\TransaksiController@ambildatareview')->name('user.transaksiambildatareview');
+    Route::post('transaksi/datareview/store/{id}', 'pembeli\TransaksiController@storereview')->name('user.transaksistoredatareview');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
