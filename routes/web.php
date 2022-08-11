@@ -106,7 +106,9 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
-
+Route::get('cobapeta',function(){
+    return view('pembeli.lokasitoko');
+});
 
 Route::get('/loginkurir', function (Request $request) {
     if ($request->session()->has('kurir')) {
