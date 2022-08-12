@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 10 Agu 2022 pada 14.48
+-- Waktu pembuatan: 12 Agu 2022 pada 14.48
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -47,8 +47,8 @@ CREATE TABLE `alamat` (
 --
 
 INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
-(1, 'Jln. Sultan Hassanudin', 'Richardo Hartanto', '-8.578725106091214', '2022-07-16 01:26:38', '2022-07-16 01:26:38', 1, 122, '116.08215547238801', '08776127', NULL, 23),
-(2, 'kk', 'Ev', '-5.236563859412162', '2022-07-16 03:06:33', '2022-07-16 03:06:33', 1, 254, '119.46130396479317', '123', NULL, 28);
+(1, 'Jln. Sultan Hassanudin', 'Richardo Hartanto', '-8.841058126271845', '2022-07-16 01:26:38', '2022-08-12 13:13:20', 1, 122, '121.64767269922905', '08776127', NULL, 23),
+(2, 'Jln. Sultan Hassanudin', 'Richardo Hartant', '-8.837440190216498', '2022-07-16 03:06:33', '2022-08-12 13:13:41', 1, 122, '121.65921121085465', '08776127', NULL, 23);
 
 -- --------------------------------------------------------
 
@@ -905,8 +905,8 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `telepon`, `latitude`, `longitude`, `created_at`, `updated_at`, `kotakabupaten_idkotakabupaten`) VALUES
-(1, 'Toko Barett', 'hello world', 1, 'asdasdasda', '123123', '-8.589259394724797', '116.13002335887123', NULL, '2022-07-15 19:10:18', 241),
-(2, 'Teratai Cookies', 'Menjual kue khas makkasar', 1, 'Komplek catalia', '0813', '-8.843257601381023', '121.65381767079468', '2022-07-12 11:32:46', '2022-07-12 11:33:20', 241);
+(1, 'Toko Barett', 'hello world', 1, 'Jln. Nenas No. 32', '123', '-8.846046282126355', '121.66005041105346', NULL, '2022-08-12 06:21:42', 241),
+(2, 'Teratai Cookies', 'Menjual kue khas makkasar', 1, 'Jln. Biji Kuda No. 69', '021-45767', '-8.831623096374207', '121.66375973065797', '2022-07-12 11:32:46', '2022-08-12 05:14:30', 276);
 
 -- --------------------------------------------------------
 
@@ -925,15 +925,16 @@ CREATE TABLE `transaksi` (
   `alamat_idalamat` int(11) NOT NULL,
   `pembayaran` varchar(45) DEFAULT NULL,
   `pengiriman` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL
+  `status` varchar(45) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, 1, 'transfer', 'kurir_toko', 'Selesai');
+INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`, `ongkir`) VALUES
+(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, 1, 'transfer', 'kurir_toko', 'Selesai', NULL);
 
 -- --------------------------------------------------------
 

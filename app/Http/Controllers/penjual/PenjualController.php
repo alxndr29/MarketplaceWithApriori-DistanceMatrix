@@ -67,4 +67,14 @@ class PenjualController extends Controller
             return back()->with('gagal', $e->getMessage());
         }
     }
+    public function ambilLokasi(){
+        try{
+            $lokasi = Toko::all();
+            return response()->json([
+                'lokasi' => $lokasi
+            ]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 }

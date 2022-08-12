@@ -152,11 +152,13 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     var totalSemua = 0;
-    var o;
-    var d;
-    var ongkir = 0;
+    var o; //origin latitude longtiude
+    var d; //destinatnion latitude longitude
+    var onkir = 0;
     var idtoko = 0;
     $('input[type=radio][name=toko]').change(function() {
+        $("#alamat").prop('selectedIndex', 0);
+        $("#pengiriman").prop('selectedIndex', 0);
         var total = 0;
         @foreach($b as $value)
         if ("{{$value->toko_users_id}}" == this.value.split("|")[0]) {
@@ -165,7 +167,7 @@
             idtoko = this.value.split("|")[0];
         }
         @endforeach
-        console.log(total);
+
         $("#total-products").html('IDR. ' + total);
         totalSemua = total;
         $("#total-price").html('IDR. ' + totalSemua);
@@ -175,8 +177,19 @@
 
     $("#alamat").change(function() {
         d = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
-        initMap(o, d);
-        alert(d);
+        // initMap(o, d);
+        // alert(d);
+    });
+    $("#pengiriman").change(function() {
+        if (this.value == "kurir_toko") {
+            initMap(o, d);
+        } else {
+            // ambil_sendiri
+            onkir = 0;
+            $("#total-price").html('IDR. ' + (totalSemua + onkir));
+            $("#total-ongkir").html('Rp. 0');
+        }
+
     });
 
     function initMap(origin, destination) {
@@ -197,30 +210,32 @@
             }
             console.log(response);
             console.log(response.rows[0].elements[0].distance.value);
-            onkir = response.rows[0].elements[0].distance.value * 500;
+            onkir = response.rows[0].elements[0].distance.value / 1000 * 500;
             $("#total-price").html('IDR. ' + (totalSemua + onkir));
-            $("#total-ongkir").html(response.rows[0].elements[0].distance.value + " km * 500perak " + (response.rows[0].elements[0].distance.value * 500));
+            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " km * 500perak " + (response.rows[0].elements[0].distance.value / 1000 * 500));
         }
     }
 
     $("#btncheckout").on("click", function() {
-        $.ajax({
-            url: "{{route('user.transaksistore')}}",
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                'idtoko': idtoko,
-                'alamat': $("#alamat").val(),
-                'pengiriman': $("#pengiriman").val().split("|")[0],
-                'pembayaran': $("#pembayaran").val()
-            },
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(response) {
-                console.log(response);
-            }
-        });
+        // $.ajax({
+        //     url: "{{route('user.transaksistore')}}",
+        //     type: "POST",
+        //     data: {
+        //         "_token": "{{ csrf_token() }}",
+        //         'idtoko': idtoko,
+        //         'alamat': $("#alamat").val(),
+        //         'pengiriman': $("#pengiriman").val().split("|")[0],
+        //         'pembayaran': $("#pembayaran").val()
+        //     },
+        //     success: function(response) {
+        //         console.log(response);
+        //     },
+        //     error: function(response) {
+        //         console.log(response);
+        //     }
+        // });
+        console.log(totalSemua);
+        console.log(onkir);
     });
 </script>
 @endsection

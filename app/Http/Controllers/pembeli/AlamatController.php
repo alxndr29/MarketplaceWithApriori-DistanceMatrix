@@ -40,8 +40,9 @@ class AlamatController extends Controller
     }
     public function edit($id)
     {
+        // return $id;
         try {
-            $alamat = Alamat::find($id)->first();
+            $alamat = Alamat::where('idalamat', $id)->first();
             return response()->json([
                 'data' => $alamat
             ]);
@@ -52,8 +53,8 @@ class AlamatController extends Controller
         }
     }
     public function update(Request $request, $id)
-    { 
-        try{
+    {
+        try {
             $alamat = Alamat::find($id);
             $alamat->alamat_lengkap = $request->get('alamat_lengkap_edit');
             $alamat->nama_penerima = $request->get('nama_penerima_edit');
@@ -65,7 +66,7 @@ class AlamatController extends Controller
             $alamat->users_id =  Auth::user()->id;
             $alamat->save();
             return redirect()->back()->with('sukses', 'Berhasil edit alamat');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());
         }
         return $request->all();

@@ -106,7 +106,9 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
-Route::get('cobapeta',function(){
+
+Route::get('ambillokasi','penjual\PenjualController@ambilLokasi')->name('ambillokasi');
+Route::get('cobapeta', function () {
     return view('pembeli.lokasitoko');
 });
 
@@ -187,3 +189,5 @@ Route::get('kurir/status/{id}/{status}', function ($id, $status) {
         return redirect()->back()->with('gagal', $e->getMessage());
     }
 })->name('kurir.status');
+
+

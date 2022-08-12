@@ -174,9 +174,6 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
-
-        //$('#exampleModalCenter').modal('show');
         $('#latitude').val('-8.5876173');
         $('#longitude').val('116.0815738');
         $('#myTable').DataTable();
@@ -208,6 +205,7 @@
 
             },
             success: function(response) {
+                // console.log(response);
                 $("#nama_penerima_edit").val(response.data.nama_penerima);
                 $("#alamat_lengkap_edit").val(response.data.alamat_lengkap);
                 $("#telepon_edit").val(response.data.telepon);
@@ -243,7 +241,6 @@
                     );
                     infoWindow.open(map);
                 });
-
                 $("#modal-edit").modal('show');
                 console.log(response.data);
             },
