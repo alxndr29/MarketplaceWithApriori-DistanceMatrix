@@ -12,9 +12,9 @@
             <div class="col-md-9 col-sm-9 col-xs-9">
                 <div class="bread-crumb">
                     <ul>
-                        <li><a href="index-2.html">home</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
                         <li>\</li>
-                        <li><a href="grid-view.html">woman</a></li>
+                        <li><a href="{{url('search')}}">Search</a></li>
                     </ul>
                 </div>
             </div>
@@ -49,21 +49,21 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <p> Order By: </p>
+                                    <p> Urutkan Harga: </p>
                                     <select id="order">
                                         @if($order == null)
-                                            <option value="asc" selected="selected">Ascending</option>
-                                            <option value="desc">Descending</option>
+                                            <option value="asc" selected="selected">Terendah</option>
+                                            <option value="desc">Tertinggi</option>
                                         @elseif ($order == "asc")
-                                            <option value="asc" selected="selected">Ascending</option>
-                                            <option value="desc">Descending</option>
+                                            <option value="asc" selected="selected">Terendah</option>
+                                            <option value="desc">Tertinggi</option>
                                         @else
-                                            <option value="asc">Ascending</option>
-                                            <option value="desc" selected="selected">Descending</option>
+                                            <option value="asc">Terendah</option>
+                                            <option value="desc" selected="selected">Tertinggi</option>
                                         @endif
                                     </select>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <p> Min Rating: </p>
                                     <select id="rating">
                                         <option value="all" selected="selected">Semua</option>
@@ -73,10 +73,10 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
-                                </li>
+                                </li> -->
                                 <li>
                                     <br>
-                                    <button type="button" id="btnsearch"> Cari </button>
+                                    <button type="button" id="btnsearch" class="btn btn-primary"> Cari </button>
                                 </li>
                             </ul>
                         </div>
@@ -140,7 +140,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="shoring pull-right">
-                                <div class="short-by">
+                                <!-- <div class="short-by">
                                     <p>Sort By</p>
                                     <div class="select-item">
                                         <select>
@@ -152,7 +152,8 @@
                                             <option value="">rating(lowest)</option>
                                         </select>
                                         <span class="fa fa-angle-down"></span> </div>
-                                </div>
+                                </div> -->
+
                                 <!-- <div class="show-item">
                                     <p>Show</p>
                                     <div class="select-item">

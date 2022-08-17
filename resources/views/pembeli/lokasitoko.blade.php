@@ -12,9 +12,9 @@
             <div class="col-md-9 col-sm-9 col-xs-9">
                 <div class="bread-crumb">
                     <ul>
-                        <li><a href="index-2.html">home</a></li>
+                        <li><a href="{{route('home')}}">home</a></li>
                         <li>\</li>
-                        <li><a href="grid-view.html">woman</a></li>
+                        <li><a href="{{url('cobapeta')}}">Lokasi</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,8 +55,25 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // getDataLokasi();
+        getLocation();
     });
 
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        // x.innerHTML = "Latitude: " + position.coords.latitude +
+        //     "<br>Longitude: " + position.coords.longitude;
+        latitude_sekarang = position.coords.latitude;
+        longitude_sekarang = position.coords.longitude;
+
+        initMap();
+    }
     var directionsRenderer;
     var directionsService;
     var haight;
@@ -72,7 +89,7 @@
         directionsRenderer = new google.maps.DirectionsRenderer({
             suppressMarkers: true
         });
-        haight = new google.maps.LatLng(-8.844141683196028, 121.66765931017436);
+        haight = new google.maps.LatLng(latitude_sekarang, longitude_sekarang);
         // oceanBeach = new google.maps.LatLng(-8.83281336036591, 121.67777016991337);
         mapOptions = {
             zoom: 14,

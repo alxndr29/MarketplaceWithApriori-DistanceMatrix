@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-12 col-xs-12">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Launch demo modal
+                    Tambah Alamat
                 </button>
             </div>
         </div>

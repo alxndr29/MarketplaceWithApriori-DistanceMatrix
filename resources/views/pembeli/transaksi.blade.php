@@ -21,7 +21,7 @@
         </div>
     </div>
 </div>
-<div id="result-json">JSON result will appear here after payment:<br></div>
+<!-- <div id="result-json">JSON result will appear here after payment:<br></div> -->
 <!-- bredcrumb and page title block end  -->
 <div id="product-category">
     <div class="container">
@@ -77,7 +77,7 @@
 </div>
 <br>
 <!-- Modal Detail -->
-@foreach ($review as $value)
+
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -142,7 +142,7 @@
         </div>
     </div>
 </div>
-@endforeach
+
 
 
 @endsection

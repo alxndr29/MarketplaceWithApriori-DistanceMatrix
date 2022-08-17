@@ -31,7 +31,7 @@
             <div class="header-top">
                 <div class="container">
                     <div class="call pull-left">
-                        <p>Call us toll free : <span>+1324 353 4689</span></p>
+                        <!-- <p>Call us toll free : <span>+1324 353 4689</span></p> -->
                     </div>
                     <div class="user-info pull-right">
                         <div class="user">
@@ -43,7 +43,30 @@
                                     <a href="{{ route('register') }}">{{ __('Register') }}</a>
                                     @endif
                                     @else
-                                    <a href="#">{{ Auth::user()->name }}</a>
+                                    <div class="dropdown">
+                                        <button type="button" data-toggle="dropdown" style="color:black !important;">
+                                            {{ Auth::user()->name }}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{route('user.transaksi')}}" style="color:black !important;">Transaksi</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('user.keranjang')}}" style="color:black !important;">Keranjang</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('user.alamat')}}" style="color:black !important;">Alamat</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('user.wishlist')}}" style="color:black !important;">Wishlist</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{url('cobapeta')}}" style="color:black !important;">Lokasi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- <a href="#">{{ Auth::user()->name }}</a> -->
                                     ||
                                     <a href="{{route('seller.dashboard')}}">Seller Dashboard</a> ||
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -173,7 +196,7 @@
                         <div class="col-md-6 search_block">
                             <div class="search">
                                 <form action="http://html.lionode.com/korslook/grid-view.html">
-                                    <div class="search_cat">
+                                    <!-- <div class="search_cat">
                                         <select class="search-category" name="search-category">
                                             <option class="computer" selected>All Categories</option>
                                             <option class="computer">Men</option>
@@ -182,7 +205,8 @@
                                             <option class="computer">Computer</option>
                                             <option class="computer">Electronics</option>
                                         </select>
-                                        <span class="fa fa-angle-down"></span> </div>
+                                        <span class="fa fa-angle-down"></span>
+                                    </div> -->
                                     <input type="text" placeholder="Search..." id="txtsearch">
                                     <button type="button" id="btnsearchatas" class="btn submit"> <span class="fa fa-search"></span></button>
                                 </form>
@@ -240,7 +264,7 @@
                     </div>
                 </div>
             </div>
-            <div class="header-bottom">
+            <!-- <div class="header-bottom">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -256,7 +280,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- Header End -->
 
@@ -297,7 +321,7 @@
         <div id="offer">
             <div class="container">
                 <div class="offer">
-                    <p>30 New Mega Sales. Upto 80% Off. Starting Everyday at 9 AM.</p>
+                    <!-- <p>30 New Mega Sales. Upto 80% Off. Starting Everyday at 9 AM.</p> -->
                 </div>
             </div>
         </div>
@@ -388,7 +412,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12">
                             <div class="footer-link">
                                 <ul>
@@ -402,7 +426,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="copy-right">
@@ -411,9 +435,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer-offer">
+                <!-- <div class="footer-offer">
                     <h2>$2.55 Next Day Delivery! Ends 8PM ! USE CODE FLASH</h2>
-                </div>
+                </div> -->
             </div>
         </footer>
         <!-- Footer block End  -->

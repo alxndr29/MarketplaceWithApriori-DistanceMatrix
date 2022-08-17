@@ -217,23 +217,25 @@
     }
 
     $("#btncheckout").on("click", function() {
-        // $.ajax({
-        //     url: "{{route('user.transaksistore')}}",
-        //     type: "POST",
-        //     data: {
-        //         "_token": "{{ csrf_token() }}",
-        //         'idtoko': idtoko,
-        //         'alamat': $("#alamat").val(),
-        //         'pengiriman': $("#pengiriman").val().split("|")[0],
-        //         'pembayaran': $("#pembayaran").val()
-        //     },
-        //     success: function(response) {
-        //         console.log(response);
-        //     },
-        //     error: function(response) {
-        //         console.log(response);
-        //     }
-        // });
+        $.ajax({
+            url: "{{route('user.transaksistore')}}",
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'idtoko': idtoko,
+                'alamat': $("#alamat").val(),
+                'pengiriman': $("#pengiriman").val().split("|")[0],
+                'pembayaran': $("#pembayaran").val(),
+                'totalsemua': totalSemua,
+                'onkir': onkir
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
         console.log(totalSemua);
         console.log(onkir);
     });

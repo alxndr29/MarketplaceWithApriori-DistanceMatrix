@@ -6,15 +6,15 @@
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <div class="page-title">
-                    <h4>Wishlist</h4>
+                    <h4>Produk Wishlist</h4>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-9">
                 <div class="bread-crumb">
                     <ul>
-                        <li><a href="index-2.html">home</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
                         <li>\</li>
-                        <li><a href="grid-view.html">woman</a></li>
+                        <li><a href="{{route('user.wishlist')}}">Wishlist</a></li>
                     </ul>
                 </div>
             </div>
