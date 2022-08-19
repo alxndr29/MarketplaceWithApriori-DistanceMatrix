@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 12 Agu 2022 pada 14.48
+-- Waktu pembuatan: 19 Agu 2022 pada 15.06
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -922,19 +922,19 @@ CREATE TABLE `transaksi` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT NULL,
   `alamat_idalamat` int(11) NOT NULL,
   `pembayaran` varchar(45) DEFAULT NULL,
   `pengiriman` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `ongkir` int(11) DEFAULT NULL
+  `status` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`, `ongkir`) VALUES
-(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, 1, 'transfer', 'kurir_toko', 'Selesai', NULL);
+INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `ongkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
+(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, NULL, 1, 'transfer', 'kurir_toko', 'Selesai');
 
 -- --------------------------------------------------------
 
@@ -1023,7 +1023,8 @@ CREATE TABLE `wishlist` (
 
 INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
 (1, 1),
-(1, 2);
+(1, 2),
+(1, 3);
 
 --
 -- Indexes for dumped tables
