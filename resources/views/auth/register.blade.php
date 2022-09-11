@@ -23,9 +23,9 @@
                 <section class="login_content">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-                        <h1>Register Form</h1>
+                        <h1>Halaman Registrasi</h1>
                         <div>
-                            <input id="name" type="text" placeholder="Enter name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
+                            <input id="name" type="text" placeholder="Masukan Nama" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
                             @error('name')
                             <span>
                                 <strong>{{ $message }}</strong>
@@ -33,13 +33,13 @@
                             @enderror
                         </div>
                         <div>
-                            <input id="email" type="email" placeholder="Enter an email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="off">
+                            <input id="email" type="email" placeholder="Masukan Alamat Email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="off">
                             @error('email')
                             <strong>{{ $message }}</strong>
                             @enderror
                         </div>
                         <div>
-                            <input id="password" type="password" placeholder="Enter password" class="form-control" name="password" required autocomplete="off">
+                            <input id="password" type="password" placeholder="Masukan Kata Sandi" class="form-control" name="password" required autocomplete="off">
                             @error('password')
                             <span>
                                 <strong>{{ $message }}</strong>
@@ -47,62 +47,26 @@
                             @enderror
                         </div>
                         <div>
-                            <input id="password-confirm" type="password" placeholder="Enter password confirmation" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <input id="password-confirm" type="password" placeholder="Konfirmasi Kata Sandi" class="form-control" name="password_confirmation" required autocomplete="new-password">
                         </div>
                         <div>
-                            <button class="btn btn-secondary" type="submit">Register</button>
+                            <button class="btn btn-secondary" type="submit">Daftar</button>
                             <!-- <a class="reset_pass" href="{{ route('password.request') }}">Lost your password?</a> -->
                         </div>
 
                         <div class="clearfix"></div>
 
                         <div class="separator">
-                            <p class="change_link">Already Register?
-                                <a href="{{ route('login') }}" class="to_register"> Create Account </a>
+                            <p class="change_link">Sudah Memiliki Akun?
+                                <a href="{{ route('login') }}" class="to_register"> Buat Akun </a>
                             </p>
 
                             <div class="clearfix"></div>
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
-
-            <div id="register" class="animate form registration_form">
-                <section class="login_content">
-                    <form>
-                        <h1>Create Account</h1>
-                        <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
-                        </div>
-                        <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" />
-                        </div>
-                        <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
-                        </div>
-                        <div>
-                            <a class="btn btn-default submit" href="index.html">Submit</a>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <div class="separator">
-                            <p class="change_link">Already a member ?
-                                <a href="#signin" class="to_register"> Log in </a>
-                            </p>
-
-                            <div class="clearfix"></div>
-                            <br />
-
-                            <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                                <h1><i class="fa fa-paw"></i> Lombok Marketplace!</h1>
+                                <p>©2022 All Rights Reserved. Lombok Marketplace Developer Team</p>
                             </div>
                         </div>
                     </form>

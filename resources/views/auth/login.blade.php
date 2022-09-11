@@ -23,9 +23,9 @@
                 <section class="login_content">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <h1>Login Form</h1>
+                        <h1>Halaman Login</h1>
                         <div>
-                            <input id="email" type="email" placeholder="Enter an email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="off">
+                            <input id="email" type="email" placeholder="Masukan Alamat Email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="off">
                             @error('email')
 
                             <strong>{{ $message }}</strong>
@@ -33,7 +33,7 @@
                             @enderror
                         </div>
                         <div>
-                            <input id="password" type="password" placeholder="Enter an password" class="form-control" name="password" required autocomplete="off">
+                            <input id="password" type="password" placeholder="Masukan Kata Sandi" class="form-control" name="password" required autocomplete="off">
                             @error('password')
                             <span>
                                 <strong>{{ $message }}</strong>
@@ -41,23 +41,23 @@
                             @enderror
                         </div>
                         <div>
-                            <button class="btn btn-secondary" type="submit">Log in</button>
-                            <a class="reset_pass" href="{{ route('password.request') }}">Lost your password?</a>
+                            <button class="btn btn-secondary" type="submit">Masuk</button>
+                            <a class="reset_pass" href="{{ route('password.request') }}">Lupa Kata Sandi?</a>
                         </div>
 
                         <div class="clearfix"></div>
 
                         <div class="separator">
-                            <p class="change_link">New to site?
-                                <a href="{{ route('register') }}" class="to_register"> Create Account </a>
+                            <p class="change_link">Belum Memiliki Akun?
+                                <a href="{{ route('register') }}" class="to_register"> Buat Akun </a>
                             </p>
 
                             <div class="clearfix"></div>
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                                <h1><i class="fa fa-paw"></i> Lombok Marketplace!</h1>
+                                <p>©2022 All Rights Reserved. Lombok Marketplace Developer Team</p>
                             </div>
                         </div>
                     </form>
