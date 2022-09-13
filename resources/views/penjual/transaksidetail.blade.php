@@ -100,14 +100,14 @@
                                     <td></td>
                                     <td></td>
                                     <td>Total Ongkir</td>
-                                    <td>Rp. {{number_format(0)}}</td>
+                                    <td>Rp. {{number_format($datapemesan->onkir)}}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>Total Seluruh</td>
-                                    <td>Rp. {{number_format($datapemesan->total)}}</td>
+                                    <td>Rp. {{number_format($datapemesan->total + $datapemesan->onkir)}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -121,7 +121,11 @@
                         @endif
 
                         @if($datapemesan->status == "Pesanan Diproses")
-                            <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Dikirim'])}}" class="btn btn-primary">Pesanan Dikirim</a>
+                            @if ($datapemesan->pengiriman == "ambil_sendiri")
+                                <a href="" class="btn btn-primary">Notif User</a>
+                            @else
+                                <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Dikirim'])}}" class="btn btn-primary">Pesanan Dikirim</a>
+                            @endif
                         @endif
                     </div>
                 </div>

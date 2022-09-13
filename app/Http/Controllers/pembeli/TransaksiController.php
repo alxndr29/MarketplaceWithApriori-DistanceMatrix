@@ -41,11 +41,10 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::where('transaksi.users_id', Auth::user()->id)
             ->leftJoin('users_has_produk', 'users_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->groupBy('transaksi.idtransaksi')
             ->select('transaksi.*', DB::raw('COUNT(users_has_produk.transaksi_idtransaksi) as hitung'))
             ->get();
-
-
-        // return $transaksi;
+        //return $transaksi;
         return view('pembeli.transaksi', compact('transaksi'));
     }
     public function ambildataajax($id)
@@ -89,6 +88,7 @@ class TransaksiController extends Controller
             $transaksi->alamat_idalamat = $request->get('alamat');
             $transaksi->pengiriman = $request->get('pengiriman');
             $transaksi->pembayaran = $request->get('pembayaran');
+            $transaksi->onkir = $request->get('onkir');
             if ($request->get('pembayaran') == 'transfer') {
                 $transaksi->status = "Menunggu Pembayaran";
             } else {
@@ -131,6 +131,7 @@ class TransaksiController extends Controller
                 $midtrans->save();
             }
             DB::commit();
+            return "berhasil";
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
@@ -188,8 +189,10 @@ class TransaksiController extends Controller
                 ]);
             }
             DB::commit();
+            return 'berhasil';
         } catch (\Exception $e) {
             DB::rollBack();
+            return $e->getMessage();
         }
     }
 }

@@ -37,12 +37,6 @@
                         <div class="user">
                             <ul>
                                 <li>
-                                    @guest
-                                    <a href="{{ route('login') }}">{{ __('Login') }}</a> ||
-                                    @if (Route::has('register'))
-                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    @endif
-                                    @else
                                     <div class="dropdown">
                                         <button type="button" data-toggle="dropdown" style="color:black !important;">
                                             {{ Auth::user()->name }}
@@ -66,18 +60,27 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- <a href="#">{{ Auth::user()->name }}</a> -->
+                                </li>
+                                <li>
+                                    @guest
+                                        <a href="{{ route('login') }}">{{ __('Login') }}</a> ||
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        @endif
+                                    @else
+                                    
+                                    <a href="{{route('seller.dashboard')}}">
+                                        Seller Dashboard
+                                    </a> 
                                     ||
-                                    <a href="{{route('seller.dashboard')}}">Seller Dashboard</a> ||
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <b> Logout </b>
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                     @endguest
-                                    <!-- <a href="#" data-toggle="modal" data-target="#login">Login</a> -->
+                                  
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="login" role="dialog">
@@ -191,7 +194,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3 header-left">
-                            <div class="logo"> <a href="{{route('home')}}"><img src="{{asset('kors-look/html.lionode.com/korslook/images/logo.png')}}" alt="#"></a> </div>
+                            <div class="logo"> <a href="{{route('home')}}"><img src="{{asset('kors-look/html.lionode.com/korslook/images/logo1.png')}}" alt="#"></a> </div>
                         </div>
                         <div class="col-md-6 search_block">
                             <div class="search">

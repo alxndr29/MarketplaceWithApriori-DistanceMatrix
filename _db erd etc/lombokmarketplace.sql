@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 19 Agu 2022 pada 15.06
+-- Waktu pembuatan: 13 Sep 2022 pada 16.22
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -47,8 +47,7 @@ CREATE TABLE `alamat` (
 --
 
 INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
-(1, 'Jln. Sultan Hassanudin', 'Richardo Hartanto', '-8.841058126271845', '2022-07-16 01:26:38', '2022-08-12 13:13:20', 1, 122, '121.64767269922905', '08776127', NULL, 23),
-(2, 'Jln. Sultan Hassanudin', 'Richardo Hartant', '-8.837440190216498', '2022-07-16 03:06:33', '2022-08-12 13:13:41', 1, 122, '121.65921121085465', '08776127', NULL, 23);
+(3, 'Jln. Kesehatan No 43', 'Alexandro', '-8.84344522701749', '2022-09-13 13:59:21', '2022-09-13 13:59:21', 1, 122, '121.64428642078308', '08123323918', NULL, 23);
 
 -- --------------------------------------------------------
 
@@ -169,8 +168,7 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
-(1, 1, '1'),
-(1, 2, '1'),
+(1, 2, '2'),
 (1, 3, '1');
 
 -- --------------------------------------------------------
@@ -740,7 +738,8 @@ CREATE TABLE `midtrans` (
 --
 
 INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
-(2, 'b353f502-1026-49e6-b2a2-109219faa18f', 'settlement', 6, '2022-08-06 23:32:24', '2022-08-06 23:55:13');
+(4, 'f3a13793-ad13-4eeb-a790-f5665fd42143', 'settlement', 8, '2022-09-13 06:51:49', '2022-09-13 06:51:49'),
+(5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08');
 
 -- --------------------------------------------------------
 
@@ -796,7 +795,7 @@ CREATE TABLE `pengiriman` (
 --
 
 INSERT INTO `pengiriman` (`idpengiriman`, `tanggalwaktu`, `status`, `created_at`, `updated_at`, `kurir_idkurir`, `transaksi_idtransaksi`) VALUES
-(1, '2022-08-09 01:45:42', 'Sampai Tujuan', '2022-08-08 17:45:42', '2022-08-09 05:34:11', 2, 6);
+(2, '2022-09-13 15:14:58', 'Sampai Tujuan', '2022-09-13 07:14:58', '2022-09-13 07:18:04', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -922,7 +921,7 @@ CREATE TABLE `transaksi` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
-  `ongkir` int(11) DEFAULT NULL,
+  `onkir` int(11) DEFAULT NULL,
   `alamat_idalamat` int(11) NOT NULL,
   `pembayaran` varchar(45) DEFAULT NULL,
   `pengiriman` varchar(45) DEFAULT NULL,
@@ -933,8 +932,9 @@ CREATE TABLE `transaksi` (
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `ongkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(6, '2022-08-07 15:32:22', 1, 1, '2022-08-06 23:32:22', '2022-08-09 05:43:35', 45000, NULL, 1, 'transfer', 'kurir_toko', 'Selesai');
+INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
+(8, '2022-09-13 22:51:48', 1, 1, '2022-09-13 06:51:48', '2022-09-13 07:08:01', 65000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai'),
+(9, '2022-09-13 22:52:07', 1, 1, '2022-09-13 06:52:07', '2022-09-13 07:18:10', 40000, 984, 3, 'transfer', 'kurir_toko', 'Selesai');
 
 -- --------------------------------------------------------
 
@@ -954,8 +954,9 @@ CREATE TABLE `transaksi_has_produk` (
 --
 
 INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
-(6, 1, 25000, 1),
-(6, 2, 20000, 1);
+(8, 1, 25000, 1),
+(8, 2, 40000, 2),
+(9, 2, 40000, 2);
 
 -- --------------------------------------------------------
 
@@ -990,6 +991,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 CREATE TABLE `users_has_produk` (
+  `id` int(11) NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `produk_idproduk` int(11) NOT NULL,
   `transaksi_idtransaksi` int(11) NOT NULL,
@@ -1002,9 +1004,10 @@ CREATE TABLE `users_has_produk` (
 -- Dumping data untuk tabel `users_has_produk`
 --
 
-INSERT INTO `users_has_produk` (`users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
-(1, 1, 6, 'HAR', '5', '2022-08-10 22:11:27'),
-(1, 2, 6, 'TOP', '1', '2022-08-10 22:11:27');
+INSERT INTO `users_has_produk` (`id`, `users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
+(1, 1, 2, 9, 'Jos dari kurir toko', '3', '2022-09-13 23:20:28'),
+(2, 1, 1, 8, 'w', '5', '2022-09-13 23:28:28'),
+(3, 1, 2, 8, 's', '5', '2022-09-13 23:28:28');
 
 -- --------------------------------------------------------
 
@@ -1023,8 +1026,7 @@ CREATE TABLE `wishlist` (
 
 INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
 (1, 1),
-(1, 2),
-(1, 3);
+(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -1173,7 +1175,7 @@ ALTER TABLE `users`
 -- Indeks untuk tabel `users_has_produk`
 --
 ALTER TABLE `users_has_produk`
-  ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `fk_users_has_produk_produk4_idx` (`produk_idproduk`),
   ADD KEY `fk_users_has_produk_users4_idx` (`users_id`),
   ADD KEY `fk_users_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
@@ -1194,7 +1196,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `etalase_produk`
@@ -1224,7 +1226,7 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -1236,7 +1238,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
@@ -1248,13 +1250,19 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `users_has_produk`
+--
+ALTER TABLE `users_has_produk`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

@@ -41,11 +41,12 @@
                         </thead>
                         <tbody>
                             @foreach ($transaksi as $key => $value)
+                            @if ($value->idtransaksi != null)
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$value->idtransaksi}}</td>
                                 <td>{{$value->tanggal}}</td>
-                                <td>{{$value->total}}</td>
+                                <td>Rp. {{number_format($value->total)}}</td>
                                 <td>
                                     {{$value->status}}
                                 </td>
@@ -60,12 +61,14 @@
                                     @endif
 
                                     @if($value->status == "Selesai" && $value->hitung == 0)
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-review-{{$value->idtransaksi}}">
+                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-review-{{$value->idtransaksi}}">
                                         Review
-                                    </button>
+                                    </button> -->
+                                    <a class="btn btn-primary" href="{{route('user.transaksiambildatareview',$value->idtransaksi)}}">Review</a>
                                     @endif
                                 </td>
                             </tr>
+                            @endif
                             @endforeach
 
                         </tbody>
@@ -176,17 +179,20 @@
                     '<br>' +
                     'Pengiriman: ' + response.datatransaksi.pengiriman
                 );
-                $("#datatransaksi1").append(
-                    'Pengiriman:' +
-                    '<br>' +
-                    'Tanggal: ' + response.datapengiriman.tanggalwaktu +
-                    '<br>' +
-                    'Status: ' + response.datapengiriman.status +
-                    '<br>' +
-                    'Nama Kurir: ' + response.datapengiriman.nama +
-                    '<br>' +
-                    'Telp: ' + response.datapengiriman.email
-                );
+                if (response.datapengiriman != null) {
+                    $("#datatransaksi1").append(
+                        'Pengiriman:' +
+                        '<br>' +
+                        'Tanggal: ' + response.datapengiriman.tanggalwaktu +
+                        '<br>' +
+                        'Status: ' + response.datapengiriman.status +
+                        '<br>' +
+                        'Nama Kurir: ' + response.datapengiriman.nama +
+                        '<br>' +
+                        'Telp: ' + response.datapengiriman.email
+                    );
+                }
+
                 $("#isitablealamat").append(
                     '<tr>' +
                     '<th>' + response.datatransaksi.alamat_lengkap + '</th>' +

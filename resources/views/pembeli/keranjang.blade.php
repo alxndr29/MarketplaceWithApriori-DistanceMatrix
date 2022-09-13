@@ -89,12 +89,17 @@
                                                 <td class="price">
                                                     <!-- <button type="button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-alamat"> Pilih Alamat </button> -->
                                                     <div class="form-group">
+                                                        @if(count($alamat) == 0)
+                                                        <a href="{{route('user.alamat')}}"> Belum ada alamat. Klik Disini Untuk Tambah </a>
+                                                        @else
                                                         <select class="form-control" id="alamat">
-                                                            <option value="">Pilih</option>
+                                                            <option value="Pilih">Pilih</option>
                                                             @foreach ($alamat as $key => $value)
                                                             <option value="{{$value->idalamat}}|{{$value->latitude}}|{{$value->longitude}}">{{$value->nama_penerima}} {{$value->alamat_lengkap}}</option>
                                                             @endforeach
                                                         </select>
+                                                        @endif
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -102,7 +107,7 @@
                                                 <td>Pengiriman</td>
                                                 <td class="price">
                                                     <select name="pengiriman" id="pengiriman" class="form-control">
-                                                        <option value="" selected>Pilih</option>
+                                                        <option value="Pilih" selected>Pilih</option>
                                                         <option value="kurir_toko">Kurir Toko</option>
                                                         <option value="ambil_sendiri">Ambil Sendiri</option>
                                                     </select>
@@ -157,8 +162,11 @@
     var onkir = 0;
     var idtoko = 0;
     $('input[type=radio][name=toko]').change(function() {
+        $("#alamat").attr('disabled', false);
+
         $("#alamat").prop('selectedIndex', 0);
         $("#pengiriman").prop('selectedIndex', 0);
+
         var total = 0;
         @foreach($b as $value)
         if ("{{$value->toko_users_id}}" == this.value.split("|")[0]) {
@@ -172,13 +180,21 @@
         totalSemua = total;
         $("#total-price").html('IDR. ' + totalSemua);
         o = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
-        initMap(o, d);
+
+        if ($("#pengiriman").val() == "Pilih") {
+            $("#total-ongkir").html(0);
+        } else {
+            initMap(o, d);
+        }
     });
 
     $("#alamat").change(function() {
-        d = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
-        // initMap(o, d);
-        // alert(d);
+        if (this.value == "Pilih") {
+            $("#pengiriman").attr('disabled', true);
+        } else {
+            $("#pengiriman").attr('disabled', false);
+            d = (this.value.split("|")[1] + "," + this.value.split("|")[2]);
+        }
     });
     $("#pengiriman").change(function() {
         if (this.value == "kurir_toko") {
@@ -189,7 +205,6 @@
             $("#total-price").html('IDR. ' + (totalSemua + onkir));
             $("#total-ongkir").html('Rp. 0');
         }
-
     });
 
     function initMap(origin, destination) {
@@ -215,7 +230,6 @@
             $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " km * 500perak " + (response.rows[0].elements[0].distance.value / 1000 * 500));
         }
     }
-
     $("#btncheckout").on("click", function() {
         $.ajax({
             url: "{{route('user.transaksistore')}}",
@@ -238,6 +252,12 @@
         });
         console.log(totalSemua);
         console.log(onkir);
+    });
+    $(document).ready(function() {
+        $("#alamat").attr('disabled', true);
+        $("#pengiriman").attr('disabled', true);
+        $("#pembayaran").attr('disabled', true);
+        $('input[type=radio][name=toko]').prop('checked', false);
     });
 </script>
 @endsection

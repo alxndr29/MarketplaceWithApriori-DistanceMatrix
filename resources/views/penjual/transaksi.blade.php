@@ -39,6 +39,7 @@
                             <th>No</th>
                             <th>ID Transaksi</th>
                             <th>Jumlah</th>
+                            <th>Pengiriman</th>
                             <th>Status</th>
                             <th>Detail</th>
                         </tr>
@@ -48,7 +49,8 @@
                         <tr>
                             <th>{{$key + 1}}</th>
                             <th>{{$value->idtransaksi}}</th>
-                            <th>{{$value->total}}</th>
+                            <th>Rp. {{number_format($value->total)}}</th>
+                            <th>{{$value->pengiriman}}</th>
                             <th>{{$value->status}}</th>
                             <th>
                                 <a href="{{route('seller.transaksishow',$value->idtransaksi)}}" class="btn btn-primary"> Detail </a>
