@@ -9,7 +9,7 @@ class ChatController extends Controller
 {
     //
     public function indexPembeli(){
-
+        return view('pembeli.chat');
     }
     public function indexPenjual(){
 

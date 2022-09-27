@@ -36,6 +36,7 @@
                     <div class="user-info pull-right">
                         <div class="user">
                             <ul>
+                                @if(Auth::check())
                                 <li>
                                     <div class="dropdown">
                                         <button type="button" data-toggle="dropdown" style="color:black !important;">
@@ -58,20 +59,23 @@
                                             <li>
                                                 <a href="{{url('cobapeta')}}" style="color:black !important;">Lokasi</a>
                                             </li>
+                                            <li>
+                                                <a href="{{url('obrolan')}}" style="color:black !important;">Obrolan</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
+                                @endif
                                 <li>
                                     @guest
-                                        <a href="{{ route('login') }}">{{ __('Login') }}</a> ||
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                                        @endif
+                                    <a href="{{ route('login') }}">{{ __('Login') }}</a> ||
+                                    @if (Route::has('register'))
+                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    @endif
                                     @else
-                                    
                                     <a href="{{route('seller.dashboard')}}">
                                         Seller Dashboard
-                                    </a> 
+                                    </a>
                                     ||
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <b> Logout </b>
@@ -80,8 +84,6 @@
                                         @csrf
                                     </form>
                                     @endguest
-                                  
-
                                     <!-- Modal -->
                                     <div class="modal fade" id="login" role="dialog">
                                         <div class="modal-dialog">

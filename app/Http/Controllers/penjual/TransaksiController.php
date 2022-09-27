@@ -20,6 +20,8 @@ class TransaksiController extends Controller
     {
         $datapemesan = Transaksi::join('users', 'users.id', 'transaksi.users_id')->where('transaksi.idtransaksi', $id)->first();
 
+        // dd($datapemesan);
+
         $databarang = Transaksi::join('transaksi_has_produk', 'transaksi_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
             ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
             ->where('transaksi.idtransaksi', $id)

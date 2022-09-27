@@ -121,14 +121,51 @@
                         @endif
 
                         @if($datapemesan->status == "Pesanan Diproses")
-                            @if ($datapemesan->pengiriman == "ambil_sendiri")
-                                <a href="" class="btn btn-primary">Notif User</a>
-                            @else
-                                <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Dikirim'])}}" class="btn btn-primary">Pesanan Dikirim</a>
-                            @endif
+                        @if ($datapemesan->pengiriman == "ambil_sendiri")
+                        <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Siap Diambil'])}}" class="btn btn-primary">Pesanan Siap Diambil</a>
+                        @else
+                        <a href="{{route('seller.transaksistatus',['id' => $datapemesan->idtransaksi, 'status' => 'Pesanan Dikirim'])}}" class="btn btn-primary">Pesanan Dikirim</a>
+                        @endif
+                        @endif
+
+                        @if ($datapemesan->status == "Pesanan Siap Diambil")
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Beritahu Pelanggan
+                        </button>
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="p1">
+                        <a class="btn btn-primary" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{$datapemesan->email}}">Via Email</a>
+                    </div>
+                    <div class="p1">
+                        <a class="btn btn-primary" href="https://wa.me/62{{$datapemesan->telepon}}">Via WhatsApp</a>
+                    </div>
+                    <div class="p1">
+                        <a class="btn btn-primary" href="#">Via Chat</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
             </div>
         </div>
     </div>

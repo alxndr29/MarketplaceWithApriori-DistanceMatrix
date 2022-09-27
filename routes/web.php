@@ -103,6 +103,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('transaksi/status/{id}/{status}', 'pembeli\TransaksiController@ubahstatus')->name('user.transaksiubahstatus');
     Route::get('transaksi/datareview/{id}', 'pembeli\TransaksiController@ambildatareview')->name('user.transaksiambildatareview');
     Route::post('transaksi/datareview/store/{id}', 'pembeli\TransaksiController@storereview')->name('user.transaksistoredatareview');
+
+    //Obrolan
+    Route::get('/obrolan','ChatController@indexPembeli')->name('pembeli.obrolanindex');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');

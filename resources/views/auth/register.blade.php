@@ -46,9 +46,22 @@
                             </span>
                             @enderror
                         </div>
+
                         <div>
                             <input id="password-confirm" type="password" placeholder="Konfirmasi Kata Sandi" class="form-control" name="password_confirmation" required autocomplete="new-password">
                         </div>
+
+                        <div>
+                            <input id="telepon" type="number" placeholder="+62(08xxx)" class="form-control" name="telepon" required autocomplete="off">
+                            @error('telepon')
+                            <span>
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <br>
+                        
                         <div>
                             <button class="btn btn-secondary" type="submit">Daftar</button>
                             <!-- <a class="reset_pass" href="{{ route('password.request') }}">Lost your password?</a> -->
