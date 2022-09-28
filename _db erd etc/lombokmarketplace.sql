@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 13 Sep 2022 pada 16.22
+-- Waktu pembuatan: 28 Sep 2022 pada 01.35
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -61,9 +61,17 @@ CREATE TABLE `chat` (
   `pengirim` enum('penjual','pembeli') DEFAULT NULL,
   `updated_at` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `users_id` bigint(20) UNSIGNED NOT NULL,
-  `users_id1` bigint(20) UNSIGNED NOT NULL
+  `idpembeli` bigint(20) UNSIGNED NOT NULL,
+  `idpenjual` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `chat`
+--
+
+INSERT INTO `chat` (`idchat`, `pesan`, `pengirim`, `updated_at`, `created_at`, `idpembeli`, `idpenjual`) VALUES
+(1, 'Mantap Hello World!', 'penjual', '2022-09-28 01:20:47', '2022-09-27 17:20:47', 1, 2),
+(2, 'Mantap Hello World!', 'penjual', '2022-09-28 01:20:53', '2022-09-27 17:20:53', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -168,7 +176,7 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
-(1, 2, '2'),
+(1, 2, '3'),
 (1, 3, '1');
 
 -- --------------------------------------------------------
@@ -739,7 +747,8 @@ CREATE TABLE `midtrans` (
 
 INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
 (4, 'f3a13793-ad13-4eeb-a790-f5665fd42143', 'settlement', 8, '2022-09-13 06:51:49', '2022-09-13 06:51:49'),
-(5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08');
+(5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08'),
+(6, '7c1feba9-2e5a-418b-a958-f1de2d931968', 'settlement', 10, '2022-09-27 05:35:20', '2022-09-27 05:35:20');
 
 -- --------------------------------------------------------
 
@@ -934,7 +943,8 @@ CREATE TABLE `transaksi` (
 
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
 (8, '2022-09-13 22:51:48', 1, 1, '2022-09-13 06:51:48', '2022-09-13 07:08:01', 65000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai'),
-(9, '2022-09-13 22:52:07', 1, 1, '2022-09-13 06:52:07', '2022-09-13 07:18:10', 40000, 984, 3, 'transfer', 'kurir_toko', 'Selesai');
+(9, '2022-09-13 22:52:07', 1, 1, '2022-09-13 06:52:07', '2022-09-13 07:18:10', 40000, 984, 3, 'transfer', 'kurir_toko', 'Selesai'),
+(10, '2022-09-27 21:35:19', 1, 1, '2022-09-27 05:35:19', '2022-09-27 05:39:38', 60000, 0, 3, 'transfer', 'ambil_sendiri', 'Pesanan Siap Diambil');
 
 -- --------------------------------------------------------
 
@@ -956,7 +966,8 @@ CREATE TABLE `transaksi_has_produk` (
 INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
 (8, 1, 25000, 1),
 (8, 2, 40000, 2),
-(9, 2, 40000, 2);
+(9, 2, 40000, 2),
+(10, 2, 60000, 3);
 
 -- --------------------------------------------------------
 
@@ -982,7 +993,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
 (1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
-(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL);
+(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL),
+(3, 'Babi', 'babi@babi.com', NULL, '$2y$10$crxnzxynuFJJIiMI0z21f.lC07U6atGO/3nur3nLP9Y6.p3wY6C2W', NULL, '2022-09-27 05:52:28', '2022-09-27 05:52:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -1046,8 +1058,8 @@ ALTER TABLE `alamat`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`idchat`),
-  ADD KEY `fk_chat_users1_idx` (`users_id`),
-  ADD KEY `fk_chat_users2_idx` (`users_id1`);
+  ADD KEY `fk_chat_users1_idx` (`idpembeli`),
+  ADD KEY `fk_chat_users2_idx` (`idpenjual`);
 
 --
 -- Indeks untuk tabel `etalase_produk`
@@ -1199,6 +1211,12 @@ ALTER TABLE `alamat`
   MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT untuk tabel `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `idchat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `etalase_produk`
 --
 ALTER TABLE `etalase_produk`
@@ -1226,7 +1244,7 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -1250,13 +1268,13 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users_has_produk`
@@ -1280,8 +1298,8 @@ ALTER TABLE `alamat`
 -- Ketidakleluasaan untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  ADD CONSTRAINT `fk_chat_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_chat_users2` FOREIGN KEY (`users_id1`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_chat_users1` FOREIGN KEY (`idpembeli`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_chat_users2` FOREIGN KEY (`idpenjual`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `etalase_produk`

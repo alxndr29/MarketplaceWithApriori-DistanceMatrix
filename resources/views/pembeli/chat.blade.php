@@ -117,8 +117,26 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
+       kirimPesan();
     });
+
+    function kirimPesan() {
+        $.ajax({
+            url: "{{route('pembeli.obrolanstore')}}",
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'idpenjual': 2,
+                'pesan': "Mantap Hello World!"
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    }
 </script>
 
 @endsection

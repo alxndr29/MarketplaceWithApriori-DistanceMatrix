@@ -106,6 +106,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Obrolan
     Route::get('/obrolan','ChatController@indexPembeli')->name('pembeli.obrolanindex');
+    Route::get('obrolan/get','ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
+    Route::post('/obrolan/post','ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
