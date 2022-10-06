@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 28 Sep 2022 pada 01.35
+-- Waktu pembuatan: 06 Okt 2022 pada 15.32
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -944,7 +944,7 @@ CREATE TABLE `transaksi` (
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
 (8, '2022-09-13 22:51:48', 1, 1, '2022-09-13 06:51:48', '2022-09-13 07:08:01', 65000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai'),
 (9, '2022-09-13 22:52:07', 1, 1, '2022-09-13 06:52:07', '2022-09-13 07:18:10', 40000, 984, 3, 'transfer', 'kurir_toko', 'Selesai'),
-(10, '2022-09-27 21:35:19', 1, 1, '2022-09-27 05:35:19', '2022-09-27 05:39:38', 60000, 0, 3, 'transfer', 'ambil_sendiri', 'Pesanan Siap Diambil');
+(10, '2022-09-27 21:35:19', 1, 1, '2022-09-27 05:35:19', '2022-10-05 06:20:52', 60000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai');
 
 -- --------------------------------------------------------
 
@@ -1019,7 +1019,8 @@ CREATE TABLE `users_has_produk` (
 INSERT INTO `users_has_produk` (`id`, `users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
 (1, 1, 2, 9, 'Jos dari kurir toko', '3', '2022-09-13 23:20:28'),
 (2, 1, 1, 8, 'w', '5', '2022-09-13 23:28:28'),
-(3, 1, 2, 8, 's', '5', '2022-09-13 23:28:28');
+(3, 1, 2, 8, 's', '5', '2022-09-13 23:28:28'),
+(4, 1, 2, 10, 'sada', '5', '2022-10-05 22:21:08');
 
 -- --------------------------------------------------------
 
@@ -1280,7 +1281,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `users_has_produk`
 --
 ALTER TABLE `users_has_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

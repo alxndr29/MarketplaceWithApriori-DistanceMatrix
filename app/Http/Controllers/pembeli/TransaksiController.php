@@ -189,10 +189,10 @@ class TransaksiController extends Controller
                 ]);
             }
             DB::commit();
-            return 'berhasil';
+            return redirect('transaksi')->with('sukses', 'Berhasil menambahkan review');
         } catch (\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            return redirect('transaksi')->with('gagal', $e->getMessage());
         }
     }
 }

@@ -56,14 +56,11 @@
                                     <button type="button" onClick="bayar({{$value->idtransaksi}})" class="btn btn-primary"> Bayar </button>
                                     @endif
 
-                                    @if($value->status == "Sampai Tujuan")
+                                    @if($value->status == "Sampai Tujuan" || $value->status == "Pesanan Siap Diambil")
                                     <a href="{{route('user.transaksiubahstatus',['id' => $value->idtransaksi, 'status'=> 'Selesai'])}}" class="btn btn-primary"> Selesai </a>
                                     @endif
 
                                     @if($value->status == "Selesai" && $value->hitung == 0)
-                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-review-{{$value->idtransaksi}}">
-                                        Review
-                                    </button> -->
                                     <a class="btn btn-primary" href="{{route('user.transaksiambildatareview',$value->idtransaksi)}}">Review</a>
                                     @endif
                                 </td>

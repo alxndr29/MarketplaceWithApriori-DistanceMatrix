@@ -167,7 +167,7 @@
                                     @foreach ($hasilAkhirRekomendasi as $value)
                                     <div class="item">
                                         <div class="product-block ">
-                                            <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:281px; height:366px;"></a> </div>
+                                            <div class="image"> <a href="product-detail-view.html"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:100%; height:366px;"></a> </div>
                                             <div class="product-details">
                                                 <div class="product-name">
                                                     <h4><a href="#">{{$value->nama}}</a></h4>
@@ -191,7 +191,7 @@
                                         </div>
                                     </div>
                                     @endforeach
-
+                                    
                                 </div>
                             </div>
                         </div>
