@@ -72,6 +72,12 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('/obrolan/seller/{idpembeli?}', 'ChatController@indexPenjual')->name('seller.obrolanindex');
     Route::get('obrolan/seller/data/get/{id}', 'ChatController@ambilDataPenjual')->name('seller.obrolanget');
     Route::post('/obrolan/seller/post', 'ChatController@storeDataPenjual')->name('seller.obrolanstore');
+
+    //Voucher
+    Route::get('voucher','penjual\VoucherController@index')->name('seller.voucherindex');
+    Route::post('voucher/store','penjual\VoucherController@store')->name('seller.voucherstore');
+    Route::put('voucher/update/{id}', 'penjual\VoucherController@edit')->name('seller.voucheredit');
+    Route::delete('voucher/store/{id}', 'penjual\VoucherController@destroy')->name('seller.voucherdestroy');
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko
@@ -119,6 +125,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('obrolan/data/get/{id}', 'ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
     Route::post('/obrolan/post', 'ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
 });
+
+//ADMIN
+Route::get('admin','admin\AdminController@index')->name('admin.index');
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
 Route::get('ambillokasi', 'penjual\PenjualController@ambilLokasi')->name('ambillokasi');
@@ -193,7 +202,6 @@ Route::get('kurir/status/{id}/{status}', function ($id, $status) {
             $pengiriman = Pengiriman::find($id);
             $pengiriman->status = $status;
             $pengiriman->save();
-
             $transaksi = Transaksi::find($pengiriman->transaksi_idtransaksi);
             $transaksi->status = $status;
             $transaksi->save();

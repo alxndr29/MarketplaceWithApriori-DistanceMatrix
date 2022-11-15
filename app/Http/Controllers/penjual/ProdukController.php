@@ -188,4 +188,7 @@ class ProdukController extends Controller
         // return $hasilAkhirRekomendasi;
         return view('pembeli.detailproduk', compact('produk', 'gambar_produk', 'avg', 'review', 'hasilAkhirRekomendasi'));
     }
+    public function detailReview($id){
+
+    }
 }

@@ -133,7 +133,14 @@
                                                 <td> Total</td>
                                                 <td id="total-price">IDR. 0</td>
                                             </tr>
-
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="input-append couponForm">
+                                                        <input type="text" placeholder="Gift or Coupon code" id="appendedInputButton">
+                                                        <button type="button" class="col-lg-4 btn btn-success">Terapkan!</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

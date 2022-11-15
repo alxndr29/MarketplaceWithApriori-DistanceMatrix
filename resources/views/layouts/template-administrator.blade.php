@@ -20,7 +20,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="{{route('seller.dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>Dashboard Toko!</span></a>
+                        <a href="{{route('kurir.home')}}" class="site_title"><i class="fa fa-paw"></i> <span>Dashboard Admin!</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
@@ -30,7 +30,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2>Administrator</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -40,16 +40,11 @@
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-home"></i> Data <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-home"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="{{route('seller.halamanupdatetoko')}}">Pengaturan</a></li>
-                                        <li><a href="{{route('seller.etalaseindex')}}">Etalase</a></li>
-                                        <li><a href="{{route('seller.produkindex')}}">Produk</a></li>
-                                        <li><a href="{{route('seller.kuririndex')}}">Kurir</a></li>
-                                        <li><a href="{{route('seller.transaksiindex')}}">Transaksi</a></li>
-                                        <li><a href="{{route('seller.pengiriman')}}">Pengiriman</a></li>
-                                        <li><a href="{{route('seller.obrolanindex')}}">Obrolan</a></li>
-                                        <li><a href="{{route('seller.voucherindex')}}">Voucher</a></li>
+                                        <li>
+                                            <a href="#">Voucher</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
