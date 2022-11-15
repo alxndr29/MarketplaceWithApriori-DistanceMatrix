@@ -19,6 +19,10 @@ use App\Transaksi;
 // Route::get('/coba',function(){
 //     return view('penjual.produkadd');
 // });
+
+Route::post('/midtrans/notification', 'MidtransController@payment_handling');
+Route::get('/midtrans/a', 'MidtransController@a');
+
 Route::get('/', function () {
     return redirect('/home');
     $client = new GuzzleHttp\Client();
@@ -68,7 +72,6 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('/obrolan/seller/{idpembeli?}', 'ChatController@indexPenjual')->name('seller.obrolanindex');
     Route::get('obrolan/seller/data/get/{id}', 'ChatController@ambilDataPenjual')->name('seller.obrolanget');
     Route::post('/obrolan/seller/post', 'ChatController@storeDataPenjual')->name('seller.obrolanstore');
-
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko
@@ -112,13 +115,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('transaksi/datareview/store/{id}', 'pembeli\TransaksiController@storereview')->name('user.transaksistoredatareview');
 
     //Obrolan
-    Route::get('/obrolan/{idpenjual?}','ChatController@indexPembeli')->name('pembeli.obrolanindex');
-    Route::get('obrolan/data/get/{id}','ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
-    Route::post('/obrolan/post','ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
+    Route::get('/obrolan/{idpenjual?}', 'ChatController@indexPembeli')->name('pembeli.obrolanindex');
+    Route::get('obrolan/data/get/{id}', 'ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
+    Route::post('/obrolan/post', 'ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
-Route::get('ambillokasi','penjual\PenjualController@ambilLokasi')->name('ambillokasi');
+Route::get('ambillokasi', 'penjual\PenjualController@ambilLokasi')->name('ambillokasi');
 Route::get('cobapeta', function () {
     return view('pembeli.lokasitoko');
 });
@@ -200,5 +203,3 @@ Route::get('kurir/status/{id}/{status}', function ($id, $status) {
         return redirect()->back()->with('gagal', $e->getMessage());
     }
 })->name('kurir.status');
-
-
