@@ -48,6 +48,7 @@
                                         <li><a href="{{route('seller.kuririndex')}}">Kurir</a></li>
                                         <li><a href="{{route('seller.transaksiindex')}}">Transaksi</a></li>
                                         <li><a href="{{route('seller.pengiriman')}}">Pengiriman</a></li>
+                                        <li><a href="{{route('seller.obrolanindex')}}">Obrolan</a></li>
                                     </ul>
                                 </li>
                             </ul>

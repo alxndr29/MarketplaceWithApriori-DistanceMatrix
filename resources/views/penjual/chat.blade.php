@@ -1,7 +1,6 @@
-@extends('layouts.template-pembeli')
+@extends('layouts.template-admin')
+@section('content')
 
-@section('anothercss')
-@endsection
 <style>
     .container-chat {
         border: 2px solid #dedede;
@@ -46,32 +45,35 @@
         color: #999;
     }
 </style>
-@section('content')
-<div id="cart-page-contain">
-    <div class="container">
-        <br>
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <h2>Pesan</h2>
-            </div>
-        </div>
+
+<div class="page-title">
+    <div class="title_left">
+        <h3><small> Dashboard Iki</small></h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="card">
+    <div class="card-title">
+
+    </div>
+    <div class="card-body">
         <div class="row">
             <div class="col-md-3 col-xs-3">
-                Daftar Obrolan: {{$idpenjual}}
+                Daftar Obrolan: {{$idpembeli}}
                 @foreach($data as $key => $value)
-                @if($value->idpenjual == $idpenjual)
+                @if($value->idpembeli == $idpembeli)
                 <div class="container-chat" style="background-color: blue;">
                     <p>
-                        <a href="{{route('pembeli.obrolanindex',['idpenjual' => $value->idpenjual])}}">
-                            {{$value->nama_toko}}
+                        <a href="{{route('seller.obrolanindex',['idpembeli' => $value->idpembeli])}}">
+                            {{$value->name}}
                         </a>
                     </p>
                 </div>
                 @else
                 <div class="container-chat">
                     <p>
-                        <a href="{{route('pembeli.obrolanindex',['idpenjual' => $value->idpenjual])}}">
-                            {{$value->nama_toko}}
+                        <a href="{{route('seller.obrolanindex',['idpembeli' => $value->idpembeli])}}">
+                            {{$value->name}}
                         </a>
                     </p>
                 </div>
@@ -79,15 +81,7 @@
                 @endforeach
             </div>
             <div class="col-md-9 col-xs-9">
-
                 <div class="isi-chat" id="isi-chat" style="height: 500px; overflow:auto;">
-
-                    <!-- <div class="container-chat darker">
-                        <img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
-                        <p>Hey! I'm fine. Thanks for asking!</p>
-                        <span class="time-left">11:01</span>
-                    </div> -->
-
 
                 </div>
 
@@ -97,12 +91,12 @@
                 </div>
             </div>
         </div>
-        <br>
+
     </div>
 </div>
 @endsection
-@section('anotherjs')
 
+@section('anotherjs')
 <script type="text/javascript">
     var interval = [];
 
@@ -113,11 +107,11 @@
     });
     $("#btn-submit").on('click', function() {
         $.ajax({
-            url: "{{route('pembeli.obrolanstore')}}",
+            url: "{{route('seller.obrolanstore')}}",
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
-                'idpenjual': "{{$idpenjual}}",
+                'idpembeli': "{{$idpembeli}}",
                 'pesan': $("#txtbox-pesan").val()
             },
             success: function(response) {
@@ -132,11 +126,11 @@
 
     function kirimPesan() {
         $.ajax({
-            url: "{{route('pembeli.obrolanstore')}}",
+            url: "{{route('seller.obrolanstore')}}",
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
-                'idpenjual': "{{$idpenjual}}",
+                'idpembeli': "{{$idpembeli}}",
                 'pesan': "Mantap Hello World!"
             },
             success: function(response) {
@@ -151,7 +145,7 @@
     function ambilPesan() {
         $("#isi-chat").empty();
         $.ajax({
-            url: "{{url('obrolan/data/get')}}/" + "{{$idpenjual}}",
+            url: "{{url('obrolan/seller/data/get')}}/" + "{{$idpembeli}}",
             type: "GET",
             success: function(response) {
                 console.log(response);
@@ -185,10 +179,7 @@
         $("#isi-chat").animate({
             scrollTop: $('#isi-chat').prop("scrollHeight")
         }, 1000);
-        // $('#isi-chat').scrollTop($('#isi-chat')[0].scrollHeight);
-        // $('#isi-chat').scrollTop($('#body')[0].scrollHeight);
-        //$('#isi-chat').scrollTop($('#isi-chat')[0].scrollHeight - $('#isi-chat')[0].clientHeight);
+       
     }
 </script>
-
 @endsection

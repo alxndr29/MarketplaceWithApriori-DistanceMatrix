@@ -63,6 +63,12 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('seller/pengiriman', 'penjual\PengirimanController@index')->name('seller.pengiriman');
     Route::get('seller/pengiriman/{id}', 'penjual\PengirimanController@show')->name('seller.pengirimandetail');
     Route::post('seller/plotkurir', 'penjual\PengirimanController@plotkurir')->name('seller.plotkurir');
+
+    //Obrolan
+    Route::get('/obrolan/seller/{idpembeli?}', 'ChatController@indexPenjual')->name('seller.obrolanindex');
+    Route::get('obrolan/seller/data/get/{id}', 'ChatController@ambilDataPenjual')->name('seller.obrolanget');
+    Route::post('/obrolan/seller/post', 'ChatController@storeDataPenjual')->name('seller.obrolanstore');
+
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko
@@ -106,13 +112,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('transaksi/datareview/store/{id}', 'pembeli\TransaksiController@storereview')->name('user.transaksistoredatareview');
 
     //Obrolan
-    Route::get('/obrolan','ChatController@indexPembeli')->name('pembeli.obrolanindex');
-    Route::get('obrolan/get','ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
+    Route::get('/obrolan/{idpenjual?}','ChatController@indexPembeli')->name('pembeli.obrolanindex');
+    Route::get('obrolan/data/get/{id}','ChatController@ambilDataPembeli')->name('pembeli.obrolanget');
     Route::post('/obrolan/post','ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
 });
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
-
 Route::get('ambillokasi','penjual\PenjualController@ambilLokasi')->name('ambillokasi');
 Route::get('cobapeta', function () {
     return view('pembeli.lokasitoko');

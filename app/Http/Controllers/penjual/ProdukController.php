@@ -129,7 +129,7 @@ class ProdukController extends Controller
         ->join('toko','toko.users_id','=','produk.toko_users_id')
         ->select('produk.*','toko.nama_toko as namatoko','toko.users_id as idtoko')
         ->first();
-        dd($produk);
+        // dd($produk);
         // return $produk;
         $avg = DB::table('users_has_produk')->where('produk_idproduk', $id)->avg('bintang');
         // return $avg;
