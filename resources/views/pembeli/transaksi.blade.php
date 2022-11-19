@@ -174,7 +174,12 @@
                     '<br>' +
                     'Pembayaran: ' + response.datatransaksi.pembayaran +
                     '<br>' +
-                    'Pengiriman: ' + response.datatransaksi.pengiriman
+                    'Pengiriman: ' + response.datatransaksi.pengiriman +
+                    'Total: ' + response.datatransaksi.total +
+                    '<br>' +
+                    'Onkir:' + response.datatransaksi.onkir +
+                    '<br>' +
+                    'Potongan: ' + response.datatransaksi.nilai_potongan
                 );
                 if (response.datapengiriman != null) {
                     $("#datatransaksi1").append(
@@ -235,21 +240,21 @@
                     // Optional
                     onSuccess: function(result) {
                         /* You may add your own js here, this is just example */
-                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     },
                     // Optional
                     onPending: function(result) {
                         /* You may add your own js here, this is just example */
-                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     },
                     // Optional
                     onError: function(result) {
                         /* You may add your own js here, this is just example */
-                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     },
                     onClose: function() {
                         /* You may add your own js here, this is just example */
-                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     }
                 });
             },

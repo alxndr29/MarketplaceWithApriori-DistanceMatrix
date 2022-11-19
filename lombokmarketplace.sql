@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 15, 2022 at 08:10 AM
+-- Generation Time: Nov 19, 2022 at 12:48 AM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.3
 
@@ -757,7 +757,9 @@ CREATE TABLE `midtrans` (
 INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
 (4, 'f3a13793-ad13-4eeb-a790-f5665fd42143', 'settlement', 8, '2022-09-13 06:51:49', '2022-09-13 06:51:49'),
 (5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08'),
-(6, '7c1feba9-2e5a-418b-a958-f1de2d931968', 'settlement', 10, '2022-09-27 05:35:20', '2022-09-27 05:35:20');
+(6, '7c1feba9-2e5a-418b-a958-f1de2d931968', 'settlement', 10, '2022-09-27 05:35:20', '2022-09-27 05:35:20'),
+(7, '5680832e-2bf2-4708-99b4-41a1f7b105ac', NULL, 2, '2022-11-18 16:25:50', '2022-11-18 16:25:50'),
+(8, 'fdea5806-edbf-4002-bc67-45cf647dd428', NULL, 3, '2022-11-18 16:26:49', '2022-11-18 16:26:49');
 
 -- --------------------------------------------------------
 
@@ -937,8 +939,17 @@ CREATE TABLE `transaksi` (
   `alamat_idalamat` int(11) NOT NULL,
   `pembayaran` varchar(45) DEFAULT NULL,
   `pengiriman` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL
+  `status` varchar(45) DEFAULT NULL,
+  `nilai_potongan` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`, `nilai_potongan`) VALUES
+(2, '2022-11-19 08:25:49', 1, 1, '2022-11-18 16:25:49', '2022-11-18 16:25:49', 45000, 984, 3, 'transfer', 'kurir_toko', 'Menunggu Pembayaran', 9197),
+(3, '2022-11-19 08:26:49', 1, 1, '2022-11-18 16:26:49', '2022-11-18 16:26:49', 45000, 0, 3, 'transfer', 'ambil_sendiri', 'Menunggu Pembayaran', 9000);
 
 -- --------------------------------------------------------
 
@@ -952,6 +963,16 @@ CREATE TABLE `transaksi_has_produk` (
   `jumlah` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaksi_has_produk`
+--
+
+INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
+(2, 1, 25000, 1),
+(2, 2, 20000, 1),
+(3, 1, 25000, 1),
+(3, 2, 20000, 1);
 
 -- --------------------------------------------------------
 
@@ -1245,7 +1266,7 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT for table `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1269,7 +1290,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

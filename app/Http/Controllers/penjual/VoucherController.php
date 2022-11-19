@@ -58,4 +58,26 @@ class VoucherController extends Controller
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
+    public function checkVoucher(Request $request){
+        try{
+            $count = Voucher::where('toko_users_id',$request->get('idtoko'))->where('kode_voucher',$request->get('kodevoucher'));
+          
+           if($count->count() == 1){
+                return response()->json([
+                    'result' => 'ok',
+                    'message' => 'Kode Voucher Ditemukan',
+                    'data' => $count->first()
+                ]);
+           }else{
+                return response()->json([
+                    'result' => 'no',
+                    'message' => 'Kode Voucher Tidak Ditemukan'
+                ]);
+           }
+        }catch(\Exception $e){
+            return response()->json([
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
 }

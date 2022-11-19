@@ -137,7 +137,7 @@
                                                 <td colspan="2">
                                                     <div class="input-append couponForm">
                                                         <input type="text" placeholder="Gift or Coupon code" id="appendedInputButton">
-                                                        <button type="button" class="col-lg-4 btn btn-success">Terapkan!</button>
+                                                        <button type="button" class="col-lg-4 btn btn-success" id="btn-apply-voucher">Terapkan!</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -168,6 +168,7 @@
     var d; //destinatnion latitude longitude
     var onkir = 0;
     var idtoko = 0;
+    var nilai_voucher = 0;
     $('input[type=radio][name=toko]').change(function() {
         $("#alamat").attr('disabled', false);
 
@@ -209,7 +210,7 @@
         } else {
             // ambil_sendiri
             onkir = 0;
-            $("#total-price").html('IDR. ' + (totalSemua + onkir));
+            $("#total-price").html('IDR. ' + (totalSemua + onkir - nilai_voucher));
             $("#total-ongkir").html('Rp. 0');
         }
     });
@@ -232,9 +233,9 @@
             }
             console.log(response);
             console.log(response.rows[0].elements[0].distance.value);
-            onkir = response.rows[0].elements[0].distance.value / 1000 * 500;
-            $("#total-price").html('IDR. ' + (totalSemua + onkir));
-            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " km * 500perak " + (response.rows[0].elements[0].distance.value / 1000 * 500));
+            onkir = Math.round(response.rows[0].elements[0].distance.value / 1000 * 500);
+            $("#total-price").html('IDR. ' + (totalSemua + onkir - nilai_voucher));
+            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " m * 500perak " + Math.round(response.rows[0].elements[0].distance.value / 1000 * 500));
         }
     }
     $("#btncheckout").on("click", function() {
@@ -248,7 +249,8 @@
                 'pengiriman': $("#pengiriman").val().split("|")[0],
                 'pembayaran': $("#pembayaran").val(),
                 'totalsemua': totalSemua,
-                'onkir': onkir
+                'onkir': onkir,
+                'nilai_voucher': nilai_voucher
             },
             success: function(response) {
                 console.log(response);
@@ -265,6 +267,32 @@
         $("#pengiriman").attr('disabled', true);
         $("#pembayaran").attr('disabled', true);
         $('input[type=radio][name=toko]').prop('checked', false);
+    });
+    $("#btn-apply-voucher").on('click', function() {
+        // alert('btn apply voucher ditekan');
+        $.ajax({
+            url: "{{route('pembeli.checkvoucher')}}",
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'idtoko': idtoko,
+                'kodevoucher': $("#appendedInputButton").val()
+            },
+            success: function(response) {
+                // console.log(response.data.potongan);
+                console.log(response);
+                if (response.result == "ok") {
+                    nilai_voucher = Math.round(response.data.potongan / 100 * (totalSemua + onkir));
+                    alert(response.message + ". " + "Kamu dapat potongan senilai " + response.data.potongan + "%. Besaran Potongan adalah Rp. " + nilai_voucher);
+                    console.log(nilai_voucher);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
     });
 </script>
 @endsection

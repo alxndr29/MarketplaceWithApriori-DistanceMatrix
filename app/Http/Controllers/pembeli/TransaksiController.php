@@ -89,6 +89,7 @@ class TransaksiController extends Controller
             $transaksi->pengiriman = $request->get('pengiriman');
             $transaksi->pembayaran = $request->get('pembayaran');
             $transaksi->onkir = $request->get('onkir');
+            $transaksi->nilai_potongan = $request->get('nilai_voucher');
             if ($request->get('pembayaran') == 'transfer') {
                 $transaksi->status = "Menunggu Pembayaran";
             } else {
@@ -104,7 +105,6 @@ class TransaksiController extends Controller
                     'qty' => $value->jumlah
                 ]);
             }
-            if ($request->get('pengiriman') == "kurir_toko") { } else { }
             if ($request->get('pembayaran') == 'transfer') {
                 // Set your Merchant Server Key
                 \Midtrans\Config::$serverKey = 'SB-Mid-server-yj9hNmncUrqOhEvf1k3JSmPX';
@@ -114,16 +114,30 @@ class TransaksiController extends Controller
                 \Midtrans\Config::$isSanitized = true;
                 // Set 3DS transaction for credit card to true
                 \Midtrans\Config::$is3ds = true;
-                $params = array(
-                    'transaction_details' => array(
-                        'order_id' =>   $transaksi->idtransaksi,
-                        'gross_amount' => $total,
-                    ),
-                    'customer_details' => array(
-                        'first_name' => Auth::user()->id,
-                        'email' => Auth::user()->email
-                    ),
-                );
+                if ($request->get('pengiriman') == "kurir_toko") {
+                    $params = array(
+                        'transaction_details' => array(
+                            'order_id' =>   $transaksi->idtransaksi,
+                            'gross_amount' => $total + $request->get('onkir') - $request->get('nilai_voucher'),
+                        ),
+                        'customer_details' => array(
+                            'first_name' => Auth::user()->id,
+                            'email' => Auth::user()->email
+                        ),
+                    );
+                } else {
+                    $params = array(
+                        'transaction_details' => array(
+                            'order_id' =>   $transaksi->idtransaksi,
+                            'gross_amount' => $total - $request->get('nilai_voucher'),
+                        ),
+                        'customer_details' => array(
+                            'first_name' => Auth::user()->id,
+                            'email' => Auth::user()->email
+                        ),
+                    );
+                }
+
                 $snapToken = \Midtrans\Snap::getSnapToken($params);
                 $midtrans = new Midtrans();
                 $midtrans->token = $snapToken;
