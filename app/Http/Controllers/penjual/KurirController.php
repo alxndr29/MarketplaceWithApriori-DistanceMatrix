@@ -26,7 +26,7 @@ class KurirController extends Controller
             $kurir = new Kurir();
             $kurir->nama = $request->get('nama');
             $kurir->email = $request->get('email');
-            $kurir->password =  Hash::make($request->get('password'));
+            $kurir->password =  $request->get('password');
             $kurir->toko_users_id = Auth::user()->id;
             $kurir->save();
             return redirect()->back()->with('sukses', 'Berhasil menambah kurir baru');

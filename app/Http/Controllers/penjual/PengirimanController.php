@@ -16,8 +16,9 @@ class PengirimanController extends Controller
     //
     public function index()
     {
-        $data = Transaksi::where('users_id', Auth::user()->id)
+        $data = Transaksi::where('toko_users_id', Auth::user()->id)
             ->join('pengiriman', 'pengiriman.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->groupBy('pengiriman.idpengiriman')
             ->select('transaksi.idtransaksi', 'transaksi.status as statustransaksi', 'pengiriman.status as statuspengiriman')
             ->get();
         // return $data;
