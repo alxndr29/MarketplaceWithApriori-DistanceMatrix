@@ -254,6 +254,9 @@
             },
             success: function(response) {
                 console.log(response);
+                if (response == "berhasil") {
+                    window.location.href = "{{route('user.transaksi')}}";
+                }
             },
             error: function(response) {
                 console.log(response);

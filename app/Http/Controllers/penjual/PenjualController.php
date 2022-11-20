@@ -77,4 +77,11 @@ class PenjualController extends Controller
             return $e->getMessage();
         }
     }
+    public function detailToko($id){
+        try{
+            return 'masuk halaman detail toko id: '. $id;
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 }

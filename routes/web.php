@@ -128,6 +128,8 @@ Route::group(['middleware' => ['auth']], function () {
     //Voucher
     Route::post('voucher/check','penjual\VoucherController@checkVoucher')->name('pembeli.checkvoucher');
     
+    //DetailToko
+    Route::get('/tokodetail/{id}','penjual\PenjualController@detailToko')->name('pembeli.tokodetail');
 });
 
 //ADMIN

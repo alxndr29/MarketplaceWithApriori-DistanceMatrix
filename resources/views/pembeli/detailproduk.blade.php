@@ -21,7 +21,6 @@
         </div>
     </div>
 </div>
-
 <div id="product-category">
     <div class="container">
         <div class="row">
@@ -58,23 +57,6 @@
                                     <div class="product-discription"><span>Deskripsi</span>
                                         <p>{{$produk->deskripsi}}</p>
                                     </div>
-                                    <!-- <div class="Sort-by">
-                                        <label>Sort by</label>
-                                        <select class="selectpicker form-control" id="select-by-size">
-                                            <option selected="selected" value="#">S</option>
-                                            <option value="#">M</option>
-                                            <option value="#">L</option>
-                                        </select>
-                                    </div>
-                                    <div class="Color">
-                                        <label>Color</label>
-                                        <select class="selectpicker form-control" id="select-by-color">
-                                            <option selected="selected" value="#">Blue</option>
-                                            <option value="#">Green</option>
-                                            <option value="#">Orange</option>
-                                            <option value="#">White</option>
-                                        </select>
-                                    </div> -->
                                     <div class="product-qty">
                                         <label for="qty">Qty:</label>
                                         <div class="custom-qty">
@@ -88,7 +70,6 @@
                                     </div>
                                     <ul class="add-links">
                                         <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
-                                        <!-- <li> <a class="link-compare" href="#"> <i class="fa fa-bar-chart"></i> Add to Compare </a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -145,7 +126,6 @@
                                                                 </div>
                                                             </li>
                                                             @endforeach
-
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -177,7 +157,6 @@
                                                     <ul>
                                                         <li class="addtocart"><a href="{{route('user.wishlistaddToCart',$value->idproduk)}}">Add to Cart</a> </li>
                                                         <li class="addtocart"><a href="{{route('user.produkdetail',$value->idproduk)}}">Detail</a></li>
-                                                        <!-- <li class="compare"><a href="#"></a></li> -->
                                                     </ul>
                                                     <div class="review">
                                                         <span class="rate">
@@ -191,7 +170,6 @@
                                         </div>
                                     </div>
                                     @endforeach
-                                    
                                 </div>
                             </div>
                         </div>
@@ -202,7 +180,7 @@
         </div>
     </div>
 </div>
-<!-- Modal Alamat -->
+<!-- Modal Kirim Pesan -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -222,27 +200,33 @@
 @section('anotherjs')
 <script type="text/javascript">
     $("#btnAddCart").on('click', function() {
-        // $('#exampleModal').modal('show');
-        $.ajax({
-            url: "{{route('user.keranjangstore')}}",
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                'jumlah': $("#qty").val(),
-                'idproduk': "{{$produk->idproduk}}"
-            },
-            success: function(response) {
-                if (response == "berhasil") {
-                    keranjang();
-                    alert('berhasil menambahkan produk kedalam keranjang');
-                } else {
-                    alert(response);
+        var stok = parseInt("{{$produk->stok}}");
+        if ($("#qty").val() <= 0) {
+            alert('Qty tidak boleh 0 atau dibawahnya.');
+        } else if ($("#qty").val() > stok) {
+            alert('Stok tidak mencukupi. ');
+        } else {
+            $.ajax({
+                url: "{{route('user.keranjangstore')}}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'jumlah': $("#qty").val(),
+                    'idproduk': "{{$produk->idproduk}}"
+                },
+                success: function(response) {
+                    if (response == "berhasil") {
+                        keranjang();
+                        alert('berhasil menambahkan produk kedalam keranjang');
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
                 }
-            },
-            error: function(response) {
-                console.log(response);
-            }
-        });
+            });
+        }
     });
 </script>
 <script type="text/javascript">
