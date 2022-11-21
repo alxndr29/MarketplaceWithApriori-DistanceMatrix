@@ -254,6 +254,7 @@
             },
             success: function(response) {
                 console.log(response);
+                alert(response);
                 if (response == "berhasil") {
                     window.location.href = "{{route('user.transaksi')}}";
                 }
@@ -273,6 +274,7 @@
     });
     $("#btn-apply-voucher").on('click', function() {
         // alert('btn apply voucher ditekan');
+        
         $.ajax({
             url: "{{route('pembeli.checkvoucher')}}",
             type: "POST",

@@ -48,33 +48,38 @@ class VoucherController extends Controller
         }
     }
     public function destroy($id)
-    { 
-        try{
+    {
+        try {
             $voucher = Voucher::find($id);
             $voucher->status = "Tidak Aktif";
             $voucher->save();
             return redirect()->back()->with('sukses', 'Berhasil non aktifkan voucher.');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
-    public function checkVoucher(Request $request){
-        try{
-            $count = Voucher::where('toko_users_id',$request->get('idtoko'))->where('kode_voucher',$request->get('kodevoucher'));
-          
-           if($count->count() == 1){
+    public function checkVoucher(Request $request)
+    {
+        // return $request->all();
+        try {
+            $count = Voucher::where('toko_users_id', $request->get('idtoko'))
+                ->where('kode_voucher', $request->get('kodevoucher'))
+                ->where('status', 'Aktif')
+                ->where('expired', '<=', date('Y-m-d'));
+
+            if ($count->count() == 1) {
                 return response()->json([
                     'result' => 'ok',
                     'message' => 'Kode Voucher Ditemukan',
                     'data' => $count->first()
                 ]);
-           }else{
+            } else {
                 return response()->json([
                     'result' => 'no',
-                    'message' => 'Kode Voucher Tidak Ditemukan'
+                    'message' => 'Kode Voucher Ditemukan atau Sudah tidak berlaku untuk Toko Ini.'
                 ]);
-           }
-        }catch(\Exception $e){
+            }
+        } catch (\Exception $e) {
             return response()->json([
                 'data' => $e->getMessage()
             ]);

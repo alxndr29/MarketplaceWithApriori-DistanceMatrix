@@ -175,8 +175,8 @@
                     google.maps.event.addListener(marker_a, 'click', (function(marker_a, i) {
                         return function() {
                             infowindow_a.setContent(
-                                '<h3>' +
-                                k.nama_toko + '</h3>' + '' +
+                                '<h3><a href="{{url('')}}/tokodetail/'+k.users_id+ '">' +
+                                k.nama_toko + '</a></h3>' + '' +
                                 k.alamat + '<br> <a class="btn btn-primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=' + k.latitude + '8%2C' + k.longitude + '">Petunjuk Arah</a>');
                             infowindow_a.open(map, marker_a);
                             // alert(this.position)

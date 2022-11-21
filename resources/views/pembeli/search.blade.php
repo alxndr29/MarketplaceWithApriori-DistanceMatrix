@@ -173,10 +173,10 @@
                             <li>
                                 <div class="item col-md-4 col-sm-6 col-xs-6">
                                     <div class="product-block ">
-                                        <div class="image"> <a href="#"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:281px; height:300px;"></a> </div>
+                                        <div class="image"> <a href="{{route('user.produkdetail',$value->idproduk)}}"><img class="img-responsive" title="T-shirt" alt="T-shirt" src="{{asset('gambar_produk/'.$value->idgambar_produk)}}" style="width:281px; height:300px;"></a> </div>
                                         <div class="product-details">
                                             <div class="product-name">
-                                                <h4><a href="#">{{$value->nama}} </a></h4>
+                                                <h4><a href="{{route('user.produkdetail',$value->idproduk)}}">{{$value->nama}} </a></h4>
                                             </div>
                                             <div class="price"> <span class="price-new">IDR. {{number_format($value->harga)}}</span> </div>
                                             <div class="product-hov">

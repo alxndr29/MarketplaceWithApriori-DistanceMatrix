@@ -118,6 +118,8 @@ class ProdukController extends Controller
     public function delete($id)
     {
         try {
+            $produk = Produk::find($id);
+            $produk->delete();
             return redirect()->back()->with('sukses', 'Berhasil meghapus etalase ');
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', $e->getMessage());

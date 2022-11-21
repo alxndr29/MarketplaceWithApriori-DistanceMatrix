@@ -124,4 +124,20 @@ class ChatController extends Controller
             ]);
         }
     }
+
+    public function storeDataPembeliDetailProduk(Request $request)
+    {
+        try {
+            $chat = new Chat();
+            $chat->pesan = $request->get('pesan');
+            $chat->idpembeli = Auth::user()->id;
+            $chat->idpenjual = $request->get('idpenjual');
+            $chat->pengirim = "pembeli";
+            $chat->save();
+            return redirect()->back()->with('sukses', 'Berhasil kirim pesan. ');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal',  $e->getMessage());
+        }
+    }
+
 }

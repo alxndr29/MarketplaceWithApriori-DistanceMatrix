@@ -12,9 +12,11 @@
             <div class="col-md-9 col-sm-9 col-xs-9">
                 <div class="bread-crumb">
                     <ul>
-                        <li><a href="index-2.html">home</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
                         <li>\</li>
-                        <li><a href="grid-view.html">woman</a></li>
+                        <li><a href="{{url('search')}}">Search</a></li>
+                        <li>\</li>
+                        <li>Detail Product</li>
                     </ul>
                 </div>
             </div>
@@ -67,6 +69,7 @@
                                     </div>
                                     <div class="add-to-cart">
                                         <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
+                                        <button type="button" class="btn btn-default" onCLick="modalPesan()">Message</button>
                                     </div>
                                     <ul class="add-links">
                                         <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
@@ -184,14 +187,27 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form method="post" action="{{route('pembeli.obrolanstore2')}}">
+                @csrf
+                <div class="modal-header">
+                    Send Message:
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kepada: </label>
+                        <input type="text" class="form-control" readonly value="{{$produk->namatoko}}">
+                        <input type="hidden" class="form-control" readonly value="{{$produk->idtoko}}" name="idpenjual">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Message</label>
+                        <textarea class="form-control" rows="3" name="pesan"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -199,6 +215,9 @@
 @endsection
 @section('anotherjs')
 <script type="text/javascript">
+    function modalPesan() {
+        $("#exampleModal").modal('show');
+    }
     $("#btnAddCart").on('click', function() {
         var stok = parseInt("{{$produk->stok}}");
         if ($("#qty").val() <= 0) {

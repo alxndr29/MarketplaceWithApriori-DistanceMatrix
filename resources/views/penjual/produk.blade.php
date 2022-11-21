@@ -57,8 +57,9 @@
                                 <a href="{{route('seller.produkedit',$value->idproduk)}}" class="btn btn-primary"> Update </a>
                             </td>
                             <td>
-                                <form method="post" action="">
+                                <form method="post" action="{{route('seller.produkdelete',$value->idproduk)}}">
                                     @csrf
+                                    @method('delete')
                                     <button type="submit" class="btn btn-primary"> Hapus </button>
                                 </form>
                             </td>
