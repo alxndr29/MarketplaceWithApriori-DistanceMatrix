@@ -62,6 +62,8 @@
                         Pengiriman: {{$datapemesan->pengiriman}}
                         <br>
                         Total: Rp. {{number_format($datapemesan->total)}}
+                        <br>
+                        Diskon: RP. {{number_format($datapemesan->nilai_potongan)}}
                     </div>
                 </div>
                 <br>
@@ -133,6 +135,7 @@
                             Beritahu Pelanggan
                         </button>
                         @endif
+                        <br>
                     </div>
                 </div>
             </div>
@@ -141,6 +144,42 @@
 </div>
 
 <!-- Modal -->
+<div class="modal fade" id="modal-chat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal Pesan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form method="post" action="{{route('seller.notifpesan')}}">
+                @csrf
+                <div class="modal-header">
+                    Send Message:
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kepada: </label>
+                        <input type="text" class="form-control" readonly value="{{$datapemesan->name}}">
+                        <input type="hidden" class="form-control" readonly value="{{$datapemesan->id}}" name="idpembeli">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Message</label>
+                        <textarea class="form-control" rows="3" name="pesan">Pesanan anda dengan ID Transaksi: "{{$datapemesan->idtransaksi}}" Siap Diambil.</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Chat -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -153,24 +192,22 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
                     <div class="p1">
-                        <a class="btn btn-primary" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{$datapemesan->email}}">Via Email</a>
+                        <a class="btn btn-primary" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{$datapemesan->email}}&body=Pesanan Anda Dengan Nomor Transaksi {{$datapemesan->id}} Sudah Dapat Diambil&su=SU">Via Email</a>
                     </div>
                     <div class="p1">
-                        <a class="btn btn-primary" href="https://wa.me/62{{$datapemesan->telepon}}">Via WhatsApp</a>
+                        <a class="btn btn-primary" href="https://wa.me/62{{$datapemesan->telepon}}?text=Pesanan%Anda%Dengan%Nomor%Transaksi%{{$datapemesan->id}}%Sudah%Dapat%Diambil">Via WhatsApp</a>
                     </div>
                     <div class="p1">
-                        <a class="btn btn-primary" href="#">Via Chat</a>
+                        <button class="btn btn-primary" onClick="modalChat()">Via Chat</button>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-
             </div>
         </div>
     </div>
 </div>
-
 @endsection
 @section('anotherjs')
 <script type="text/javascript">
@@ -178,5 +215,9 @@
         console.log('hello world!');
         // $('#datatable-1').DataTable();
     });
+    function modalChat(){
+        $("#exampleModalCenter").modal('hide');
+        $("#modal-chat").modal('show');
+    }
 </script>
 @endsection

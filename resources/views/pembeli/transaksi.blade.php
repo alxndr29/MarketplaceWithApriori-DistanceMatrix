@@ -46,7 +46,7 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$value->idtransaksi}}</td>
                                 <td>{{$value->tanggal}}</td>
-                                <td>Rp. {{number_format($value->total)}}</td>
+                                <td>Rp. {{number_format($value->total + $value->onkir)}}</td>
                                 <td>
                                     {{$value->status}}
                                 </td>

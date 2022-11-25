@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Transaksi;
 use App\Pengiriman;
+use App\Chat;
 class TransaksiController extends Controller
 {
     //
@@ -67,6 +68,19 @@ class TransaksiController extends Controller
             return redirect()->back()->with('sukses', 'Berhasil ubah status transaksi');
         } catch (\Exception $e) {
             DB::rollBack();
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
+    }
+    public function notifPesan(Request $request){
+        try{
+            $chat = new Chat();
+            $chat->pesan = $request->get('pesan');
+            $chat->idpenjual = Auth::user()->id;
+            $chat->idpembeli = $request->get('idpembeli');
+            $chat->pengirim = "penjual";
+            $chat->save();
+            return redirect()->back()->with('sukses', 'Berhasil kirim pesan');
+        }catch(\Exception $e){
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }

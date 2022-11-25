@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('seller/transaksi', 'penjual\TransaksiController@index')->name('seller.transaksiindex');
     Route::get('seller/transaksi/{id}', 'penjual\TransaksiController@show')->name('seller.transaksishow');
     Route::get('seller/transaksi/status/{id}/{status}', 'penjual\TransaksiController@ubahstatus')->name('seller.transaksistatus');
+    Route::post('seller/transaksi/notifpelanggan','penjual\TransaksiController@notifPesan')->name('seller.notifpesan');
     //Pengiriman
     Route::get('seller/pengiriman', 'penjual\PengirimanController@index')->name('seller.pengiriman');
     Route::get('seller/pengiriman/{id}', 'penjual\PengirimanController@show')->name('seller.pengirimandetail');
