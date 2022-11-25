@@ -13,8 +13,9 @@ class VoucherController extends Controller
     //
     public function index()
     {
+        $a = date('Y-m-d');
         $data = Voucher::where('toko_users_id', Auth::user()->id)->get();
-        return view('penjual.voucher', compact('data'));
+        return view('penjual.voucher', compact('data','a'));
     }
     public function store(Request $request)
     {

@@ -95,7 +95,7 @@
                     </div>
                     <div class="form-group">
                         <label>Expired</label>
-                        <input type="date" class="form-control" name="expired">
+                        <input type="date" class="form-control" name="expired" min="{{$a}}">
                     </div>
 
             </div>
