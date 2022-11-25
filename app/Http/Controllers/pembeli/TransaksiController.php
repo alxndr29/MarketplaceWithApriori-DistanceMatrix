@@ -80,6 +80,7 @@ class TransaksiController extends Controller
             $total = 0;
             foreach ($keranjang as $value) {
                 $total += $value->harga * $value->jumlah;
+                DB::table('keranjang')->where('users_id',Auth::user()->id)->where('produk_idproduk',$value->idproduk)->delete();
             }
             $transaksi = new Transaksi();
             $transaksi->users_id = Auth::user()->id;
