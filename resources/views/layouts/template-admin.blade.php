@@ -30,7 +30,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2>{{auth()->user()->name}}</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -68,7 +68,7 @@
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                        <a data-toggle="tooltip" data-placement="top" title="Back To Home" href="{{url('home')}}">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -89,17 +89,17 @@
                                     <img src="{{asset('gentelella-master/production/images/img.jpg')}}">
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <!-- <a class="dropdown-item" href="javascript:;"> Profile</a>
                                     <a class="dropdown-item" href="javascript:;">
                                         <span class="badge bg-red pull-right">50%</span>
                                         <span>Settings</span>
                                     </a>
-                                    <a class="dropdown-item" href="javascript:;">Help</a>
-                                    <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a> -->
+                                    <a class="dropdown-item" href="{{url('home')}}"><i class="fa fa-sign-out pull-right"></i> Back To Home</a>
                                 </div>
                             </li>
 
-                            <li role="presentation" class="nav-item dropdown open my-auto">
+                            <!-- <li role="presentation" class="nav-item dropdown open my-auto">
                                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
                                     <span class="badge bg-green">6</span>
@@ -162,7 +162,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
+
                         </ul>
                     </nav>
                 </div>

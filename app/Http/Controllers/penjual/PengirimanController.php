@@ -51,6 +51,7 @@ class PengirimanController extends Controller
         // return view('penjual.transaksidetail', compact('databarang', 'datapemesan', 'dataalamat'));
         return view('penjual.pengirimandetail', compact('databarang', 'datapemesan', 'dataalamat', 'kurir', 'datapengiriman'));
     }
+    
     public function plotkurir(Request $request)
     {
         // return $request->all();

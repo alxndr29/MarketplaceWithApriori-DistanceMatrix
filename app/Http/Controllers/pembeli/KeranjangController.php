@@ -31,7 +31,8 @@ class KeranjangController extends Controller
             ->groupBy('produk.idproduk')
             ->get();
         //return $b;
-        return view('pembeli.keranjang', compact('a', 'b', 'alamat'));
+        $conf = DB::table('konfigurasi')->first();
+        return view('pembeli.keranjang', compact('a', 'b', 'alamat', 'conf'));
     }
     public function updateKeranjang(Request $request, $id)
     {

@@ -26,19 +26,60 @@
 <div id="product-category">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-4">
-                <img src="https://www.w3schools.com/bootstrap/paris.jpg" class="img-rounded" alt="Cinque Terre">
+            <div class="col-md-3 col-sm-4">
+                <img src="{{asset('tambahan/store.jpg')}}" style="width: 300px; height: 300px;" class="img-rounded" alt="Cinque Terre">
             </div>
-            <div class="col-md-6 col-sm-4">
-                Nama Toko: Toko Gusti
-                <br>
-                Lokasi:
-                <br>
-                Chat:
-                <br>
-                Bintang Review
+            <div class="col-md-9 col-sm-4">
+                <table>
+                    <tr>
+                        <td style="width:50%">
+                            <h2>Nama</h2>
+                        </td>
+                        <td>
+                            <h2>{{$toko->nama_toko}}</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%">
+                            <h2>Lokasi</h2>
+                        </td>
+                        <td>
+                            <h2>
+                                <!-- <a href="#"> Buka Peta </a> -->
+                                <a href="https://www.google.com/maps/search/?api=1&query={{$toko->latitude}},{{$toko->longitude}}">
+                                    Buka Peta
+                                </a>
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%">
+                            <h2>Pesan</h2>
+                        </td>
+                        <td>
+                            @guest
+                            <button type="button" class="btn btn-default disabled" style="background-color:#000 !important;" onCLick="modalPesan()" disabled>
+                                Message
+                            </button>
+                            @else
+                            <button type="button" class="btn btn-default" onCLick="modalPesan()">
+                                Message
+                            </button>
+                            @endguest
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%">
+                            <h2>Review</h2>
+                        </td>
+                        <td>
+                            <h2>{{$avg->avg}} <i class="fa fa-star rated"></i></h2>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="col-md-12 col-sm-4">
                 <div id="tabs">
@@ -53,13 +94,15 @@
                         <ul>
                             <li>
                                 <div class="items-Description selected">
-                                    <div class="Description"></div>
+                                    <div class="Description">
+                                        {{$toko->deskripsi}}
+                                    </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="items-Product-Tags ">
                                     <div class="product-grid-view">
-                                        Menampilkan Daftar Produk. {{count($produk)}} Produk Tersedia.
+                                        <h4>Menampilkan Daftar Produk. {{count($produk)}} Produk Tersedia. </h4>
                                         <ul>
                                             @foreach ($produk as $value)
                                             <li>
@@ -131,7 +174,34 @@
     </div>
 </div>
 <br>
-
+<!-- Modal Kirim Pesan -->
+<div class="modal fade" id="modal-pesan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="{{route('pembeli.obrolanstore2')}}">
+                @csrf
+                <div class="modal-header">
+                    Send Message:
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kepada: </label>
+                        <input type="text" class="form-control" readonly value="{{$toko->nama_toko}}">
+                        <input type="hidden" class="form-control" readonly value="{{$toko->users_id}}" name="idpenjual">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Message</label>
+                        <textarea class="form-control" rows="3" name="pesan"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 @section('anotherjs')
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-KK2QTLbPiIfm9sBs"></script>
@@ -148,7 +218,11 @@
         $('.sp-wrap').smoothproducts();
     });
     $(document).ready(function() {
-        // $('#myTable').DataTable();
+
     });
+
+    function modalPesan() {
+        $("#modal-pesan").modal('show');
+    }
 </script>
 @endsection

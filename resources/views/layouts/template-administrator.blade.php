@@ -43,7 +43,13 @@
                                 <li><a><i class="fa fa-home"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="#">Voucher</a>
+                                            <a href="{{route('admin.onkir')}}">Set Harga Ongkir</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('admin.refund')}}">Refund Pembeli</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('admin.pencairan')}}">Pencarian Penjual</a>
                                         </li>
                                     </ul>
                                 </li>

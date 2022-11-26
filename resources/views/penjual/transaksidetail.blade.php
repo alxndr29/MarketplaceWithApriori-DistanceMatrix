@@ -135,6 +135,10 @@
                             Beritahu Pelanggan
                         </button>
                         @endif
+
+                        @if($datapemesan->status == "Pesanan Dikirim")
+                        <a href="{{route('seller.pengirimandetail',$datapemesan->idtransaksi)}}" class="btn btn-primary"> Link Pengiriman </a>
+                        @endif
                         <br>
                     </div>
                 </div>
@@ -154,27 +158,27 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form method="post" action="{{route('seller.notifpesan')}}">
-                @csrf
-                <div class="modal-header">
-                    Send Message:
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Kepada: </label>
-                        <input type="text" class="form-control" readonly value="{{$datapemesan->name}}">
-                        <input type="hidden" class="form-control" readonly value="{{$datapemesan->id}}" name="idpembeli">
+                <form method="post" action="{{route('seller.notifpesan')}}">
+                    @csrf
+                    <div class="modal-header">
+                        Send Message:
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Message</label>
-                        <textarea class="form-control" rows="3" name="pesan">Pesanan anda dengan ID Transaksi: "{{$datapemesan->idtransaksi}}" Siap Diambil.</textarea>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kepada: </label>
+                            <input type="text" class="form-control" readonly value="{{$datapemesan->name}}">
+                            <input type="hidden" class="form-control" readonly value="{{$datapemesan->id}}" name="idpembeli">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Message</label>
+                            <textarea class="form-control" rows="3" name="pesan">Pesanan anda dengan ID Transaksi: "{{$datapemesan->idtransaksi}}" Siap Diambil.</textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -215,7 +219,8 @@
         console.log('hello world!');
         // $('#datatable-1').DataTable();
     });
-    function modalChat(){
+
+    function modalChat() {
         $("#exampleModalCenter").modal('hide');
         $("#modal-chat").modal('show');
     }

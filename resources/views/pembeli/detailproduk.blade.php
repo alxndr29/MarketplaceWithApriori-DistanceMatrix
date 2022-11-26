@@ -59,21 +59,28 @@
                                     <div class="product-discription"><span>Deskripsi</span>
                                         <p>{{$produk->deskripsi}}</p>
                                     </div>
-                                    <div class="product-qty">
-                                        <label for="qty">Qty:</label>
-                                        <div class="custom-qty">
-                                            <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="reduced items" type="button"> <i class="fa fa-minus"></i> </button>
-                                            <input type="text" class="input-text qty" title="Qty" value="1" maxlength="8" id="qty" name="qty">
-                                            <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items" type="button"> <i class="fa fa-plus"></i> </button>
+                                    <div class="product-discription"><span>Dijual Oleh</span>
+                                        <a href="{{route('pembeli.tokodetail',$produk->idtoko)}}">{{$produk->namatoko}}</a>
+                                    </div>
+                                    @guest
+                                        @else
+                                        <div class="product-qty">
+                                            <label for="qty">Qty:</label>
+                                            <div class="custom-qty">
+                                                <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="reduced items" type="button"> <i class="fa fa-minus"></i> </button>
+                                                <input type="text" class="input-text qty" title="Qty" value="1" maxlength="8" id="qty" name="qty">
+                                                <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items" type="button"> <i class="fa fa-plus"></i> </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
-                                        <button type="button" class="btn btn-default" onCLick="modalPesan()">Message</button>
-                                    </div>
-                                    <ul class="add-links">
-                                        <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
-                                    </ul>
+                                        <div class="add-to-cart">
+                                            <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
+                                            <button type="button" class="btn btn-default" onCLick="modalPesan()">Message</button>
+                                        </div>
+                                        <ul class="add-links">
+                                            <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
+                                        </ul>
+                                    @endguest
+
                                 </div>
                             </div>
                         </div>

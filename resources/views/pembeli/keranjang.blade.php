@@ -169,6 +169,8 @@
     var onkir = 0;
     var idtoko = 0;
     var nilai_voucher = 0;
+
+    var conf_harga = parseInt("{{$conf->harga_ongkir}}");
     $('input[type=radio][name=toko]').change(function() {
         $("#alamat").attr('disabled', false);
 
@@ -233,9 +235,9 @@
             }
             console.log(response);
             console.log(response.rows[0].elements[0].distance.value);
-            onkir = Math.round(response.rows[0].elements[0].distance.value / 1000 * 500);
+            onkir = Math.round(response.rows[0].elements[0].distance.value / 1000 * conf_harga);
             $("#total-price").html('IDR. ' + (totalSemua + onkir - nilai_voucher));
-            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " m * 500perak " + Math.round(response.rows[0].elements[0].distance.value / 1000 * 500));
+            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " m * "+conf_harga+"perak " + Math.round(response.rows[0].elements[0].distance.value / 1000 * conf_harga));
         }
     }
     $("#btncheckout").on("click", function() {

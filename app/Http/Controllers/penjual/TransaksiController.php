@@ -34,7 +34,7 @@ class TransaksiController extends Controller
             ->where('transaksi.idtransaksi', $id)
             ->select('alamat.*', 'kotakabupaten.nama as kabupaten', 'provinsi.nama as provinsi')
             ->first();
-
+        // $pengiriman = Pengiriman::where('transaksi_idtransaksi',$id)->first();
         return view('penjual.transaksidetail', compact('databarang', 'datapemesan', 'dataalamat'));
     }
     public function ubahstatus($id, $status)

@@ -81,9 +81,11 @@ class PenjualController extends Controller
     public function detailToko($id){
         try{
             // return 'masuk halaman detail toko id: '. $id;
-            $toko = Toko::find($id)->first();
+            $toko = Toko::where('users_id',$id)->first();
+            // dd($toko);
             $produk = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
                 ->whereNull('gambar_produk.deleted_at')
+                ->where('produk.toko_users_id',$id)
                 ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
                 ->groupBy('produk.idproduk')
                 ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->get();
@@ -93,7 +95,12 @@ class PenjualController extends Controller
                 ->where('transaksi.toko_users_id',$id)
                 ->select('users_has_produk.*', 'users.name')
                 ->get();
-            return view('pembeli.detailpenjual', compact('produk','review','toko'));
+            $avg = DB::table('users_has_produk')
+            ->join('transaksi', 'transaksi.idtransaksi', '=', 'users_has_produk.transaksi_idtransaksi')
+            ->where('transaksi.toko_users_id',$id)
+            ->select(DB::raw('avg(users_has_produk.bintang) as avg'))
+            ->first();
+            return view('pembeli.detailpenjual', compact('produk','review','toko', 'avg'));
         }catch(\Exception $e){
             return $e->getMessage();
         }
