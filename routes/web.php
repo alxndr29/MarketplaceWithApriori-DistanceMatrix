@@ -86,6 +86,10 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::post('voucher/store','penjual\VoucherController@store')->name('seller.voucherstore');
     Route::put('voucher/update/{id}', 'penjual\VoucherController@edit')->name('seller.voucheredit');
     Route::delete('voucher/store/{id}', 'penjual\VoucherController@destroy')->name('seller.voucherdestroy');
+    //Refund
+    Route::get('seller/refund', 'RefundPencarianDanaController@indexPenjual')->name('seller.refund');
+    Route::post('seller/refund/store', 'RefundPencarianDanaController@storePenjual')->name('seller.refundstore');
+    Route::get('seller/refund/{id}', 'RefundPencarianDanaController@detail')->name('seller.refunddetail');
 });
 Route::group(['middleware' => ['auth']], function () {
     //Toko
@@ -109,7 +113,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/alamat/edit/{id}', 'pembeli\AlamatController@edit')->name('user.alamatedit');
     Route::put('/alamat/update/{id}', 'pembeli\AlamatController@update')->name('user.alamatupdate');
     Route::delete('/alamat/edit/{id}', 'pembeli\AlamatController@destroy')->name('user.alamatdelete');
-   
     //Transaksi
     Route::get('/transaksi', 'pembeli\TransaksiController@index')->name('user.transaksi');
     Route::post('/transaksi/store', 'pembeli\TransaksiController@store')->name('user.transaksistore');
@@ -125,7 +128,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/obrolan2/post', 'ChatController@storeDataPembeliDetailProduk')->name('pembeli.obrolanstore2');
     //Voucher
     Route::post('voucher/check','penjual\VoucherController@checkVoucher')->name('pembeli.checkvoucher');
-    
+    //Refund
+    Route::get('refund','RefundPencarianDanaController@indexPembeli')->name('pembeli.refund');
+    Route::post('refund/store','RefundPencarianDanaController@storePembeli')->name('pembeli.refundstore');
+    Route::get('refund/{id}','RefundPencarianDanaController@detail')->name('pembeli.refunddetail');
 });
 
 //ADMIN

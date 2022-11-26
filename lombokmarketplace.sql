@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2022 at 03:02 AM
+-- Generation Time: Nov 26, 2022 at 01:56 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.3
 
@@ -931,8 +931,19 @@ CREATE TABLE `refund` (
   `pemohon` enum('penjual','pembeli') DEFAULT NULL,
   `jumlah` varchar(45) DEFAULT NULL,
   `nama_rekening` varchar(45) DEFAULT NULL,
-  `nomor_rekening` varchar(45) DEFAULT NULL
+  `nomor_rekening` varchar(45) DEFAULT NULL,
+  `bank` varchar(45) DEFAULT NULL,
+  `users_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `toko_users_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refund`
+--
+
+INSERT INTO `refund` (`idrefund`, `created_at`, `updated_at`, `pemohon`, `jumlah`, `nama_rekening`, `nomor_rekening`, `bank`, `users_id`, `toko_users_id`, `status`) VALUES
+(8, '2022-11-26 05:55:13', '2022-11-26 05:55:13', 'pembeli', '90000', 'aaa', '123', 'eee', 1, NULL, 'Menunggu Konfirmasi Admin');
 
 -- --------------------------------------------------------
 
@@ -991,9 +1002,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`, `nilai_potongan`, `refund_pembeli`, `pencarian_penjual`) VALUES
-(2, '2022-11-19 08:25:49', 1, 1, '2022-11-18 16:25:49', '2022-11-18 16:25:49', 45000, 984, 3, 'transfer', 'kurir_toko', 'Menunggu Pembayaran', 9197, 0, 0),
-(3, '2022-11-19 08:26:49', 1, 1, '2022-11-18 16:26:49', '2022-11-18 16:26:49', 45000, 0, 3, 'transfer', 'ambil_sendiri', 'Menunggu Pembayaran', 9000, 0, 0),
-(4, '2022-11-25 19:50:12', 1, 1, '2022-11-25 03:50:12', '2022-11-25 17:59:37', 45000, 0, 3, 'transfer', 'kurir_toko', 'Pesanan Dikirim', 0, 0, 0);
+(2, '2022-11-19 08:25:49', 1, 1, '2022-11-18 16:25:49', '2022-11-26 05:51:53', 45000, 984, 3, 'transfer', 'kurir_toko', 'Selesai', 9197, 0, 0),
+(3, '2022-11-19 08:26:49', 1, 1, '2022-11-18 16:26:49', '2022-11-26 05:55:13', 45000, 1, 3, 'transfer', 'ambil_sendiri', 'Batal', 9000, 1, 0),
+(4, '2022-11-25 19:50:12', 1, 1, '2022-11-25 03:50:12', '2022-11-26 05:55:13', 45000, 0, 3, 'transfer', 'kurir_toko', 'Batal', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1030,6 +1041,14 @@ CREATE TABLE `transaksi_has_refund` (
   `transaksi_idtransaksi` int(11) NOT NULL,
   `refund_idrefund` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaksi_has_refund`
+--
+
+INSERT INTO `transaksi_has_refund` (`transaksi_idtransaksi`, `refund_idrefund`) VALUES
+(3, 8),
+(4, 8);
 
 -- --------------------------------------------------------
 
@@ -1241,7 +1260,9 @@ ALTER TABLE `provinsi`
 -- Indexes for table `refund`
 --
 ALTER TABLE `refund`
-  ADD PRIMARY KEY (`idrefund`);
+  ADD PRIMARY KEY (`idrefund`),
+  ADD KEY `fk_refund_users1_idx` (`users_id`),
+  ADD KEY `fk_refund_toko1_idx` (`toko_users_id`);
 
 --
 -- Indexes for table `toko`
@@ -1372,6 +1393,12 @@ ALTER TABLE `produk`
   MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `refund`
+--
+ALTER TABLE `refund`
+  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -1466,6 +1493,13 @@ ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_idkategori`) REFERENCES `kategori` (`idkategori`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produk_voucher1` FOREIGN KEY (`voucher_idvoucher`) REFERENCES `voucher` (`idvoucher`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `refund`
+--
+ALTER TABLE `refund`
+  ADD CONSTRAINT `fk_refund_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_refund_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `toko`

@@ -50,6 +50,8 @@
                                         <li><a href="{{route('seller.pengiriman')}}">Pengiriman</a></li>
                                         <li><a href="{{route('seller.obrolanindex')}}">Obrolan</a></li>
                                         <li><a href="{{route('seller.voucherindex')}}">Voucher</a></li>
+                                        <!-- seller.refund -->
+                                        <li><a href="{{route('seller.refund')}}">Pencairan Dana</a></li>
                                     </ul>
                                 </li>
                             </ul>

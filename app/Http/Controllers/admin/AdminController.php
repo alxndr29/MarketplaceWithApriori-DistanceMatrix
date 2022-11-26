@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Refund;
+use App\Transaksi;
 class AdminController extends Controller
 {
     //
@@ -27,9 +29,11 @@ class AdminController extends Controller
         return view('admin.onkir', compact('data'));
     }
     public function refund(){
-        return view('admin.refund');
+        $daftar_refund = Refund::where('pemohon','pembeli')->get();
+        return view('admin.refund', compact('daftar_refund'));
     }
     public function pencairan(){
-        return view('admin.pencarian');
+        $daftar_pencairan = Refund::where('pemohon', 'penjual')->get();
+        return view('admin.pencarian', compact('daftar_pencairan'));
     }
 }

@@ -1,79 +1,87 @@
-@extends('layouts.template-pembeli')
+@extends('layouts.template-admin')
 @section('content')
-<!-- bredcrumb and page title block start  -->
-<div id="bread-crumb">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-3">
-                <div class="page-title">
-                    <h4>Refund Transaksi</h4>
-                </div>
+<div class="page-title">
+    <div class="title_left">
+        <h3><small> Etalase Produk</small></h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Basic Tables <small>basic table subtitle</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <!-- Button trigger modal tambah etalase-->
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambahetalase">
+                            Tambah Etalase
+                        </button> -->
+                        <button type="button" class="btn btn-primary" onClick="modalRefund()">Buat Pengajuan Baru </button>
+                    </li>
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <div class="col-md-9 col-sm-9 col-xs-9">
-                <div class="bread-crumb">
-                    <ul>
-                        <li><a href="index-2.html">home</a></li>
-                        <li>\</li>
-                        <li><a href="grid-view.html">woman</a></li>
-                    </ul>
+            <div class="x_content">
+                <div class="row">
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal Pengajuan</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data_refund as $key => $value)
+                            <tr>
+                                <td>
+                                    {{$key+1}}
+                                </td>
+                                <td>
+                                    {{$value->created_at}}
+                                </td>
+                                <td>
+                                    Rp. {{number_format($value->jumlah)}}
+                                </td>
+                                <td>
+                                    {{$value->status}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onClick="detailRefund({{$value->idrefund}})">Detail</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+                <!-- <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" onClick="modalRefund()">Buat Pengajuan Baru </button>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
 </div>
-
-<!-- bredcrumb and page title block end  -->
-<div id="product-category">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-4">
-                <table class="table" id="myTable">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal Pengajuan</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data_refund as $key => $value)
-                        <tr>
-                            <td>
-                                {{$key+1}}
-                            </td>
-                            <td>
-                                {{$value->created_at}}
-                            </td>
-                            <td>
-                                Rp. {{number_format($value->jumlah)}}
-                            </td>
-                            <td>
-                                {{$value->status}}
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-primary" onClick="detailRefund({{$value->idrefund}})">Detail</button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-4">
-                <button type="button" class="btn btn-primary" onClick="modalRefund()">Buat Pengajuan Baru </button>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
 <!-- Modal Refund -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" action="{{route('pembeli.refundstore')}}">
+            <form method="post" action="{{route('seller.refundstore')}}">
                 @csrf
                 <div class="modal-header">
                     Form Pengajuan Refund:
@@ -139,7 +147,7 @@
 <div class="modal fade" id="detail-refund" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" action="{{route('pembeli.refundstore')}}">
+            <form method="post" action="{{route('seller.refundstore')}}">
                 @csrf
                 <div class="modal-header">
                     Form Pengajuan Refund:
@@ -180,11 +188,12 @@
     </div>
 </div>
 @endsection
+
 @section('anotherjs')
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-KK2QTLbPiIfm9sBs"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#myTable').DataTable();
+        console.log('hello world!');
+        $('#mytable').DataTable();
     });
 
     function modalRefund() {
