@@ -24,11 +24,13 @@ Route::post('/midtrans/notification', 'MidtransController@payment_handling');
 Route::get('/midtrans/a', 'MidtransController@a');
 
 Route::get('/', function () {
-    return redirect('/home');
+    // return redirect('/home');
     $client = new GuzzleHttp\Client();
     $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=-8.848198553520579%2C121.6637660808329&destinations=-8.832836631765579%2C121.67777565447375&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $promise = $client->sendAsync($request)->then(function ($response) {
-        echo ($response->getBody());
+        $result = json_decode($response->getBody());
+        echo $result->rows[0]->elements[0]->distance->value;
+        echo $result->rows[0]->elements[0]->distance->text;
     });
     $promise->wait();
 });
@@ -72,7 +74,7 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('seller/transaksi', 'penjual\TransaksiController@index')->name('seller.transaksiindex');
     Route::get('seller/transaksi/{id}', 'penjual\TransaksiController@show')->name('seller.transaksishow');
     Route::get('seller/transaksi/status/{id}/{status}', 'penjual\TransaksiController@ubahstatus')->name('seller.transaksistatus');
-    Route::post('seller/transaksi/notifpelanggan','penjual\TransaksiController@notifPesan')->name('seller.notifpesan');
+    Route::post('seller/transaksi/notifpelanggan', 'penjual\TransaksiController@notifPesan')->name('seller.notifpesan');
     //Pengiriman
     Route::get('seller/pengiriman', 'penjual\PengirimanController@index')->name('seller.pengiriman');
     Route::get('seller/pengiriman/{id}', 'penjual\PengirimanController@show')->name('seller.pengirimandetail');
@@ -82,8 +84,8 @@ Route::group(['middleware' => ['auth', 'cektoko']], function () {
     Route::get('obrolan/seller/data/get/{id}', 'ChatController@ambilDataPenjual')->name('seller.obrolanget');
     Route::post('/obrolan/seller/post', 'ChatController@storeDataPenjual')->name('seller.obrolanstore');
     //Voucher
-    Route::get('voucher','penjual\VoucherController@index')->name('seller.voucherindex');
-    Route::post('voucher/store','penjual\VoucherController@store')->name('seller.voucherstore');
+    Route::get('voucher', 'penjual\VoucherController@index')->name('seller.voucherindex');
+    Route::post('voucher/store', 'penjual\VoucherController@store')->name('seller.voucherstore');
     Route::put('voucher/update/{id}', 'penjual\VoucherController@edit')->name('seller.voucheredit');
     Route::delete('voucher/store/{id}', 'penjual\VoucherController@destroy')->name('seller.voucherdestroy');
     //Refund
@@ -113,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/alamat/edit/{id}', 'pembeli\AlamatController@edit')->name('user.alamatedit');
     Route::put('/alamat/update/{id}', 'pembeli\AlamatController@update')->name('user.alamatupdate');
     Route::delete('/alamat/edit/{id}', 'pembeli\AlamatController@destroy')->name('user.alamatdelete');
+    Route::get('/alamat/utama/{id}','pembeli\AlamatController@jadikanUtama')->name('user.alamatutama');
     //Transaksi
     Route::get('/transaksi', 'pembeli\TransaksiController@index')->name('user.transaksi');
     Route::post('/transaksi/store', 'pembeli\TransaksiController@store')->name('user.transaksistore');
@@ -127,18 +130,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/obrolan/post', 'ChatController@storeDataPembeli')->name('pembeli.obrolanstore');
     Route::post('/obrolan2/post', 'ChatController@storeDataPembeliDetailProduk')->name('pembeli.obrolanstore2');
     //Voucher
-    Route::post('voucher/check','penjual\VoucherController@checkVoucher')->name('pembeli.checkvoucher');
+    Route::post('voucher/check', 'penjual\VoucherController@checkVoucher')->name('pembeli.checkvoucher');
     //Refund
-    Route::get('refund','RefundPencarianDanaController@indexPembeli')->name('pembeli.refund');
-    Route::post('refund/store','RefundPencarianDanaController@storePembeli')->name('pembeli.refundstore');
-    Route::get('refund/{id}','RefundPencarianDanaController@detail')->name('pembeli.refunddetail');
+    Route::get('refund', 'RefundPencarianDanaController@indexPembeli')->name('pembeli.refund');
+    Route::post('refund/store', 'RefundPencarianDanaController@storePembeli')->name('pembeli.refundstore');
+    Route::get('refund/{id}', 'RefundPencarianDanaController@detail')->name('pembeli.refunddetail');
 });
 
 //ADMIN
-Route::get('admin','admin\AdminController@index')->name('admin.index');
-Route::get('admin/refund','admin\AdminController@refund')->name('admin.refund');
-Route::get('admin/pencairan','admin\AdminController@pencairan')->name('admin.pencairan');
-Route::get('admin/onkir','admin\AdminController@onkir')->name('admin.onkir');
+Route::get('admin', 'admin\AdminController@index')->name('admin.index');
+Route::get('admin/refund', 'admin\AdminController@refund')->name('admin.refund');
+Route::get('admin/pencairan', 'admin\AdminController@pencairan')->name('admin.pencairan');
+Route::get('admin/onkir', 'admin\AdminController@onkir')->name('admin.onkir');
 Route::post('admin/onkir/post', 'admin\AdminController@setOnkir')->name('admin.onkirpost');
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2022 at 01:56 PM
+-- Generation Time: Nov 27, 2022 at 03:18 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.3
 
@@ -39,15 +39,17 @@ CREATE TABLE `alamat` (
   `longitude` varchar(45) DEFAULT NULL,
   `telepon` varchar(45) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `provinsi_idprovinsi` int(11) NOT NULL
+  `provinsi_idprovinsi` int(11) NOT NULL,
+  `default` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `alamat`
 --
 
-INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
-(3, 'Jln. Kesehatan No 43', 'Alexandro', '-8.84344522701749', '2022-09-13 13:59:21', '2022-09-13 13:59:21', 1, 122, '121.64428642078308', '08123323918', NULL, 23);
+INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`, `default`) VALUES
+(3, 'Jln. Kesehatan No 43', 'Alexandro', '-8.84344522701749', '2022-09-13 13:59:21', '2022-11-27 15:16:40', 1, 122, '121.64428642078308', '08123323918', NULL, 23, 0),
+(4, 'a', 'ewrwe', '-8.815908556554515', '2022-11-27 15:06:56', '2022-11-27 15:16:40', 1, 106, '120.93439278714098', '23', NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -767,18 +769,6 @@ CREATE TABLE `midtrans` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `midtrans`
---
-
-INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
-(4, 'f3a13793-ad13-4eeb-a790-f5665fd42143', 'settlement', 8, '2022-09-13 06:51:49', '2022-09-13 06:51:49'),
-(5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08'),
-(6, '7c1feba9-2e5a-418b-a958-f1de2d931968', 'settlement', 10, '2022-09-27 05:35:20', '2022-09-27 05:35:20'),
-(7, '5680832e-2bf2-4708-99b4-41a1f7b105ac', NULL, 2, '2022-11-18 16:25:50', '2022-11-18 16:25:50'),
-(8, 'fdea5806-edbf-4002-bc67-45cf647dd428', NULL, 3, '2022-11-18 16:26:49', '2022-11-18 16:26:49'),
-(9, '162e5e7d-e1cd-4fa1-834f-de3f4883c1cf', NULL, 4, '2022-11-25 03:50:14', '2022-11-25 03:50:14');
-
 -- --------------------------------------------------------
 
 --
@@ -827,13 +817,6 @@ CREATE TABLE `pengiriman` (
   `kurir_idkurir` int(11) DEFAULT NULL,
   `transaksi_idtransaksi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `pengiriman`
---
-
-INSERT INTO `pengiriman` (`idpengiriman`, `tanggalwaktu`, `status`, `created_at`, `updated_at`, `kurir_idkurir`, `transaksi_idtransaksi`) VALUES
-(1, '2022-11-26 01:59:37', 'Menunggu Plot Kurir', '2022-11-25 17:59:37', '2022-11-25 17:59:37', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -938,13 +921,6 @@ CREATE TABLE `refund` (
   `status` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `refund`
---
-
-INSERT INTO `refund` (`idrefund`, `created_at`, `updated_at`, `pemohon`, `jumlah`, `nama_rekening`, `nomor_rekening`, `bank`, `users_id`, `toko_users_id`, `status`) VALUES
-(8, '2022-11-26 05:55:13', '2022-11-26 05:55:13', 'pembeli', '90000', 'aaa', '123', 'eee', 1, NULL, 'Menunggu Konfirmasi Admin');
-
 -- --------------------------------------------------------
 
 --
@@ -997,15 +973,6 @@ CREATE TABLE `transaksi` (
   `pencarian_penjual` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `transaksi`
---
-
-INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`, `nilai_potongan`, `refund_pembeli`, `pencarian_penjual`) VALUES
-(2, '2022-11-19 08:25:49', 1, 1, '2022-11-18 16:25:49', '2022-11-26 05:51:53', 45000, 984, 3, 'transfer', 'kurir_toko', 'Selesai', 9197, 0, 0),
-(3, '2022-11-19 08:26:49', 1, 1, '2022-11-18 16:26:49', '2022-11-26 05:55:13', 45000, 1, 3, 'transfer', 'ambil_sendiri', 'Batal', 9000, 1, 0),
-(4, '2022-11-25 19:50:12', 1, 1, '2022-11-25 03:50:12', '2022-11-26 05:55:13', 45000, 0, 3, 'transfer', 'kurir_toko', 'Batal', 0, 1, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -1019,18 +986,6 @@ CREATE TABLE `transaksi_has_produk` (
   `qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `transaksi_has_produk`
---
-
-INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
-(2, 1, 25000, 1),
-(2, 2, 20000, 1),
-(3, 1, 25000, 1),
-(3, 2, 20000, 1),
-(4, 1, 25000, 1),
-(4, 2, 20000, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1041,14 +996,6 @@ CREATE TABLE `transaksi_has_refund` (
   `transaksi_idtransaksi` int(11) NOT NULL,
   `refund_idrefund` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `transaksi_has_refund`
---
-
-INSERT INTO `transaksi_has_refund` (`transaksi_idtransaksi`, `refund_idrefund`) VALUES
-(3, 8),
-(4, 8);
 
 -- --------------------------------------------------------
 
@@ -1092,14 +1039,6 @@ CREATE TABLE `users_has_produk` (
   `bintang` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggalwaktu` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users_has_produk`
---
-
-INSERT INTO `users_has_produk` (`id`, `users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
-(1, 1, 1, 2, 'jos', '2', '2022-11-25 21:55:58'),
-(2, 2, 2, 3, 'w', '5', '2022-11-25 21:55:58');
 
 -- --------------------------------------------------------
 
@@ -1336,7 +1275,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `chat`
@@ -1402,7 +1341,7 @@ ALTER TABLE `refund`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `users`

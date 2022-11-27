@@ -52,14 +52,14 @@
                                     <p> Urutkan Harga: </p>
                                     <select id="order">
                                         @if($order == null)
-                                            <option value="asc" selected="selected">Terendah</option>
-                                            <option value="desc">Tertinggi</option>
+                                        <option value="asc" selected="selected">Terendah</option>
+                                        <option value="desc">Tertinggi</option>
                                         @elseif ($order == "asc")
-                                            <option value="asc" selected="selected">Terendah</option>
-                                            <option value="desc">Tertinggi</option>
+                                        <option value="asc" selected="selected">Terendah</option>
+                                        <option value="desc">Tertinggi</option>
                                         @else
-                                            <option value="asc">Terendah</option>
-                                            <option value="desc" selected="selected">Tertinggi</option>
+                                        <option value="asc">Terendah</option>
+                                        <option value="desc" selected="selected">Tertinggi</option>
                                         @endif
                                     </select>
                                 </li>
@@ -177,20 +177,24 @@
                                         <div class="product-details">
                                             <div class="product-name">
                                                 <h4><a href="{{route('user.produkdetail',$value->idproduk)}}">{{$value->nama}} </a></h4>
+                                                <!-- <h5>{{$value->jarak}} Km.</h5> -->
                                             </div>
-                                            <div class="price"> <span class="price-new">IDR. {{number_format($value->harga)}}</span> </div>
+                                            <div class="price">
+                                                <span class="price-new">IDR. {{number_format($value->harga)}} | Jarak: {{$value->jarak}}</span>
+                                                <!-- <span>
+                                                    <h5>{{$value->jarak}}</h5>
+                                                </span> -->
+                                            </div>
                                             <div class="product-hov">
                                                 <ul>
-
                                                     <li class="addtocart"><a href="{{route('user.wishlistaddToCart',$value->idproduk)}}">Add to Cart</a> </li>
                                                     <li class="addtocart"><a href="{{route('user.produkdetail',$value->idproduk)}}">Detail</a></li>
-                                                    
                                                 </ul>
                                                 <div class="review">
                                                     <span class="rate">
                                                         @for($i = 0; $i < $value->rating; $i++)
                                                             <i class="fa fa-star rated"></i>
-                                                        @endfor
+                                                            @endfor
                                                     </span>
                                                 </div>
                                             </div>

@@ -80,4 +80,14 @@ class AlamatController extends Controller
             return redirect()->back()->with('gagal', $e->getMessage());
         }
     }
+    public function jadikanUtama($id)
+    {
+        try {
+            Alamat::where('users_id', Auth::user()->id)->update(['default' => 0]);
+            Alamat::where('users_id', Auth::user()->id)->where('idalamat',$id)->update(['default' => 1]);
+            return redirect()->back()->with('sukses', 'Berhasil Ubah Alamat Utama');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('gagal', $e->getMessage());
+        }
+    }
 }

@@ -23,6 +23,8 @@
                                 <th>Nama</th>
                                 <th>Alamat</th>
                                 <th>Telp</th>
+                                <th>Utama</th>
+                                <th>Jadikan Utama</th>
                                 <th>Ubah</th>
                                 <th>Hapus</th>
                             </tr>
@@ -34,6 +36,17 @@
                                 <td>{{$value->alamat_lengkap}}</td>
                                 <td>{{$value->nama_penerima}}</td>
                                 <td>{{$value->telepon}}</td>
+                                <td>
+                                    <!-- {{$value->utama}} -->
+                                    @if($value->default == 1)
+                                    Ya
+                                    @else
+                                    Tidak
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('user.alamatutama',$value->idalamat)}}" class="btn btn-primary">V</a>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-primary" onclick="edit('{{$value->idalamat}}')">Ubah</button>
                                 </td>
