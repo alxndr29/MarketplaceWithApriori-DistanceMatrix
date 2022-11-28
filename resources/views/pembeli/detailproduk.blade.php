@@ -63,22 +63,22 @@
                                         <a href="{{route('pembeli.tokodetail',$produk->idtoko)}}">{{$produk->namatoko}}</a>
                                     </div>
                                     @guest
-                                        @else
-                                        <div class="product-qty">
-                                            <label for="qty">Qty:</label>
-                                            <div class="custom-qty">
-                                                <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="reduced items" type="button"> <i class="fa fa-minus"></i> </button>
-                                                <input type="text" class="input-text qty" title="Qty" value="1" maxlength="8" id="qty" name="qty">
-                                                <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items" type="button"> <i class="fa fa-plus"></i> </button>
-                                            </div>
+                                    @else
+                                    <div class="product-qty">
+                                        <label for="qty">Qty:</label>
+                                        <div class="custom-qty">
+                                            <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="reduced items" type="button"> <i class="fa fa-minus"></i> </button>
+                                            <input type="text" class="input-text qty" title="Qty" value="1" maxlength="8" id="qty" name="qty">
+                                            <button onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items" type="button"> <i class="fa fa-plus"></i> </button>
                                         </div>
-                                        <div class="add-to-cart">
-                                            <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
-                                            <button type="button" class="btn btn-default" onCLick="modalPesan()">Message</button>
-                                        </div>
-                                        <ul class="add-links">
-                                            <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
-                                        </ul>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button type="button" class="btn btn-default" id="btnAddCart">Add to Cart</button>
+                                        <button type="button" class="btn btn-default" onCLick="modalPesan()">Message</button>
+                                    </div>
+                                    <ul class="add-links">
+                                        <li> <a class="add-to-wishlist" href="{{route('user.wishliststore',$produk->idproduk)}}"> <i class="fa fa-heart-o"></i> Add to Wishlist </a></li>
+                                    </ul>
                                     @endguest
 
                                 </div>
@@ -90,16 +90,16 @@
                             <div class="col-md-12">
                                 <div id="tabs">
                                     <ul class="nav nav-tabs">
-                                        <li><a class="tab-Description selected" title="Description">Description</a></li>
-                                        <li><a class="tab-Product-Tags" title="Product-Tags">Product-Tags</a></li>
-                                        <li><a class="tab-Reviews" title="Reviews">Reviews</a></li>
+                                        <!-- <li><a class="tab-Description " title="Description">Description</a></li>
+                                        <li><a class="tab-Product-Tags" title="Product-Tags">Product-Tags</a></li> -->
+                                        <li><a class="tab-Reviews selected" title="Reviews">Reviews</a></li>
                                     </ul>
                                 </div>
                                 <div id="items">
                                     <div class="tab-content">
                                         <ul>
-                                            <li>
-                                                <div class="items-Description selected">
+                                            <!-- <li>
+                                                <div class="items-Description ">
                                                     <div class="Description"> <strong>The standard Lorem Ipsum passage, used since the 1500s</strong><br>
                                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <br>
                                                         <br>
@@ -110,9 +110,9 @@
                                             <li>
                                                 <div class="items-Product-Tags "><strong>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</strong><br>
                                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</div>
-                                            </li>
+                                            </li> -->
                                             <li>
-                                                <div class="items-Reviews ">
+                                                <div class="items-Reviews selected">
                                                     <div class="comments-area">
                                                         <h4>Comments<span>({{count($review)}})</span></h4>
                                                         <ul class="comment-list ">

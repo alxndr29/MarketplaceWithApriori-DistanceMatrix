@@ -128,26 +128,25 @@ class ProdukController extends Controller
     public function detail($id)
     {
         $produk = Produk::where('idproduk', $id)
-        ->join('toko','toko.users_id','=','produk.toko_users_id')
-        ->select('produk.*','toko.nama_toko as namatoko','toko.users_id as idtoko')
-        ->first();
-        // dd($produk);
-        // return $produk;
+            ->join('toko', 'toko.users_id', '=', 'produk.toko_users_id')
+            ->select('produk.*', 'toko.nama_toko as namatoko', 'toko.users_id as idtoko')
+            ->first();
+
         $avg = DB::table('users_has_produk')->where('produk_idproduk', $id)->avg('bintang');
-        // return $avg;
+
         $gambar_produk = GambarProduk::where('produk_idproduk', $id)->get();
-        // return $gambar_produk;
+
         $review = DB::table('users_has_produk')
             ->where('produk_idproduk', $id)
             ->join('users', 'users.id', '=', 'users_has_produk.users_id')
             ->select('users_has_produk.*', 'users.name')
             ->get();
-        // return $review;
         //apriori
         $detailtransaksi = DB::table('transaksi_has_produk')
             ->orderBy('transaksi_idtransaksi')
             ->get();
         $data = [];
+
         foreach ($detailtransaksi as $item) {
             if (!array_key_exists($item->transaksi_idtransaksi, $data)) {
                 $data[$item->transaksi_idtransaksi] = [];
@@ -162,7 +161,6 @@ class ProdukController extends Controller
         $associator->train($data, $labels);
         $result =  $associator->getRules();
 
-        // return $result;
         $rekomendasi = [];
         foreach ($result as $value) {
             if (count($value['antecedent']) == 1) {
@@ -176,21 +174,28 @@ class ProdukController extends Controller
                 }
             }
         }
-
         $hasilAkhirRekomendasi = [];
-        foreach ($rekomendasi as $rek) {
-            $a = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
+        if (count($rekomendasi) != 0) {
+            foreach ($rekomendasi as $rek) {
+                $a = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
+                    ->whereNull('gambar_produk.deleted_at')
+                    ->where('produk.idproduk', $rek)
+                    ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
+                    ->groupBy('produk.idproduk')
+                    ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->first();
+                array_push($hasilAkhirRekomendasi, $a);
+            }
+        } else {
+            $hasilAkhirRekomendasi = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
                 ->whereNull('gambar_produk.deleted_at')
-                ->where('produk.idproduk', $rek)
+                ->where('produk.idproduk', '!=', $id)
                 ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
                 ->groupBy('produk.idproduk')
-                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->first();
-            array_push($hasilAkhirRekomendasi, $a);
+                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->get();
         }
-        // return $hasilAkhirRekomendasi;
+
         return view('pembeli.detailproduk', compact('produk', 'gambar_produk', 'avg', 'review', 'hasilAkhirRekomendasi'));
     }
-    public function detailReview($id){
-
-    }
+    public function detailReview($id)
+    { }
 }

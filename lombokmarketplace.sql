@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 27, 2022 at 03:18 PM
+-- Generation Time: Nov 28, 2022 at 01:53 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.3
 
@@ -1012,17 +1012,18 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` enum('pembeli','penjual','admin') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `role` enum('pembeli','penjual','admin') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telepon` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
-(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL),
-(3, 'Babi', 'babi@babi.com', NULL, '$2y$10$crxnzxynuFJJIiMI0z21f.lC07U6atGO/3nur3nLP9Y6.p3wY6C2W', NULL, '2022-09-27 05:52:28', '2022-09-27 05:52:28', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `telepon`) VALUES
+(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual', NULL),
+(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL, NULL),
+(3, 'Babi', 'babi@babi.com', NULL, '$2y$10$crxnzxynuFJJIiMI0z21f.lC07U6atGO/3nur3nLP9Y6.p3wY6C2W', NULL, '2022-09-27 05:52:28', '2022-09-27 05:52:28', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1311,7 +1312,7 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT for table `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1323,7 +1324,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -1335,13 +1336,13 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `refund`
 --
 ALTER TABLE `refund`
-  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1353,7 +1354,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users_has_produk`
 --
 ALTER TABLE `users_has_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `voucher`

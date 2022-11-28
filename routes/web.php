@@ -24,7 +24,7 @@ Route::post('/midtrans/notification', 'MidtransController@payment_handling');
 Route::get('/midtrans/a', 'MidtransController@a');
 
 Route::get('/', function () {
-    // return redirect('/home');
+    return redirect('/home');
     $client = new GuzzleHttp\Client();
     $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=-8.848198553520579%2C121.6637660808329&destinations=-8.832836631765579%2C121.67777565447375&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
     $promise = $client->sendAsync($request)->then(function ($response) {
@@ -40,8 +40,7 @@ Route::get('/', function () {
 Auth::routes();
 //Home
 Route::get('/home', 'HomeController@index')->name('home');
-// Search
-Route::get('/search', 'pembeli\SearchController@index');
+
 //Produk Detail
 Route::get('/produkdetail/{id}', 'penjual\ProdukController@detail')->name('user.produkdetail');
 //DetailToko
@@ -135,6 +134,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('refund', 'RefundPencarianDanaController@indexPembeli')->name('pembeli.refund');
     Route::post('refund/store', 'RefundPencarianDanaController@storePembeli')->name('pembeli.refundstore');
     Route::get('refund/{id}', 'RefundPencarianDanaController@detail')->name('pembeli.refunddetail');
+    // Search
+    Route::get('/search', 'pembeli\SearchController@index');
 });
 
 //ADMIN
