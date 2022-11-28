@@ -144,6 +144,7 @@ Route::get('admin/refund', 'admin\AdminController@refund')->name('admin.refund')
 Route::get('admin/pencairan', 'admin\AdminController@pencairan')->name('admin.pencairan');
 Route::get('admin/onkir', 'admin\AdminController@onkir')->name('admin.onkir');
 Route::post('admin/onkir/post', 'admin\AdminController@setOnkir')->name('admin.onkirpost');
+Route::get('admin/acc/{id}','admin\AdminController@acc')->name('admin.acc');
 
 Route::get('/midtrans', 'pembeli\TransaksiController@index')->name('coba');
 Route::get('ambillokasi', 'penjual\PenjualController@ambilLokasi')->name('ambillokasi');

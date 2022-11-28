@@ -21,6 +21,7 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Detail</th>
+                    <th>Acc</th>
                 </tr>
             </thead>
             @foreach ($daftar_pencairan as $key => $value)
@@ -43,6 +44,9 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary" onClick="detailRefund({{$value->idrefund}})">Detail</button>
+                    </td>
+                    <td>
+                        <a href="{{route('admin.acc',$value->idrefund)}}" class="btn btn-primary">Acc</a>
                     </td>
                 </tr>
             </tbody>

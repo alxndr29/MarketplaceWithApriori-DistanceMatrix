@@ -36,4 +36,12 @@ class AdminController extends Controller
         $daftar_pencairan = Refund::where('pemohon', 'penjual')->get();
         return view('admin.pencarian', compact('daftar_pencairan'));
     }
+    public function acc($id){
+        try{
+            Refund::where('idrefund',$id)->update(['status' => 'Selesai']);
+            return back()->with('sukses', 'BErhasil ubah.');
+        }catch(\Exception $e){
+            return back()->with('gagal', $e->getMessage());
+        }
+    }
 }
