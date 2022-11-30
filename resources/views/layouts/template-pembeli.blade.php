@@ -203,7 +203,7 @@
                         </div>
                         <div class="col-md-6 search_block">
                             <div class="search">
-                                <form action="http://html.lionode.com/korslook/grid-view.html">
+                                <form>
                                     <!-- <div class="search_cat">
                                         <select class="search-category" name="search-category">
                                             <option class="computer" selected>All Categories</option>
