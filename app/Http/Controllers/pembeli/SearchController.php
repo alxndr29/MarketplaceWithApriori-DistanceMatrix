@@ -30,8 +30,8 @@ class SearchController extends Controller
         if ($request->input('filter')) {
             $filter = $request->input('filter');
             $produk->where('produk.nama', 'like', '%' . $request->input('filter') . '%');
-        }else{
-            $produk->where('produk.nama', 'like', '% %');
+        } else {
+            $produk->where('produk.nama', 'like', '%%');
         }
         if ($request->input('kategori')) {
             $kategori = $request->input('kategori');
@@ -52,15 +52,17 @@ class SearchController extends Controller
             $latitude_origin = $alamat->latitude;
             $longitude_destination = $alamat->longitude;
             foreach ($a as $key => $value) {
-                $client = new GuzzleHttp\Client();
-                $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $latitude_origin . '%2C' . $longitude_destination . '&destinations=' . $value->latitude . '%2C' . $value->longitude . '&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
-                $promise = $client->sendAsync($request)->then(function ($response) use ($value) {
-                    $result = json_decode($response->getBody());
-                    // $hasil = $result->rows[0]->elements[0]->distance->text;
-                    // echo $result->rows[0]->elements[0]->distance->value;
-                    $value->jarak = $result->rows[0]->elements[0]->distance->text;
-                });
-                $promise->wait();
+                try {
+                    $client = new GuzzleHttp\Client();
+                    $request = new \GuzzleHttp\Psr7\Request('GET', 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $latitude_origin . '%2C' . $longitude_destination . '&destinations=' . $value->latitude . '%2C' . $value->longitude . '&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k');
+                    $promise = $client->sendAsync($request)->then(function ($response) use ($value) {
+                        $result = json_decode($response->getBody());
+                        // $hasil = $result->rows[0]->elements[0]->distance->text;
+                        // echo $result->rows[0]->elements[0]->distance->value;
+                        $value->jarak = $result->rows[0]->elements[0]->distance->text;
+                    });
+                    $promise->wait();
+                } catch (\Exception $e) { }
             }
         }
         // return $a;
