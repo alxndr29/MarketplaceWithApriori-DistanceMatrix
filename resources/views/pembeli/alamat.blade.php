@@ -187,8 +187,10 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        
         $('#latitude').val('-8.5876173');
         $('#longitude').val('116.0815738');
+
         $('#myTable').DataTable();
         $('#provinsi').on('change', function() {
             $("#kotakabupaten").empty();

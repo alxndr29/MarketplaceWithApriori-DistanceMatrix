@@ -127,6 +127,20 @@ class ProdukController extends Controller
     }
     public function detail($id)
     {
+
+        // $samples = [
+        //     ['alpha', 'beta', 'epsilon'],
+        //     ['alpha', 'beta', 'theta'],
+        //     ['alpha', 'beta', 'epsilon'],
+        //     ['alpha', 'beta', 'theta']
+        // ];
+        // return $samples;
+
+        // $labels  = [];
+        // $associator = new Apriori($support = 0.5, $confidence = 0.5);
+        // $associator->train($samples, $labels);
+        // return $associator->getRules();
+
         $produk = Produk::where('idproduk', $id)
             ->join('toko', 'toko.users_id', '=', 'produk.toko_users_id')
             ->select('produk.*', 'toko.nama_toko as namatoko', 'toko.users_id as idtoko')
@@ -145,27 +159,27 @@ class ProdukController extends Controller
         $detailtransaksi = DB::table('transaksi_has_produk')
             ->orderBy('transaksi_idtransaksi')
             ->get();
+        //  return $detailtransaksi;
         $data = [];
-
         foreach ($detailtransaksi as $item) {
             if (!array_key_exists($item->transaksi_idtransaksi, $data)) {
                 $data[$item->transaksi_idtransaksi] = [];
             }
             array_push($data[$item->transaksi_idtransaksi], $item->produk_idproduk);
         }
-
+        // return $data;
         $labels  = [];
         $support = 0;
         $confidence = 0;
         $associator = new Apriori($support, $confidence);
         $associator->train($data, $labels);
         $result =  $associator->getRules();
-
+        // return $result;
         $rekomendasi = [];
+
         foreach ($result as $value) {
             if (count($value['antecedent']) == 1) {
                 if ($value['antecedent'][0] == $id) {
-                    //return "dapet";
                     foreach ($value['consequent'] as $kon) {
                         if (in_array($kon, $rekomendasi)) { } else {
                             array_push($rekomendasi, $kon);
@@ -174,6 +188,7 @@ class ProdukController extends Controller
                 }
             }
         }
+        // return $rekomendasi;
         $hasilAkhirRekomendasi = [];
         if (count($rekomendasi) != 0) {
             foreach ($rekomendasi as $rek) {

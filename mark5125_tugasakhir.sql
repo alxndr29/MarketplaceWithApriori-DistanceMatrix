@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 03 Des 2022 pada 09.44
--- Versi server: 10.3.37-MariaDB-log-cll-lve
--- Versi PHP: 7.4.33
+-- Waktu pembuatan: 04 Des 2022 pada 14.00
+-- Versi server: 5.7.33
+-- Versi PHP: 8.1.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -41,8 +40,8 @@ CREATE TABLE `alamat` (
   `telepon` varchar(45) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `provinsi_idprovinsi` int(11) NOT NULL,
-  `default` tinyint(4) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `default` tinyint(4) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `alamat`
@@ -67,7 +66,7 @@ CREATE TABLE `chat` (
   `created_at` timestamp NULL DEFAULT NULL,
   `idpembeli` bigint(20) UNSIGNED NOT NULL,
   `idpenjual` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `chat`
@@ -103,7 +102,7 @@ CREATE TABLE `etalase_produk` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `etalase_produk`
@@ -125,11 +124,11 @@ INSERT INTO `etalase_produk` (`idetalase_produk`, `nama`, `toko_users_id`, `crea
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -144,7 +143,7 @@ CREATE TABLE `gambar_produk` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `produk_idproduk` int(11) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `gambar_produk`
@@ -171,7 +170,7 @@ CREATE TABLE `kategori` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `kategori`
@@ -190,7 +189,7 @@ INSERT INTO `kategori` (`idkategori`, `nama`, `created_at`, `updated_at`, `delet
 CREATE TABLE `keranjang` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `produk_idproduk` int(11) NOT NULL,
-  `jumlah` varchar(45) DEFAULT NULL
+  `jumlah` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -209,7 +208,7 @@ INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
 CREATE TABLE `konfigurasi` (
   `idkonfigurasi` int(11) NOT NULL,
   `harga_ongkir` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `konfigurasi`
@@ -231,7 +230,7 @@ CREATE TABLE `kotakabupaten` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `provinsi_idprovinsi` int(11) NOT NULL,
   `kodepos` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `kotakabupaten`
@@ -755,7 +754,7 @@ CREATE TABLE `kurir` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `kurir`
@@ -779,7 +778,7 @@ CREATE TABLE `midtrans` (
   `transaksi_idtransaksi` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `midtrans`
@@ -798,7 +797,7 @@ INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -818,8 +817,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -839,13 +838,13 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 
 CREATE TABLE `pengiriman` (
   `idpengiriman` int(11) NOT NULL,
-  `tanggalwaktu` timestamp NULL DEFAULT current_timestamp(),
+  `tanggalwaktu` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `kurir_idkurir` int(11) DEFAULT NULL,
   `transaksi_idtransaksi` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `pengiriman`
@@ -873,7 +872,7 @@ CREATE TABLE `produk` (
   `deskripsi` varchar(45) DEFAULT NULL,
   `stok` int(11) DEFAULT NULL,
   `voucher_idvoucher` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `produk`
@@ -898,7 +897,7 @@ CREATE TABLE `provinsi` (
   `nama` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `provinsi`
@@ -958,7 +957,7 @@ CREATE TABLE `refund` (
   `users_id` bigint(20) UNSIGNED DEFAULT NULL,
   `toko_users_id` bigint(20) UNSIGNED DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -970,15 +969,15 @@ CREATE TABLE `toko` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `nama_toko` varchar(45) DEFAULT NULL,
   `deskripsi` varchar(45) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT 0,
+  `status` tinyint(4) DEFAULT '0',
   `alamat` varchar(255) DEFAULT NULL,
   `telepon` varchar(12) DEFAULT NULL,
   `latitude` varchar(45) DEFAULT NULL,
   `longitude` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `kotakabupaten_idkotakabupaten` int(11) NOT NULL DEFAULT 241
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `kotakabupaten_idkotakabupaten` int(11) NOT NULL DEFAULT '241'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `toko`
@@ -998,7 +997,7 @@ INSERT INTO `toko` (`users_id`, `nama_toko`, `deskripsi`, `status`, `alamat`, `t
 
 CREATE TABLE `transaksi` (
   `idtransaksi` int(11) NOT NULL,
-  `tanggal` datetime DEFAULT current_timestamp(),
+  `tanggal` datetime DEFAULT CURRENT_TIMESTAMP,
   `toko_users_id` bigint(20) UNSIGNED NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1010,9 +1009,9 @@ CREATE TABLE `transaksi` (
   `pengiriman` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `nilai_potongan` double DEFAULT NULL,
-  `refund_pembeli` tinyint(4) DEFAULT 0,
-  `pencarian_penjual` tinyint(4) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `refund_pembeli` tinyint(4) DEFAULT '0',
+  `pencarian_penjual` tinyint(4) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `transaksi`
@@ -1034,7 +1033,7 @@ CREATE TABLE `transaksi_has_produk` (
   `produk_idproduk` int(11) NOT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `transaksi_has_produk`
@@ -1042,8 +1041,10 @@ CREATE TABLE `transaksi_has_produk` (
 
 INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
 (40, 1, 25000, 1),
+(40, 2, 1111, 1),
 (41, 2, 20000, 1),
-(42, 1, 25000, 1);
+(42, 1, 25000, 1),
+(42, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1054,7 +1055,7 @@ INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, 
 CREATE TABLE `transaksi_has_refund` (
   `transaksi_idtransaksi` int(11) NOT NULL,
   `refund_idrefund` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1064,15 +1065,15 @@ CREATE TABLE `transaksi_has_refund` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` enum('pembeli','penjual','admin') DEFAULT NULL,
-  `telepon` varchar(45) DEFAULT NULL
+  `role` enum('pembeli','penjual','admin') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telepon` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1097,9 +1098,9 @@ CREATE TABLE `users_has_produk` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `produk_idproduk` int(11) NOT NULL,
   `transaksi_idtransaksi` int(11) NOT NULL,
-  `komen` varchar(45) DEFAULT NULL,
-  `bintang` varchar(45) DEFAULT NULL,
-  `tanggalwaktu` datetime DEFAULT current_timestamp()
+  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bintang` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggalwaktu` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1125,7 +1126,7 @@ CREATE TABLE `voucher` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1143,8 +1144,8 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
-(1, 2),
-(4, 1);
+(4, 1),
+(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -1404,13 +1405,13 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `refund`
 --
 ALTER TABLE `refund`
-  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -1428,7 +1429,7 @@ ALTER TABLE `users_has_produk`
 -- AUTO_INCREMENT untuk tabel `voucher`
 --
 ALTER TABLE `voucher`
-  MODIFY `idvoucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idvoucher` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

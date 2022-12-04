@@ -229,15 +229,19 @@
         service.getDistanceMatrix(matrixOptions, callback);
         // Callback function used to process Distance Matrix response
         function callback(response, status) {
+            console.log(status);
+            console.log(response);
             if (status !== "OK") {
                 alert("Error with distance matrix");
                 return;
             }
+            
             console.log(response);
             console.log(response.rows[0].elements[0].distance.value);
+
             onkir = Math.round(response.rows[0].elements[0].distance.value / 1000 * conf_harga);
             $("#total-price").html('IDR. ' + (totalSemua + onkir - nilai_voucher));
-            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " m * "+conf_harga+"perak " + Math.round(response.rows[0].elements[0].distance.value / 1000 * conf_harga));
+            $("#total-ongkir").html((response.rows[0].elements[0].distance.value / 1000) + " m * " + conf_harga + "perak " + Math.round(response.rows[0].elements[0].distance.value / 1000 * conf_harga));
         }
     }
     $("#btncheckout").on("click", function() {
@@ -276,7 +280,7 @@
     });
     $("#btn-apply-voucher").on('click', function() {
         // alert('btn apply voucher ditekan');
-        
+
         $.ajax({
             url: "{{route('pembeli.checkvoucher')}}",
             type: "POST",
