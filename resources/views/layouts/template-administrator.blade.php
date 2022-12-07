@@ -31,6 +31,7 @@
                         <div class="profile_info">
                             <span>Welcome,</span>
                             <h2>Administrator</h2>
+                            <a href="{{route('admin.logout')}}">Logout</a>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->

@@ -40,9 +40,9 @@ class TransaksiController extends Controller
         // return view('midtrans', compact('snapToken'));
 
         $transaksi = Transaksi::where('transaksi.users_id', Auth::user()->id)
-            ->leftJoin('users_has_produk', 'users_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->leftJoin('ulasan', 'ulasan.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
             ->groupBy('transaksi.idtransaksi')
-            ->select('transaksi.*', DB::raw('COUNT(users_has_produk.transaksi_idtransaksi) as hitung'))
+            ->select('transaksi.*', DB::raw('COUNT(ulasan.transaksi_idtransaksi) as hitung'))
             ->get();
         //return $transaksi;
         return view('pembeli.transaksi', compact('transaksi'));
@@ -53,10 +53,10 @@ class TransaksiController extends Controller
             ->join('alamat', 'alamat.idalamat', '=', 'transaksi.alamat_idalamat')
             ->select('transaksi.*', 'alamat.*')
             ->first();
-        $detailtransaksi = DB::table('transaksi_has_produk')
-            ->where('transaksi_has_produk.transaksi_idtransaksi', $id)
-            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
-            ->select('produk.nama', 'transaksi_has_produk.*')
+        $detailtransaksi = DB::table('detail_transaksi')
+            ->where('detail_transaksi.transaksi_idtransaksi', $id)
+            ->join('produk', 'produk.idproduk', '=', 'detail_transaksi.produk_idproduk')
+            ->select('produk.nama', 'detail_transaksi.*')
             ->get();
         $datapengiriman = Pengiriman::where('transaksi_idtransaksi', $id)->leftJoin('kurir', 'kurir.idkurir', '=', 'pengiriman.kurir_idkurir')->first();
 
@@ -99,7 +99,7 @@ class TransaksiController extends Controller
             $transaksi->save();
             $transaksi->idtransaksi;
             foreach ($keranjang as $value) {
-                DB::table('transaksi_has_produk')->insert([
+                DB::table('detail_transaksi')->insert([
                     'transaksi_idtransaksi' => $transaksi->idtransaksi,
                     'produk_idproduk' => $value->idproduk,
                     'jumlah' => $value->jumlah * $value->harga,
@@ -173,8 +173,8 @@ class TransaksiController extends Controller
     public function ambildatareview($id)
     {
         $review = Transaksi::where('transaksi.idtransaksi', $id)
-            ->join('transaksi_has_produk', 'transaksi.idtransaksi', '=', 'transaksi_has_produk.transaksi_idtransaksi')
-            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+            ->join('detail_transaksi', 'transaksi.idtransaksi', '=', 'detail_transaksi.transaksi_idtransaksi')
+            ->join('produk', 'produk.idproduk', '=', 'detail_transaksi.produk_idproduk')
             ->select('transaksi.idtransaksi', 'produk.nama', 'produk.idproduk')
             ->where('transaksi.status', 'Selesai')
             ->get();
@@ -186,7 +186,7 @@ class TransaksiController extends Controller
         try {
             // return $request->all();
             foreach ($request->get('rating') as $key => $value) {
-                DB::table('users_has_produk')->updateOrInsert([
+                DB::table('ulasan')->updateOrInsert([
                     'users_id' => Auth::user()->id,
                     'produk_idproduk' => $key,
                     'transaksi_idtransaksi' => $id
@@ -195,7 +195,7 @@ class TransaksiController extends Controller
                 ]);
             }
             foreach ($request->get('komen') as $key => $value) {
-                DB::table('users_has_produk')->updateOrInsert([
+                DB::table('ulasan')->updateOrInsert([
                     'users_id' => Auth::user()->id,
                     'produk_idproduk' => $key,
                     'transaksi_idtransaksi' => $id

@@ -139,6 +139,15 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 //ADMIN
+
+Route::get('admin/login', 'admin\AdminController@login')->name('admin.login');
+Route::get('admin/logout', 'admin\AdminController@logout')->name('admin.logout');
+Route::post('admin/loginproses', 'admin\AdminController@loginproses')->name('admin.loginproses');
+Route::get('admin/refund', 'admin\AdminController@refund')->name('admin.refund');
+Route::get('admin/pencairan', 'admin\AdminController@pencairan')->name('admin.pencairan');
+Route::get('admin/onkir', 'admin\AdminController@onkir')->name('admin.onkir');
+Route::post('admin/onkir/post', 'admin\AdminController@setOnkir')->name('admin.onkirpost');
+Route::get('admin/acc/{id}', 'admin\AdminController@acc')->name('admin.acc');
 Route::get('admin', 'admin\AdminController@index')->name('admin.index');
 Route::get('admin/refund', 'admin\AdminController@refund')->name('admin.refund');
 Route::get('admin/pencairan', 'admin\AdminController@pencairan')->name('admin.pencairan');
@@ -183,11 +192,11 @@ Route::get('kurir/home', function (Request $request) {
 })->name('kurir.home');
 Route::get('kurir/detail/{id}', function (Request $request, $id) {
     if ($request->session()->has('kurir')) {
-        $databarang = Transaksi::join('transaksi_has_produk', 'transaksi_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
-            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+        $databarang = Transaksi::join('detail_transaksi', 'detail_transaksi.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->join('produk', 'produk.idproduk', '=', 'detail_transaksi.produk_idproduk')
             ->join('pengiriman', 'transaksi.idtransaksi', '=', 'pengiriman.transaksi_idtransaksi')
             ->where('pengiriman.idpengiriman', $id)
-            ->select('transaksi_has_produk.*', 'produk.nama')
+            ->select('detail_transaksi.*', 'produk.nama')
             ->get();
         $dataalamat = Transaksi::join('alamat', 'alamat.idalamat', '=', 'transaksi.alamat_idalamat')
             ->join('provinsi', 'provinsi.idprovinsi', '=', 'alamat.provinsi_idprovinsi')
@@ -228,3 +237,4 @@ Route::get('kurir/status/{id}/{status}', function ($id, $status) {
         return redirect()->back()->with('gagal', $e->getMessage());
     }
 })->name('kurir.status');
+

@@ -29,10 +29,10 @@ class PengirimanController extends Controller
 
         $datapemesan = Transaksi::join('users', 'users.id', 'transaksi.users_id')->where('transaksi.idtransaksi', $id)->first();
 
-        $databarang = Transaksi::join('transaksi_has_produk', 'transaksi_has_produk.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
-            ->join('produk', 'produk.idproduk', '=', 'transaksi_has_produk.produk_idproduk')
+        $databarang = Transaksi::join('detail_transaksi', 'detail_transaksi.transaksi_idtransaksi', '=', 'transaksi.idtransaksi')
+            ->join('produk', 'produk.idproduk', '=', 'detail_transaksi.produk_idproduk')
             ->where('transaksi.idtransaksi', $id)
-            ->select('transaksi_has_produk.*', 'produk.nama')
+            ->select('detail_transaksi.*', 'produk.nama')
             ->get();
         $dataalamat = Transaksi::join('alamat', 'alamat.idalamat', '=', 'transaksi.alamat_idalamat')
             ->join('provinsi', 'provinsi.idprovinsi', '=', 'alamat.provinsi_idprovinsi')

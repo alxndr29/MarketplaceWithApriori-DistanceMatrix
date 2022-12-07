@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 06 Okt 2022 pada 15.32
+-- Waktu pembuatan: 07 Des 2022 pada 14.02
 -- Versi server: 5.7.33
--- Versi PHP: 7.4.19
+-- Versi PHP: 8.1.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,15 +39,17 @@ CREATE TABLE `alamat` (
   `longitude` varchar(45) DEFAULT NULL,
   `telepon` varchar(45) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `provinsi_idprovinsi` int(11) NOT NULL
+  `provinsi_idprovinsi` int(11) NOT NULL,
+  `default` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `alamat`
 --
 
-INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`) VALUES
-(3, 'Jln. Kesehatan No 43', 'Alexandro', '-8.84344522701749', '2022-09-13 13:59:21', '2022-09-13 13:59:21', 1, 122, '121.64428642078308', '08123323918', NULL, 23);
+INSERT INTO `alamat` (`idalamat`, `alamat_lengkap`, `nama_penerima`, `latitude`, `created_at`, `updated_at`, `users_id`, `kotakabupaten_idkotakabupaten`, `longitude`, `telepon`, `deleted_at`, `provinsi_idprovinsi`, `default`) VALUES
+(3, 'Jln. Kesehatan No 43', 'Alexandro', '-8.84344522701749', '2022-09-13 13:59:21', '2022-11-27 15:16:40', 1, 122, '121.64428642078308', '08123323918', NULL, 23, 0),
+(4, 'a', 'ewrwe', '-8.815908556554515', '2022-11-27 15:06:56', '2022-11-27 15:16:40', 1, 106, '120.93439278714098', '23', NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -70,8 +72,41 @@ CREATE TABLE `chat` (
 --
 
 INSERT INTO `chat` (`idchat`, `pesan`, `pengirim`, `updated_at`, `created_at`, `idpembeli`, `idpenjual`) VALUES
-(1, 'Mantap Hello World!', 'penjual', '2022-09-28 01:20:47', '2022-09-27 17:20:47', 1, 2),
-(2, 'Mantap Hello World!', 'penjual', '2022-09-28 01:20:53', '2022-09-27 17:20:53', 1, 2);
+(5, 'Mantap Hello World!', 'pembeli', '2022-11-15 03:27:48', '2022-11-14 19:27:48', 1, 2),
+(6, 'Mantap Hello World!', 'penjual', '2022-11-15 03:27:54', '2022-11-14 19:27:54', 1, 2),
+(7, 'Mantap Hello World!', 'penjual', '2022-11-15 03:32:35', '2022-11-14 19:32:35', 1, 2),
+(8, 'Mantap Hello World!', 'penjual', '2022-11-15 03:34:00', '2022-11-14 19:34:00', 1, 2),
+(9, 'Mantap Hello World!', 'pembeli', '2022-11-15 03:34:01', '2022-11-14 19:34:01', 1, 2),
+(47, 'Mantap Hello World!', 'pembeli', '2022-11-15 04:01:57', '2022-11-14 20:01:57', 1, 1),
+(48, 'Test melalui textbox', 'pembeli', '2022-11-15 04:09:28', '2022-11-14 20:09:28', 1, 2),
+(49, 'y', 'pembeli', '2022-11-15 04:53:52', '2022-11-14 20:53:52', 1, 2),
+(50, 'hallo', 'penjual', '2022-11-15 05:30:11', '2022-11-14 21:30:11', 1, 1),
+(51, 'y', 'pembeli', '2022-11-15 05:30:36', '2022-11-14 21:30:36', 1, 1),
+(52, 'dari detail toko', 'pembeli', '2022-11-26 01:41:06', '2022-11-25 17:41:06', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_refund`
+--
+
+CREATE TABLE `detail_refund` (
+  `transaksi_idtransaksi` int(11) NOT NULL,
+  `refund_idrefund` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_transaksi`
+--
+
+CREATE TABLE `detail_transaksi` (
+  `transaksi_idtransaksi` int(11) NOT NULL,
+  `produk_idproduk` int(11) NOT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -176,8 +211,25 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`users_id`, `produk_idproduk`, `jumlah`) VALUES
-(1, 2, '3'),
 (1, 3, '1');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `konfigurasi`
+--
+
+CREATE TABLE `konfigurasi` (
+  `idkonfigurasi` int(11) NOT NULL,
+  `harga_ongkir` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `konfigurasi`
+--
+
+INSERT INTO `konfigurasi` (`idkonfigurasi`, `harga_ongkir`) VALUES
+(1, 750);
 
 -- --------------------------------------------------------
 
@@ -741,15 +793,6 @@ CREATE TABLE `midtrans` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `midtrans`
---
-
-INSERT INTO `midtrans` (`idmidtrans`, `token`, `status`, `transaksi_idtransaksi`, `created_at`, `updated_at`) VALUES
-(4, 'f3a13793-ad13-4eeb-a790-f5665fd42143', 'settlement', 8, '2022-09-13 06:51:49', '2022-09-13 06:51:49'),
-(5, '51f52580-c79d-498d-9e63-7fe05eb21126', 'settlement', 9, '2022-09-13 06:52:08', '2022-09-13 06:52:08'),
-(6, '7c1feba9-2e5a-418b-a958-f1de2d931968', 'settlement', 10, '2022-09-27 05:35:20', '2022-09-27 05:35:20');
-
 -- --------------------------------------------------------
 
 --
@@ -799,13 +842,6 @@ CREATE TABLE `pengiriman` (
   `transaksi_idtransaksi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `pengiriman`
---
-
-INSERT INTO `pengiriman` (`idpengiriman`, `tanggalwaktu`, `status`, `created_at`, `updated_at`, `kurir_idkurir`, `transaksi_idtransaksi`) VALUES
-(2, '2022-09-13 15:14:58', 'Sampai Tujuan', '2022-09-13 07:14:58', '2022-09-13 07:18:04', 2, 9);
-
 -- --------------------------------------------------------
 
 --
@@ -823,17 +859,18 @@ CREATE TABLE `produk` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `toko_users_id` bigint(20) UNSIGNED NOT NULL,
   `deskripsi` varchar(45) DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL
+  `stok` int(11) DEFAULT NULL,
+  `voucher_idvoucher` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `produk`
 --
 
-INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`, `stok`) VALUES
-(1, 'First Product Gawr Gura', '25000', 2, 2, '2022-07-08 08:21:40', '2022-07-12 09:51:03', NULL, 1, 'Gura', 100),
-(2, 'Izumi Sagiri', '20000', 2, 1, '2022-07-12 11:23:01', '2022-07-12 11:23:01', NULL, 1, 'Eromanga Sensei terbaik', 50),
-(3, 'Kue Nastar', '30000', 4, 1, '2022-07-12 11:35:15', '2022-07-12 11:35:15', NULL, 2, 'Enak pokoknya', 10);
+INSERT INTO `produk` (`idproduk`, `nama`, `harga`, `etalase_produk_idetalase_produk`, `kategori_idkategori`, `created_at`, `updated_at`, `deleted_at`, `toko_users_id`, `deskripsi`, `stok`, `voucher_idvoucher`) VALUES
+(1, 'First Product Gawr Gura', '25000', 2, 2, '2022-07-08 08:21:40', '2022-07-12 09:51:03', NULL, 1, 'Gura', 100, 0),
+(2, 'Izumi Sagiri', '20000', 2, 1, '2022-07-12 11:23:01', '2022-07-12 11:23:01', NULL, 1, 'Eromanga Sensei terbaik', 50, 0),
+(3, 'Kue Nastar', '30000', 4, 1, '2022-07-12 11:35:15', '2022-07-12 11:35:15', NULL, 2, 'Enak pokoknya', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -891,6 +928,26 @@ INSERT INTO `provinsi` (`idprovinsi`, `nama`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `refund`
+--
+
+CREATE TABLE `refund` (
+  `idrefund` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `pemohon` enum('penjual','pembeli') DEFAULT NULL,
+  `jumlah` varchar(45) DEFAULT NULL,
+  `nama_rekening` varchar(45) DEFAULT NULL,
+  `nomor_rekening` varchar(45) DEFAULT NULL,
+  `bank` varchar(45) DEFAULT NULL,
+  `users_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `toko_users_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `toko`
 --
 
@@ -934,40 +991,27 @@ CREATE TABLE `transaksi` (
   `alamat_idalamat` int(11) NOT NULL,
   `pembayaran` varchar(45) DEFAULT NULL,
   `pengiriman` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL
+  `status` varchar(45) DEFAULT NULL,
+  `nilai_potongan` double DEFAULT NULL,
+  `refund_pembeli` tinyint(4) DEFAULT '0',
+  `pencarian_penjual` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `transaksi`
---
-
-INSERT INTO `transaksi` (`idtransaksi`, `tanggal`, `toko_users_id`, `users_id`, `created_at`, `updated_at`, `total`, `onkir`, `alamat_idalamat`, `pembayaran`, `pengiriman`, `status`) VALUES
-(8, '2022-09-13 22:51:48', 1, 1, '2022-09-13 06:51:48', '2022-09-13 07:08:01', 65000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai'),
-(9, '2022-09-13 22:52:07', 1, 1, '2022-09-13 06:52:07', '2022-09-13 07:18:10', 40000, 984, 3, 'transfer', 'kurir_toko', 'Selesai'),
-(10, '2022-09-27 21:35:19', 1, 1, '2022-09-27 05:35:19', '2022-10-05 06:20:52', 60000, 0, 3, 'transfer', 'ambil_sendiri', 'Selesai');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi_has_produk`
+-- Struktur dari tabel `ulasan`
 --
 
-CREATE TABLE `transaksi_has_produk` (
-  `transaksi_idtransaksi` int(11) NOT NULL,
+CREATE TABLE `ulasan` (
+  `id` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
   `produk_idproduk` int(11) NOT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `transaksi_has_produk`
---
-
-INSERT INTO `transaksi_has_produk` (`transaksi_idtransaksi`, `produk_idproduk`, `jumlah`, `qty`) VALUES
-(8, 1, 25000, 1),
-(8, 2, 40000, 2),
-(9, 2, 40000, 2),
-(10, 2, 60000, 3);
+  `transaksi_idtransaksi` int(11) NOT NULL,
+  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bintang` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggalwaktu` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -984,43 +1028,44 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` enum('pembeli','penjual','admin') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `role` enum('pembeli','penjual','admin') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telepon` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual'),
-(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL),
-(3, 'Babi', 'babi@babi.com', NULL, '$2y$10$crxnzxynuFJJIiMI0z21f.lC07U6atGO/3nur3nLP9Y6.p3wY6C2W', NULL, '2022-09-27 05:52:28', '2022-09-27 05:52:28', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `telepon`) VALUES
+(1, 'Alexander Evan', 'evan@evan.com', NULL, '$2y$10$iyHAWbls0iO1oqJfdMgX7uqkDAv8FD9WFFUuBW/l1isqOGcfIzh56', NULL, '2022-07-01 07:54:00', '2022-07-01 07:54:00', 'penjual', NULL),
+(2, 'Adit', 'adit@adit.com', NULL, '$2y$10$eeJz2EYOZXLwemv0noqKv.QvsoWAqKsiaAE2GQ08fZbmxKnwOIxn6', NULL, '2022-07-12 11:31:06', '2022-07-12 11:31:06', NULL, NULL),
+(3, 'Babi', 'babi@babi.com', NULL, '$2y$10$crxnzxynuFJJIiMI0z21f.lC07U6atGO/3nur3nLP9Y6.p3wY6C2W', NULL, '2022-09-27 05:52:28', '2022-09-27 05:52:28', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users_has_produk`
+-- Struktur dari tabel `voucher`
 --
 
-CREATE TABLE `users_has_produk` (
-  `id` int(11) NOT NULL,
-  `users_id` bigint(20) UNSIGNED NOT NULL,
-  `produk_idproduk` int(11) NOT NULL,
-  `transaksi_idtransaksi` int(11) NOT NULL,
-  `komen` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bintang` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tanggalwaktu` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `voucher` (
+  `idvoucher` int(11) NOT NULL,
+  `judul` varchar(255) DEFAULT NULL,
+  `potongan` int(11) DEFAULT NULL,
+  `expired` date DEFAULT NULL,
+  `kode_voucher` varchar(255) DEFAULT NULL,
+  `toko_users_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users_has_produk`
+-- Dumping data untuk tabel `voucher`
 --
 
-INSERT INTO `users_has_produk` (`id`, `users_id`, `produk_idproduk`, `transaksi_idtransaksi`, `komen`, `bintang`, `tanggalwaktu`) VALUES
-(1, 1, 2, 9, 'Jos dari kurir toko', '3', '2022-09-13 23:20:28'),
-(2, 1, 1, 8, 'w', '5', '2022-09-13 23:28:28'),
-(3, 1, 2, 8, 's', '5', '2022-09-13 23:28:28'),
-(4, 1, 2, 10, 'sada', '5', '2022-10-05 22:21:08');
+INSERT INTO `voucher` (`idvoucher`, `judul`, `potongan`, `expired`, `kode_voucher`, `toko_users_id`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'Baru Edit', 20, '2022-12-01', '4567', 1, '2022-11-14 23:47:57', '2022-11-15 00:10:17', 'Tidak Aktif'),
+(2, 'a', 1, '2022-11-25', '111', 1, '2022-11-15 00:10:12', '2022-11-15 00:10:15', 'Tidak Aktif');
 
 -- --------------------------------------------------------
 
@@ -1032,14 +1077,6 @@ CREATE TABLE `wishlist` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `produk_idproduk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `wishlist`
---
-
-INSERT INTO `wishlist` (`users_id`, `produk_idproduk`) VALUES
-(1, 1),
-(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -1060,7 +1097,23 @@ ALTER TABLE `alamat`
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`idchat`),
   ADD KEY `fk_chat_users1_idx` (`idpembeli`),
-  ADD KEY `fk_chat_users2_idx` (`idpenjual`);
+  ADD KEY `fk_chat_toko1_idx` (`idpenjual`);
+
+--
+-- Indeks untuk tabel `detail_refund`
+--
+ALTER TABLE `detail_refund`
+  ADD PRIMARY KEY (`transaksi_idtransaksi`,`refund_idrefund`),
+  ADD KEY `fk_transaksi_has_refund_refund1_idx` (`refund_idrefund`),
+  ADD KEY `fk_transaksi_has_refund_transaksi1_idx` (`transaksi_idtransaksi`);
+
+--
+-- Indeks untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD PRIMARY KEY (`transaksi_idtransaksi`,`produk_idproduk`),
+  ADD KEY `fk_transaksi_has_produk_produk1_idx` (`produk_idproduk`),
+  ADD KEY `fk_transaksi_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
 
 --
 -- Indeks untuk tabel `etalase_produk`
@@ -1095,6 +1148,12 @@ ALTER TABLE `keranjang`
   ADD PRIMARY KEY (`users_id`,`produk_idproduk`),
   ADD KEY `fk_users_has_produk_produk1_idx` (`produk_idproduk`),
   ADD KEY `fk_users_has_produk_users1_idx` (`users_id`);
+
+--
+-- Indeks untuk tabel `konfigurasi`
+--
+ALTER TABLE `konfigurasi`
+  ADD PRIMARY KEY (`idkonfigurasi`);
 
 --
 -- Indeks untuk tabel `kotakabupaten`
@@ -1144,13 +1203,22 @@ ALTER TABLE `produk`
   ADD PRIMARY KEY (`idproduk`),
   ADD KEY `fk_produk_etalase_produk1_idx` (`etalase_produk_idetalase_produk`),
   ADD KEY `fk_produk_kategori1_idx` (`kategori_idkategori`),
-  ADD KEY `fk_produk_toko1_idx` (`toko_users_id`);
+  ADD KEY `fk_produk_toko1_idx` (`toko_users_id`),
+  ADD KEY `fk_produk_voucher1_idx` (`voucher_idvoucher`);
 
 --
 -- Indeks untuk tabel `provinsi`
 --
 ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`idprovinsi`);
+
+--
+-- Indeks untuk tabel `refund`
+--
+ALTER TABLE `refund`
+  ADD PRIMARY KEY (`idrefund`),
+  ADD KEY `fk_refund_users1_idx` (`users_id`),
+  ADD KEY `fk_refund_toko1_idx` (`toko_users_id`);
 
 --
 -- Indeks untuk tabel `toko`
@@ -1170,12 +1238,13 @@ ALTER TABLE `transaksi`
   ADD KEY `fk_transaksi_alamat1_idx` (`alamat_idalamat`);
 
 --
--- Indeks untuk tabel `transaksi_has_produk`
+-- Indeks untuk tabel `ulasan`
 --
-ALTER TABLE `transaksi_has_produk`
-  ADD PRIMARY KEY (`transaksi_idtransaksi`,`produk_idproduk`),
-  ADD KEY `fk_transaksi_has_produk_produk1_idx` (`produk_idproduk`),
-  ADD KEY `fk_transaksi_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
+ALTER TABLE `ulasan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_users_has_produk_produk4_idx` (`produk_idproduk`),
+  ADD KEY `fk_users_has_produk_users4_idx` (`users_id`),
+  ADD KEY `fk_users_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
 
 --
 -- Indeks untuk tabel `users`
@@ -1185,13 +1254,11 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indeks untuk tabel `users_has_produk`
+-- Indeks untuk tabel `voucher`
 --
-ALTER TABLE `users_has_produk`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_users_has_produk_produk4_idx` (`produk_idproduk`),
-  ADD KEY `fk_users_has_produk_users4_idx` (`users_id`),
-  ADD KEY `fk_users_has_produk_transaksi1_idx` (`transaksi_idtransaksi`);
+ALTER TABLE `voucher`
+  ADD PRIMARY KEY (`idvoucher`),
+  ADD KEY `fk_voucher_toko1_idx` (`toko_users_id`);
 
 --
 -- Indeks untuk tabel `wishlist`
@@ -1209,13 +1276,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idalamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `idchat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idchat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT untuk tabel `etalase_produk`
@@ -1245,7 +1312,7 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT untuk tabel `midtrans`
 --
 ALTER TABLE `midtrans`
-  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idmidtrans` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -1257,7 +1324,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpengiriman` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
@@ -1266,10 +1333,22 @@ ALTER TABLE `produk`
   MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT untuk tabel `refund`
+--
+ALTER TABLE `refund`
+  MODIFY `idrefund` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idtransaksi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `ulasan`
+--
+ALTER TABLE `ulasan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -1278,10 +1357,10 @@ ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `users_has_produk`
+-- AUTO_INCREMENT untuk tabel `voucher`
 --
-ALTER TABLE `users_has_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `voucher`
+  MODIFY `idvoucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -1299,8 +1378,22 @@ ALTER TABLE `alamat`
 -- Ketidakleluasaan untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  ADD CONSTRAINT `fk_chat_users1` FOREIGN KEY (`idpembeli`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_chat_users2` FOREIGN KEY (`idpenjual`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_chat_toko1` FOREIGN KEY (`idpenjual`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_chat_users1` FOREIGN KEY (`idpembeli`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `detail_refund`
+--
+ALTER TABLE `detail_refund`
+  ADD CONSTRAINT `fk_transaksi_has_refund_refund1` FOREIGN KEY (`refund_idrefund`) REFERENCES `refund` (`idrefund`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_transaksi_has_refund_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `etalase_produk`
@@ -1352,7 +1445,15 @@ ALTER TABLE `pengiriman`
 ALTER TABLE `produk`
   ADD CONSTRAINT `fk_produk_etalase_produk1` FOREIGN KEY (`etalase_produk_idetalase_produk`) REFERENCES `etalase_produk` (`idetalase_produk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_idkategori`) REFERENCES `kategori` (`idkategori`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_produk_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_produk_voucher1` FOREIGN KEY (`voucher_idvoucher`) REFERENCES `voucher` (`idvoucher`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `refund`
+--
+ALTER TABLE `refund`
+  ADD CONSTRAINT `fk_refund_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_refund_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `toko`
@@ -1370,19 +1471,18 @@ ALTER TABLE `transaksi`
   ADD CONSTRAINT `fk_transaksi_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Ketidakleluasaan untuk tabel `transaksi_has_produk`
+-- Ketidakleluasaan untuk tabel `ulasan`
 --
-ALTER TABLE `transaksi_has_produk`
-  ADD CONSTRAINT `fk_transaksi_has_produk_produk1` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_transaksi_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `users_has_produk`
---
-ALTER TABLE `users_has_produk`
+ALTER TABLE `ulasan`
   ADD CONSTRAINT `fk_users_has_produk_produk4` FOREIGN KEY (`produk_idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_has_produk_transaksi1` FOREIGN KEY (`transaksi_idtransaksi`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_has_produk_users4` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ketidakleluasaan untuk tabel `voucher`
+--
+ALTER TABLE `voucher`
+  ADD CONSTRAINT `fk_voucher_toko1` FOREIGN KEY (`toko_users_id`) REFERENCES `toko` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `wishlist`

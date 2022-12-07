@@ -23,10 +23,10 @@ class SearchController extends Controller
         // return $request->input('filter') ?  $request->input('filter') : "kosongan";
         $produk = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
             ->whereNull('gambar_produk.deleted_at')
-            ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
+            ->leftJoin('ulasan', 'ulasan.produk_idproduk', '=', 'produk.idproduk')
             ->join('toko', 'produk.toko_users_id', '=', 'toko.users_id')
             ->groupBy('produk.idproduk')
-            ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"), 'toko.latitude', 'toko.longitude');
+            ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(ulasan.bintang)) as rating"), 'toko.latitude', 'toko.longitude');
         if ($request->input('filter')) {
             $filter = $request->input('filter');
             $produk->where('produk.nama', 'like', '%' . $request->input('filter') . '%');

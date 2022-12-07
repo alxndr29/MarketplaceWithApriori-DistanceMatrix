@@ -146,17 +146,17 @@ class ProdukController extends Controller
             ->select('produk.*', 'toko.nama_toko as namatoko', 'toko.users_id as idtoko')
             ->first();
 
-        $avg = DB::table('users_has_produk')->where('produk_idproduk', $id)->avg('bintang');
+        $avg = DB::table('ulasan')->where('produk_idproduk', $id)->avg('bintang');
 
         $gambar_produk = GambarProduk::where('produk_idproduk', $id)->get();
 
-        $review = DB::table('users_has_produk')
+        $review = DB::table('ulasan')
             ->where('produk_idproduk', $id)
-            ->join('users', 'users.id', '=', 'users_has_produk.users_id')
-            ->select('users_has_produk.*', 'users.name')
+            ->join('users', 'users.id', '=', 'ulasan.users_id')
+            ->select('ulasan.*', 'users.name')
             ->get();
         //apriori
-        $detailtransaksi = DB::table('transaksi_has_produk')
+        $detailtransaksi = DB::table('detail_transaksi')
             ->orderBy('transaksi_idtransaksi')
             ->get();
         //  return $detailtransaksi;
@@ -195,18 +195,18 @@ class ProdukController extends Controller
                 $a = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
                     ->whereNull('gambar_produk.deleted_at')
                     ->where('produk.idproduk', $rek)
-                    ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
+                    ->leftJoin('ulasan', 'ulasan.produk_idproduk', '=', 'produk.idproduk')
                     ->groupBy('produk.idproduk')
-                    ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->first();
+                    ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(ulasan.bintang)) as rating"))->first();
                 array_push($hasilAkhirRekomendasi, $a);
             }
         } else {
             $hasilAkhirRekomendasi = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
                 ->whereNull('gambar_produk.deleted_at')
                 ->where('produk.idproduk', '!=', $id)
-                ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
+                ->leftJoin('ulasan', 'ulasan.produk_idproduk', '=', 'produk.idproduk')
                 ->groupBy('produk.idproduk')
-                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->get();
+                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(ulasan.bintang)) as rating"))->get();
         }
 
         return view('pembeli.detailproduk', compact('produk', 'gambar_produk', 'avg', 'review', 'hasilAkhirRekomendasi'));

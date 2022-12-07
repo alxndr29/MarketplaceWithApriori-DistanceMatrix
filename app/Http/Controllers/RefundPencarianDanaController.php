@@ -36,7 +36,7 @@ class RefundPencarianDanaController extends Controller
             $refund->toko_users_id = Auth::user()->id;
             $refund->save();
             foreach ($data_transaksi as $value) {
-                DB::table('transaksi_has_refund')->insert([
+                DB::table('detail_refund')->insert([
                     'transaksi_idtransaksi' => $value->idtransaksi,
                     'refund_idrefund' => $refund->idrefund
                 ]);
@@ -71,7 +71,7 @@ class RefundPencarianDanaController extends Controller
             $refund->status = "Menunggu Konfirmasi Admin";
             $refund->save();
             foreach ($data_transaksi as $value) {
-                DB::table('transaksi_has_refund')->insert([
+                DB::table('detail_refund')->insert([
                     'transaksi_idtransaksi' => $value->idtransaksi,
                     'refund_idrefund' => $refund->idrefund
                 ]);
@@ -86,8 +86,8 @@ class RefundPencarianDanaController extends Controller
     public function detail($id)
     {
         $data_refund = Refund::where('idrefund', $id)->first();
-        $detail_refund = DB::table('transaksi_has_refund')->join('transaksi', 'transaksi.idtransaksi', '=', 'transaksi_has_refund.transaksi_idtransaksi')
-            ->where('transaksi_has_refund.refund_idrefund', $id)
+        $detail_refund = DB::table('detail_refund')->join('transaksi', 'transaksi.idtransaksi', '=', 'detail_refund.transaksi_idtransaksi')
+            ->where('detail_refund.refund_idrefund', $id)
             ->select('transaksi.idtransaksi', 'transaksi.created_at', 'transaksi.total')
             ->get();
         return response()->json([

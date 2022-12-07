@@ -86,19 +86,19 @@ class PenjualController extends Controller
             $produk = Produk::join('gambar_produk', 'produk.idproduk', '=', 'gambar_produk.produk_idproduk')
                 ->whereNull('gambar_produk.deleted_at')
                 ->where('produk.toko_users_id',$id)
-                ->leftJoin('users_has_produk', 'users_has_produk.produk_idproduk', '=', 'produk.idproduk')
+                ->leftJoin('ulasan', 'ulasan.produk_idproduk', '=', 'produk.idproduk')
                 ->groupBy('produk.idproduk')
-                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(users_has_produk.bintang)) as rating"))->get();
-            $review = DB::table('users_has_produk')
-                ->join('users', 'users.id', '=', 'users_has_produk.users_id')
-                ->join('transaksi','transaksi.idtransaksi','=','users_has_produk.transaksi_idtransaksi')
+                ->select('produk.*', 'gambar_produk.idgambar_produk', DB::raw("ROUND(AVG(ulasan.bintang)) as rating"))->get();
+            $review = DB::table('ulasan')
+                ->join('users', 'users.id', '=', 'ulasan.users_id')
+                ->join('transaksi','transaksi.idtransaksi','=','ulasan.transaksi_idtransaksi')
                 ->where('transaksi.toko_users_id',$id)
-                ->select('users_has_produk.*', 'users.name')
+                ->select('ulasan.*', 'users.name')
                 ->get();
-            $avg = DB::table('users_has_produk')
-            ->join('transaksi', 'transaksi.idtransaksi', '=', 'users_has_produk.transaksi_idtransaksi')
+            $avg = DB::table('ulasan')
+            ->join('transaksi', 'transaksi.idtransaksi', '=', 'ulasan.transaksi_idtransaksi')
             ->where('transaksi.toko_users_id',$id)
-            ->select(DB::raw('avg(users_has_produk.bintang) as avg'))
+            ->select(DB::raw('avg(ulasan.bintang) as avg'))
             ->first();
             return view('pembeli.detailpenjual', compact('produk','review','toko', 'avg'));
         }catch(\Exception $e){
